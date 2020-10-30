@@ -2,9 +2,8 @@
   "name": "castleofghosts",
   "version": "1.0.0",
   "description": "Браузерная игра",
-  "main": "./dist/index.html",
   "repository": "https://github.com/PraktikumSeoulDevTeam/castleofghosts.git",
-  "author": "Артем Мозговой, Дима Кузнецов, Никита Иванов",
+  "author": "Artem Mozgovoy, Dima Kuznecov, Nikita Ivanov",
   "license": "MIT",
   "scripts": {
     "start": "webpack serve --mode development --watch",

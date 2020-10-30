@@ -1,0 +1,9 @@
+{
+  "name": "castleofghosts-backend",
+  "version": "1.0.0",
+  "description": "Back-end for Castle Of Ghost application",
+  "repository": "https://github.com/PraktikumSeoulDevTeam/castleofghosts.git",
+  "author": "Artem Mozgovoy, Dima Kuznecov, Nikita Ivanov",
+  "main": "./dist/app.js",
+  "license": "MIT"
+}

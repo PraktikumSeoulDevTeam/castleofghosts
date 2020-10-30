@@ -1,12 +1,8 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "es2017"
-    ],
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "es2015",
     "jsx": "react",
     "importHelpers": true,
     "noUnusedLocals": true,
@@ -19,10 +15,6 @@
     "sourceMap": false,
     "baseUrl": ".",
     "outDir": "./dist",
-    "paths": {
-      "*": ["./src/*"]
-    },
-    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"],
   },
   "include": [
     "src",
@@ -32,4 +24,4 @@
   "exclude": [
     "**/*.js"
   ]
-} 
+}
