@@ -1,0 +1,12 @@
+{
+  "extends": ["stylelint-config-idiomatic-order"],
+  "ignoreFiles": ["./static/*", "**/*.css"],
+  "rules": {
+    "indentation": 4,
+    "color-named": "always-where-possible",
+    "order/properties-alphabetical-order": null,
+    "selector-no-qualifying-type": null,
+    "selector-class-pattern": null,
+    "max-nesting-depth": 3
+  }
+}
