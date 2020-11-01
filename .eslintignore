@@ -1,6 +1,9 @@
 /dist
 /node_modules
+Procfile
+Dockerfile
 *.*
+
 !*.tsx
 !*.ts
 !*.jsx
