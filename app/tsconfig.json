@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.common.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "../dist",
+    "jsx": "react",
+    "importHelpers": true
+  }
+}
