@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../button';
 
 export default function WelcomePage(): JSX.Element {
     return (
@@ -11,6 +12,8 @@ export default function WelcomePage(): JSX.Element {
                     <br />
                     Ghosts
                 </div>
+                <div className="m--t__5" />
+                <Button>Start</Button>
             </div>
         </div>
     );

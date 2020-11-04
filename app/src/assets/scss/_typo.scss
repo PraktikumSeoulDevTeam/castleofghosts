@@ -11,7 +11,7 @@ $font-main: 'sds', sans-serif;
 @mixin t-main() {
     font-family: $font-main;
     line-height: 1.25;
-    font-size: 12px;
+    font-size: 25px;
     font-weight: normal;
 }
 
@@ -22,8 +22,4 @@ $font-main: 'sds', sans-serif;
     font-weight: normal;
     color: #fff;
     text-align: center;
-}
-
-.t-title {
-    @include t-title;
 }

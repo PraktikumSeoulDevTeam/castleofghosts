@@ -21,3 +21,14 @@ div {
         margin-bottom: auto;
     }
 }
+
+/*
+* Typo
+*/
+.t-main {
+    @include t-main;
+}
+
+.t-title {
+    @include t-title;
+}
