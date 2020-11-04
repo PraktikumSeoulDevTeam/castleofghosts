@@ -14,3 +14,16 @@ $font-main: 'sds', sans-serif;
     font-size: 12px;
     font-weight: normal;
 }
+
+@mixin t-title() {
+    font-family: $font-main;
+    line-height: 1.25;
+    font-size: 40px;
+    font-weight: normal;
+    color: #fff;
+    text-align: center;
+}
+
+.t-title {
+    @include t-title;
+}

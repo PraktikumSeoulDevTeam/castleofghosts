@@ -1,5 +1,8 @@
 import React from 'react';
+import WelcomePage from './welcome-page/welcome-page';
 
-export default function App(): JSX.Element {
-    return <h1>Hello, world!</h1>;
+export default class App extends React.PureComponent {
+    render(): JSX.Element {
+        return <WelcomePage />;
+    }
 }

@@ -10,7 +10,7 @@
     "app:serve": "webpack serve -c ./app/webpack.config.js --mode development --watch",
     "app:build": "webpack -c ./app/webpack.config.js --mode production",
     "lint:verify": "eslint --max-warnings=0 \"**/*\"",
-    "lint:fix": "eslint --fix **/*",
+    "lint:fix": "eslint --fix \"**/*\"",
     "server:build": "run-s server:clear server:ts:compile",
     "server:serve": "run-p server:ts:watch server:nodemon",
     "server:ts:compile": "tsc -p server",

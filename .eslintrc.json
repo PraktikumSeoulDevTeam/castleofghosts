@@ -25,11 +25,12 @@
     }
   },
   "rules": {
-    "no-console":"off",
+    "no-console": "off",
     "import/extensions": ["error", "never"],
     "react/jsx-filename-extension": ["warn", {"extensions": [".tsx", ".jsx"]}],
     "react/jsx-uses-react": "warn",
-    "prettier/prettier": "warn"
+    "prettier/prettier": "warn",
+    "react/jsx-indent": ["error", 4]
   },
   "overrides": [
     {
