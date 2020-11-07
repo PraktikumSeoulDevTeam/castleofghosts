@@ -1,14 +1,6 @@
-import {ValidatorResult, ValidatorParams, ValidationMethods, ValidationMethod} from './types';
+import {ValidatorResult, ValidatorParams, ValidationMethods, ValidatorConfig, ValidatorUserData} from './types';
 import validatorFunctions from './functions';
 import getText from './errorText';
-
-type ValidatorConfig = {
-    [fieldName: string]: {func: ValidationMethod; funcName: string; arg: (number & string) | null}[];
-};
-
-type ValidatorUserData = {
-    [fieldName: string]: string;
-};
 
 /**
  * params looks like:
@@ -37,7 +29,9 @@ export default function validator(params: ValidatorParams): ReturnType<typeof va
                 [func, arg] = param.split(':').map((s) => s.trim());
             }
 
-            if (config[key] === undefined) config[key] = [];
+            if (config[key] === undefined) {
+                config[key] = [];
+            }
 
             if (functions[func] !== undefined) {
                 config[key].push({
@@ -65,7 +59,9 @@ function validate(validatorConfig: ValidatorConfig): (userData: ValidatorUserDat
             const validationResult = [];
             validatorConfig[fieldName].forEach(({func, funcName, arg}) => {
                 const res = func(fieldValue, arg);
-                if (!res && validationResult.length === 0) validationResult.push(getText(funcName, arg));
+                if (!res && validationResult.length === 0) {
+                    validationResult.push(getText(funcName, arg));
+                }
             });
 
             if (validationResult.length !== 0) {

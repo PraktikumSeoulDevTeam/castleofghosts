@@ -1,7 +1,9 @@
 import isEmpty from '../../isEmpty';
 
-export default function isEmailt(val: string): boolean {
-    if (isEmpty(val)) return false;
+export default function isEmail(val: string): boolean {
+    if (isEmpty(val)) {
+        return false;
+    }
 
     return val.includes('@');
 }

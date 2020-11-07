@@ -1,29 +1,14 @@
-export default function getText(
-    fieldName: string,
-    arg?: string
-): {
-    ru: string;
-} {
+export default function getText(fieldName: string, arg?: string): string {
     switch (fieldName) {
         case 'required':
-            return {
-                ru: `Поле обязательно для заполнения`
-            };
+            return `Поле обязательно для заполнения`;
         case 'min-length':
-            return {
-                ru: `Поле не должно быть короче ${arg} символов`
-            };
+            return `Поле не должно быть короче ${arg} символов`;
         case 'max-length':
-            return {
-                ru: `Поле не должно быть длиннее ${arg} символов`
-            };
+            return `Поле не должно быть длиннее ${arg} символов`;
         case 'email':
-            return {
-                ru: `Некорректный email адрес`
-            };
+            return `Некорректный email адрес`;
         default:
-            return {
-                ru: `Некорректное значение`
-            };
+            return `Некорректное значение`;
     }
 }
