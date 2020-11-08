@@ -18,10 +18,11 @@ export default function validator(params: ValidatorParams): ReturnType<typeof va
     };
 
     const config: ValidatorConfig = {};
-    Object.keys(params).forEach((key) => {
+
+    for (const key of Object.keys(params)) {
         const splitString = params[key].split('|');
 
-        splitString.forEach((param) => {
+        for (const param of splitString) {
             let func = param.trim();
             let arg = null;
 
@@ -40,8 +41,8 @@ export default function validator(params: ValidatorParams): ReturnType<typeof va
                     arg
                 });
             } else throw Error(`unknow validation function (${func})`);
-        });
-    });
+        }
+    }
 
     return validate(config);
 }
@@ -53,22 +54,23 @@ function validate(validatorConfig: ValidatorConfig): (userData: ValidatorUserDat
             errors: {}
         };
 
-        Object.keys(userData).forEach((fieldName) => {
+        for (const fieldName of Object.keys(userData)) {
             const fieldValue = userData[fieldName];
+            let validationResult = '';
 
-            const validationResult = [];
-            validatorConfig[fieldName].forEach(({func, funcName, arg}) => {
+            for (const {func, funcName, arg} of validatorConfig[fieldName]) {
                 const res = func(fieldValue, arg);
-                if (!res && validationResult.length === 0) {
-                    validationResult.push(getText(funcName, arg));
+                if (!res) {
+                    validationResult = getText(funcName, arg);
+                    break;
                 }
-            });
+            }
 
-            if (validationResult.length !== 0) {
+            if (validationResult.length) {
                 result.wasError = true;
                 result.errors[fieldName] = validationResult;
             }
-        });
+        }
 
         return result;
     };

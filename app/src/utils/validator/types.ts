@@ -1,7 +1,7 @@
 export type ValidatorResult = {
     wasError: boolean;
     errors: {
-        [fieldName: string]: string[];
+        [fieldName: string]: string;
     };
 };
 
