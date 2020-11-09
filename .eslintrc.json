@@ -7,11 +7,12 @@
   },
   "plugins": ["@typescript-eslint", "prettier"],
   "extends": [
+    "airbnb",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/typescript",
-    "airbnb",
-    "prettier/@typescript-eslint",
-    "prettier"
+    "prettier",
+    "prettier/react",
+    "prettier/@typescript-eslint"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -20,23 +21,34 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"],
+        "moduleDirectory": ["app/src", "node_modules"]
       }
     }
   },
   "rules": {
-    "no-console": "warn",
+    "no-console":"off",
     "no-plusplus": "off",
+<<<<<<< HEAD
     "no-shadow": "off",
     "curly": ["warn", "all"],
     "newline-before-return": "warn",
+=======
+    "newline-before-return": "warn",
+    "curly": ["warn", "all"],
+    "no-shadow": "off",
+>>>>>>> Fix патч, для настроек качества кода
     "@typescript-eslint/no-shadow": ["error"],
     "import/extensions": ["error", "never"],
     "import/prefer-default-export": "off",
     "react/jsx-filename-extension": ["warn", {"extensions": [".tsx", ".jsx"]}],
     "react/jsx-uses-react": "warn",
+<<<<<<< HEAD
     "react/jsx-indent": ["warn", 4],
     "react/jsx-indent-props": ["warn", 4],
+=======
+    "react/jsx-props-no-spreading": "off",
+>>>>>>> Fix патч, для настроек качества кода
     "prettier/prettier": "warn"
   },
   "overrides": [
