@@ -1,17 +1,15 @@
-import React from 'react';
-import {Props} from './types';
+import React, {ButtonHTMLAttributes, memo} from 'react';
 import './Button.scss';
 
-export function Button(props: Props): JSX.Element {
-    const {className, children} = props;
+function component(props: ButtonHTMLAttributes<HTMLButtonElement>): JSX.Element {
+    const {children, ...rest} = props;
 
-    return (
-        <button className={className} type="button">
-            {children}
-        </button>
-    );
+    return <button {...rest}>{children}</button>;
 }
 
-Button.defaultProps = {
-    className: 'btn t-main'
+component.defaultProps = {
+    className: 'btn t-main',
+    type: 'button'
 };
+
+export const Button = memo(component);

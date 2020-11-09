@@ -1,8 +1,9 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {Button, Copyright} from '../../components';
-import './Welcome.scss';
+import './WelcomePage.scss';
 
-export function Welcome(): JSX.Element {
+export function WelcomePage(): JSX.Element {
     return (
         <main className="ui">
             <div className="ui__inner">
@@ -14,7 +15,9 @@ export function Welcome(): JSX.Element {
                         <span className="welcome-page__title__item">Ghosts</span>
                     </h1>
                     <div className="m--t__5" />
-                    <Button>Start</Button>
+                    <Link to="/login">
+                        <Button>Start</Button>
+                    </Link>
                     <div className="m--t__5" />
                     <div className="link">Leaderboard</div>
                 </div>
