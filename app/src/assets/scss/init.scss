@@ -1,7 +1,7 @@
 html {
     width: 100%;
     height: 100%;
-    background: $color2;
+    background: $colorBack;
     @include t-main;
 }
 
@@ -24,10 +24,10 @@ div {
         align-items: center;
         margin-top: auto;
         margin-bottom: auto;
-        background: $color4;
+        background: $colorBackDark;
         width: 90%;
         min-height: 90vh;
-        border: 10px solid $color1;
+        border: 10px solid $colorMain;
     }
 }
 

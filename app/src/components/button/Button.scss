@@ -5,13 +5,13 @@
     height: 50px;
     line-height: 50px;
     min-width: 320px;
-    background: $color1;
-    border: 2px solid $color3;
+    background: $colorMain;
+    border: 2px solid $colorSecond;
     border-radius: 10px;
     color: #fff;
     cursor: pointer;
     &:hover {
-        background: $color3;
-        color: $color1;
+        background: $colorSecond;
+        color: $colorMain;
     }
 }
