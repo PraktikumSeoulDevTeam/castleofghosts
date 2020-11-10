@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '../button';
-import Copyright from '../copyright';
+import Button from '../Button';
+import Copyright from '../Copyright';
 
 export default function WelcomePage(): JSX.Element {
     return (
