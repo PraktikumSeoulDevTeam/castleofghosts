@@ -1,8 +1,5 @@
 import React from 'react';
 import WelcomePage from './WelcomePage/WelcomePage';
 
-export default class App extends React.PureComponent {
-    render(): JSX.Element {
-        return <WelcomePage />;
-    }
-}
+const App = (): JSX.Element => <WelcomePage />;
+export default App;
