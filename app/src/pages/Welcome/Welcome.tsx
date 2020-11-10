@@ -1,9 +1,9 @@
 import React from 'react';
-import Button from '../Button';
-import Copyright from '../Copyright';
-import './WelcomePage.scss';
+import Button from '../../components/Button';
+import Copyright from '../../components/Copyright';
+import './Welcome.scss';
 
-export default function WelcomePage(): JSX.Element {
+export default function Welcome(): JSX.Element {
     return (
         <main className="ui">
             <div className="ui__inner">
