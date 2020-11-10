@@ -3,7 +3,7 @@ import Button from '../../components/Button';
 import Copyright from '../../components/Copyright';
 import './Welcome.scss';
 
-export default function Welcome(): JSX.Element {
+function Welcome(): JSX.Element {
     return (
         <main className="ui">
             <div className="ui__inner">
@@ -26,3 +26,4 @@ export default function Welcome(): JSX.Element {
         </main>
     );
 }
+export default Welcome;
