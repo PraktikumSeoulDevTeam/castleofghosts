@@ -1,20 +1,19 @@
 import React from 'react';
 import Button from '../Button';
 import Copyright from '../Copyright';
+import './WelcomePage.scss';
 
 export default function WelcomePage(): JSX.Element {
     return (
-        <div className="ui">
+        <main className="ui">
             <div className="ui__inner">
                 <div className="ui__top" />
                 <div className="ui__center">
-                    <div className="welcome--page__title t-title">
-                        Castle
-                        <br />
-                        of
-                        <br />
-                        Ghosts
-                    </div>
+                    <h1 className="welcome-page__title t-title">
+                        <span className="welcome-page__title__item">Castle</span>
+                        <span className="welcome-page__title__item">of</span>
+                        <span className="welcome-page__title__item">Ghosts</span>
+                    </h1>
                     <div className="m--t__5" />
                     <Button>Start</Button>
                     <div className="m--t__5" />
@@ -24,6 +23,6 @@ export default function WelcomePage(): JSX.Element {
                     <Copyright />
                 </div>
             </div>
-        </div>
+        </main>
     );
 }
