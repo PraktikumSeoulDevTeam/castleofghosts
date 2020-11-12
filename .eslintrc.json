@@ -30,7 +30,8 @@
     "react/jsx-filename-extension": ["warn", {"extensions": [".tsx", ".jsx"]}],
     "react/jsx-uses-react": "warn",
     "prettier/prettier": "warn",
-    "react/jsx-indent": ["error", 4]
+    "react/jsx-indent": ["error", 4],
+    "import/prefer-default-export": "off"
   },
   "overrides": [
     {
