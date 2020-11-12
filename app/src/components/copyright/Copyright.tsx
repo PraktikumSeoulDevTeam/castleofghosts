@@ -1,7 +1,7 @@
 import React from 'react';
 import './Copyright.scss';
 
-function Copyright(): JSX.Element {
+export function Copyright(): JSX.Element {
     return (
         <div className="copyright">
             <div className="copyright__title">Created by:</div>
@@ -26,5 +26,3 @@ function Copyright(): JSX.Element {
         </div>
     );
 }
-
-export default Copyright;

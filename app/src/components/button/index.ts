@@ -1,6 +1,6 @@
 import {memo} from 'react';
 
-import Button from './Button';
+import {Button as Btn} from './Button';
 import {OwnProps} from './types';
 
-export default memo<OwnProps>(Button);
+export const Button = memo<OwnProps>(Btn);

@@ -1,9 +1,8 @@
 import React from 'react';
-import Button from '../../components/Button';
-import Copyright from '../../components/Copyright';
+import {Button, Copyright} from '../../components';
 import './Welcome.scss';
 
-function Welcome(): JSX.Element {
+export function Welcome(): JSX.Element {
     return (
         <main className="ui">
             <div className="ui__inner">
@@ -26,4 +25,3 @@ function Welcome(): JSX.Element {
         </main>
     );
 }
-export default Welcome;

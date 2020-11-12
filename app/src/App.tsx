@@ -1,5 +1,4 @@
 import React from 'react';
-import Welcome from './pages/Welcome/Welcome';
+import {Welcome} from './pages';
 
-const App = (): JSX.Element => <Welcome />;
-export default App;
+export const App = (): JSX.Element => <Welcome />;
