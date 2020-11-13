@@ -11,5 +11,6 @@ server.get('*', (_req: Request, res: Response) => {
 });
 
 server.listen(PORT, () => {
+    // eslint-disable-next-line no-console
     console.log(`Launched @ ${PORT}!`);
 });

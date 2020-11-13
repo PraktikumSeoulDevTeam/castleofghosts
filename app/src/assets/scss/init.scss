@@ -1,0 +1,54 @@
+html {
+    width: 100%;
+    height: 100%;
+    background: $colorBack;
+    @include t-main;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+.ui {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__inner {
+        @include sizeByGridHor(padding, 5);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+        margin-bottom: auto;
+        background: $colorBackDark;
+        width: 90%;
+        min-height: 90vh;
+        border: 10px solid $colorMain;
+    }
+}
+
+/*
+* Typo
+*/
+.t-main {
+    @include t-main;
+}
+
+.t-title {
+    @include t-title;
+}
+
+.link {
+    @include t-main;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: underline;
+    text-align: center;
+    &:hover {
+        text-decoration: none;
+    }
+}

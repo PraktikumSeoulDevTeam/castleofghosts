@@ -1,0 +1,17 @@
+@import '../../assets/scss/variables';
+.btn {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 50px;
+    line-height: 50px;
+    min-width: 320px;
+    background: $colorMain;
+    border: 2px solid $colorSecond;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    &:hover {
+        background: $colorSecond;
+        color: $colorMain;
+    }
+}
