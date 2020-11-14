@@ -1,2 +1,2 @@
-export * from './button';
-export * from './copyright/Copyright';
+export * from './Button';
+export * from './Copyright/Copyright';
