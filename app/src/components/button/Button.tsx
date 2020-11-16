@@ -4,6 +4,7 @@ import './Button.scss';
 
 export function Button(props: Props): JSX.Element {
     const {className, children} = props;
+
     return (
         <button className={className} type="button">
             {children}

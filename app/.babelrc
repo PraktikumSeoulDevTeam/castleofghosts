@@ -5,6 +5,7 @@
     "@babel/preset-react"
   ],
   "plugins": [
+    "const-enum",
     "@babel/proposal-class-properties",
     "@babel/proposal-object-rest-spread"
   ]
