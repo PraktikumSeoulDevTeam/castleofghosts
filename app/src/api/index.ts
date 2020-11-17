@@ -7,6 +7,7 @@ import type {
     ApiGetLeaderboardResponse,
     ApiSignInRequest,
     ApiSignUpRequest,
+    ApiSignUpResponce,
     ApiUserInfo
 } from './types';
 
@@ -23,11 +24,11 @@ ax.interceptors.response.use(responseHandler, responseErrorHandler);
  * @param data  Информация о пользователе
  */
 export async function signUp(data: ApiSignUpRequest): Promise<boolean> {
-    const response = await ax.post<string>('/auth/signup', data, {
+    const response = await ax.post<ApiSignUpResponce>('/auth/signup', data, {
         responseType: 'text'
     });
 
-    return response.data === 'OK' || Promise.reject(response);
+    return Boolean(response.data.id) || Promise.reject(response);
 }
 
 /**

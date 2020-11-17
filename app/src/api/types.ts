@@ -37,6 +37,13 @@ export interface ApiSignUpRequest {
 }
 
 /**
+ * Ответ на запрос регистрации
+ */
+export interface ApiSignUpResponce {
+    id: number;
+}
+
+/**
  * Запрос аутентификации
  */
 export interface ApiSignInRequest {
