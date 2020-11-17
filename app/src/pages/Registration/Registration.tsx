@@ -1,22 +1,20 @@
 import React from 'react';
 import * as Yup from 'yup';
-import {Button} from '../../components/button';
+import 'yup-phone';
+import {Button} from '../../components/button/Button';
 import {FormControl} from '../../components/FormControl/FormControl';
 import './Registration.scss';
 
 const RegistrationSchema = Yup.object().shape({
     login: Yup.string()
         .min(5, 'min length 5 symbols')
-        .max(12, 'max length 12 symbols')
+        .max(22, 'max length 22 symbols')
         .required('field must be required'),
     password: Yup.string()
         .min(4, 'min length 4 symbols')
         .max(16, 'max length 16 symbols')
         .required('field must be required'),
-    phoneNumber: Yup.string()
-        .min(8, 'min length 8 symbols')
-        .max(16, 'max length 16 symbols')
-        .required('field must be required'),
+    phoneNumber: Yup.string().phone('*', false, 'phone number is not valid').required('field must be required'),
     firstName: Yup.string(),
     secondName: Yup.string()
 });
