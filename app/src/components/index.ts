@@ -1,3 +1,4 @@
-export * from './Button/Button';
-export * from './Copyright/Copyright';
+export * from './button/Button';
+export * from './copyright/Copyright';
 export * from './AuthButton/AuthButton';
+export * from './formControl/FormControl';

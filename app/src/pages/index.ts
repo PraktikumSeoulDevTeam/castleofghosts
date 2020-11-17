@@ -1,5 +1,5 @@
 export * from './WelcomePage/WelcomePage';
 export * from './ErrorPage/ErrorPage';
 export * from './GamePage/GamePage';
-export * from './LoginPage/LoginPage';
-export * from './RegistrationPage/RegistrationPage';
+export * from './AuthorizationPage/Authorization';
+export * from './RegistrationPage/Registration';
