@@ -7,7 +7,6 @@ export type FormControlFields = {
         type: FormControlFieldType;
         placeholder: string;
         title: string;
-        initialValue?: string;
     };
 };
 export type FormControlInputFields = DefaultStringObject;
