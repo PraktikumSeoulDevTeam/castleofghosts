@@ -1,12 +1,12 @@
 @font-face {
-    font-family: 'sds';
-    src: url('../fonts/sds.woff2') format('woff2');
+    font-family: 'ps2p';
+    src: url('../fonts/ps2p.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
-$font-main: 'sds', sans-serif;
+$font-main: 'ps2p', sans-serif;
 
 @mixin t-main() {
     font-family: $font-main;
