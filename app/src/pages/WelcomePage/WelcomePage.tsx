@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Button, Copyright} from '../../components';
-import './WelcomePage.scss';
 
 export function WelcomePage(): JSX.Element {
     return (
@@ -10,15 +9,15 @@ export function WelcomePage(): JSX.Element {
                 <div className="ui__top" />
                 <div className="ui__center">
                     <h1 className="welcome-page__title t-title">
-                        <span className="welcome-page__title__item">Castle</span>
-                        <span className="welcome-page__title__item">of</span>
-                        <span className="welcome-page__title__item">Ghosts</span>
+                        <div>Castle</div>
+                        <div>of</div>
+                        <div>Ghosts</div>
                     </h1>
-                    <div className="m--t__5" />
+                    <div className="mt-5" />
                     <Link to="/login">
                         <Button>Start</Button>
                     </Link>
-                    <div className="m--t__5" />
+                    <div className="mt-5" />
                     <div className="link">Leaderboard</div>
                 </div>
                 <div className="ui__bottom">
