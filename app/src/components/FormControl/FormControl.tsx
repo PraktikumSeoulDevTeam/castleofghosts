@@ -20,6 +20,7 @@ const RenderFields = (fields: FormControlFields): JSX.Element[] =>
 export function FormControl({fields, schema, onSubmit, children}: FormControlProps): JSX.Element {
     const initialValues: FormControlInputFields = Object.keys(fields).reduce((res, key) => {
         res[key] = fields[key].initialValue ?? '';
+
         return res;
     }, {});
 
