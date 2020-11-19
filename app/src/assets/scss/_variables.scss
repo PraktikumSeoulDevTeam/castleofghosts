@@ -1,6 +1,16 @@
+$assetPath : "/app/src/assets";
+
 $baseline: 8px;
 
-$colorMain: #d34549;
+$colorMain: white;
+$colorAccent: #d34549;
 $colorSecond: #6daa2c;
-$colorBack: #291e34;
-$colorBackDark: #140c1c;
+$colorBg: #291e34;
+$colorBgDark: #140c1c;
+
+$fontSize: 1rem;
+
+$avatarUrlTema: url('#{$assetPath}/img/tema.png');
+$avatarUrlNikita: url('#{$assetPath}/img/nikita.png');
+$avatarUrlDima: url('#{$assetPath}/img/dima.png');
+$avatarUrlJenya: url('#{$assetPath}/img/jenya.png');

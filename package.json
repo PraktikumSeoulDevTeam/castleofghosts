@@ -11,6 +11,8 @@
     "app:build": "webpack -c ./app/webpack.config.js --mode production",
     "lint:verify": "eslint --max-warnings=0 \"**/*\"",
     "lint:fix": "eslint --fix \"**/*\"",
+    "slint:verify": "stylelint --max-warnings=0 \"app/src/**/*.scss\"",
+    "slint:fix": "stylelint --fix \"app/src/**/*.scss\"",
     "server:build": "run-s server:clear server:ts:compile",
     "server:serve": "run-p server:ts:watch server:nodemon",
     "server:ts:compile": "tsc -p server",
@@ -27,7 +29,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "run-s lint:verify yarn:check"
+      "pre-commit": "run-s lint:verify slint:verify yarn:check"
     }
   },
   "nodemonConfig": {
