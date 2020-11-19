@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import type {ErrorPageProps} from './types';
+import './error.scss';
 
 export const ErrorPage = ({type}: ErrorPageProps): JSX.Element => {
     let errorTxt = '';
