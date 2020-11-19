@@ -1,9 +1,11 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import * as Yup from 'yup';
 import 'yup-phone';
-import {Button} from '../../components/Button';
+
+import {Button, FormControl} from '../../components';
 import {FormControlFields} from '../../components/FormControl/types';
-import {FormControl} from '../../components/FormControl/FormControl';
+
 import './Registration.scss';
 
 const RegistrationSchema = Yup.object().shape({
@@ -15,7 +17,7 @@ const RegistrationSchema = Yup.object().shape({
         .min(4, 'min length 4 symbols')
         .max(16, 'max length 16 symbols')
         .required('field must be required'),
-    email: Yup.string().email(),
+    email: Yup.string().email('invalid email'),
     phoneNumber: Yup.string().phone('*', false, 'phone number is not valid').required('field must be required'),
     firstName: Yup.string(),
     secondName: Yup.string()
@@ -68,8 +70,10 @@ export function Registration(): JSX.Element {
                     }}
                 >
                     <footer className="authentication__footer">
-                        <div>Authorization</div>
-                        <Button className="btn t-main registration-button" submit>
+                        <Link to="/login" className="authentication__link">
+                            Authorization
+                        </Link>
+                        <Button className="btn t-main registration-button" type="submit">
                             Register
                         </Button>
                     </footer>
