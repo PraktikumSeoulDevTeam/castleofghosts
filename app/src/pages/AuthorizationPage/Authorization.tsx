@@ -3,9 +3,7 @@ import * as Yup from 'yup';
 import {Link} from 'react-router-dom';
 
 import {Button, FormControl} from '../../components';
-import {FormControlFields} from '../../components/formControl/types';
-
-import './Authorization.scss';
+import {FormControlFields} from '../../components/FormControl/types';
 
 const AuthorizationSchema = Yup.object().shape({
     login: Yup.string()
@@ -45,10 +43,10 @@ export function Authorization(): JSX.Element {
                     }}
                 >
                     <footer className="authentication__footer">
-                        <Link to="/registration" className="authentication__link">
+                        <Link to="/registration" className="link mr-5">
                             Registration
                         </Link>
-                        <Button className="btn t-main authorization-button" type="submit">
+                        <Button className="btn t-main" type="submit">
                             Enter
                         </Button>
                     </footer>

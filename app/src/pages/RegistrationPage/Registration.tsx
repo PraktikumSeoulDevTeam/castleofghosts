@@ -4,9 +4,7 @@ import * as Yup from 'yup';
 import 'yup-phone';
 
 import {Button, FormControl} from '../../components';
-import {FormControlFields} from '../../components/formControl/types';
-
-import './Registration.scss';
+import {FormControlFields} from '../../components/FormControl/types';
 
 const RegistrationSchema = Yup.object().shape({
     login: Yup.string()
@@ -70,10 +68,10 @@ export function Registration(): JSX.Element {
                     }}
                 >
                     <footer className="authentication__footer">
-                        <Link to="/login" className="authentication__link">
+                        <Link to="/login" className="link mr-5">
                             Authorization
                         </Link>
-                        <Button className="btn t-main registration-button" type="submit">
+                        <Button className="btn t-main" type="submit">
                             Register
                         </Button>
                     </footer>

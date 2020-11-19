@@ -3,20 +3,9 @@
     min-height: auto;
     color: white;
 
-    &__title {
-        font-size: 22px;
-    }
-
     &__footer {
         display: flex;
         justify-content: space-between;
         margin-top: 20px;
-        font-size: 16px;
-        line-height: 50px;
-    }
-
-    &__link {
-        color: white;
-        text-decoration: none;
     }
 }
