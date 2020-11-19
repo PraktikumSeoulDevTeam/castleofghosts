@@ -1,70 +1,56 @@
-.p {
-    &--l__half {
-        @include sizeByGridHor(padding-left, 0.5);
-    }
-    &--r__half {
-        @include sizeByGridHor(padding-right, 0.5);
-    }
-    &--t__half {
-        @include sizeByGridHor(padding-top, 0.5);
-    }
-    &--b__half {
-        @include sizeByGridHor(padding-bottom, 0.5);
-    }
-    &--a__half {
-        @include sizeByGridHor(padding, 0.5);
-    }
+$sizes: 1 2 3 4 5 6 7 8 9 10;
 
-    @for $i from $min through $max {
-        &--l__#{$i} {
+.p {
+    @each $i in $sizes {
+        &l-#{$i} {
             @include sizeByGridHor(padding-left, $i);
         }
-        &--r__#{$i} {
+        &r-#{$i} {
             @include sizeByGridHor(padding-right, $i);
         }
-        &--t__#{$i} {
+        &t-#{$i} {
             @include sizeByGridHor(padding-top, $i);
         }
-        &--b__#{$i} {
+        &b-#{$i} {
             @include sizeByGridHor(padding-bottom, $i);
         }
-        &--a__#{$i} {
+        &x-#{$i} {
+            @include sizeByGridHor(padding-left, $i);
+            @include sizeByGridHor(padding-right, $i);
+        }
+        &y-#{$i} {
+            @include sizeByGridHor(padding-top, $i);
+            @include sizeByGridHor(padding-bottom, $i);
+        }
+        &a-#{$i} {
             @include sizeByGridHor(padding, $i);
         }
     }
 }
 
 .m {
-    &--l__half {
-        @include sizeByGridHor(margin-left, 0.5);
-    }
-    &--r__half {
-        @include sizeByGridHor(margin-right, 0.5);
-    }
-    &--t__half {
-        @include sizeByGridHor(margin-top, 0.5);
-    }
-    &--b__half {
-        @include sizeByGridHor(margin-bottom, 0.5);
-    }
-    &--a__half {
-        @include sizeByGridHor(margin, 0.5);
-    }
-
-    @for $i from $min through $max {
-        &--l__#{$i} {
+    @each $i in $sizes {
+        &l-#{$i} {
             @include sizeByGridHor(margin-left, $i);
         }
-        &--r__#{$i} {
+        &r-#{$i} {
             @include sizeByGridHor(margin-right, $i);
         }
-        &--t__#{$i} {
+        &t-#{$i} {
             @include sizeByGridHor(margin-top, $i);
         }
-        &--b__#{$i} {
+        &b-#{$i} {
             @include sizeByGridHor(margin-bottom, $i);
         }
-        &--a__#{$i} {
+        &x-#{$i} {
+            @include sizeByGridHor(margin-left, $i);
+            @include sizeByGridHor(margin-right, $i);
+        }
+        &y-#{$i} {
+            @include sizeByGridHor(margin-top, $i);
+            @include sizeByGridHor(margin-bottom, $i);
+        }
+        &a-#{$i} {
             @include sizeByGridHor(margin, $i);
         }
     }

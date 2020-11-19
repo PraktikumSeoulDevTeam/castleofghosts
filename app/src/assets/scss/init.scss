@@ -1,7 +1,8 @@
-html {
+body {
     width: 100%;
     height: 100%;
-    background: $colorBack;
+    background: var(--color-bg);
+    color: var(--color-main);
     @include t-main;
 }
 
@@ -10,24 +11,24 @@ div {
 }
 
 .ui {
+    display: flex;
     width: 100%;
     min-height: 100vh;
-    padding: 20px;
-    display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
     &__inner {
         @include sizeByGridHor(padding, 5);
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: auto;
-        margin-bottom: auto;
-        background: $colorBackDark;
         width: 90%;
         min-height: 90vh;
-        border: 10px solid $colorMain;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        border: 10px solid var(--color-accent);
+        margin-top: auto;
+        margin-bottom: auto;
+        background: var(--color-bg-dark);
     }
 }
 
@@ -44,10 +45,9 @@ div {
 
 .link {
     @include t-main;
-    color: #fff;
     cursor: pointer;
-    text-decoration: underline;
     text-align: center;
+    text-decoration: underline;
     &:hover {
         text-decoration: none;
     }

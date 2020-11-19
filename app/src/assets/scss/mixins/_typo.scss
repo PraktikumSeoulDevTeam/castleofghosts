@@ -1,0 +1,29 @@
+@font-face {
+    font-display: swap;
+    font-family: 'ps2p';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/ps2p.woff2') format('woff2');
+}
+
+$fontFamily: 'ps2p', sans-serif;
+
+@mixin t-main() {
+    font-family: $fontFamily;
+    font-size: $fontSize * 1.5;
+    font-weight: normal;
+    line-height: 1.25;
+}
+
+@mixin t-title() {
+    font-family: $font-main;
+    line-height: 1.25;
+}
+
+@mixin t-title() {
+    font-family: $fontFamily;
+    font-size: $fontSize * 2.5;
+    font-weight: normal;
+    line-height: 1.25;
+    text-align: center;
+}

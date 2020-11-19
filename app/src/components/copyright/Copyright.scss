@@ -1,7 +1,7 @@
 @import '../../assets/scss/variables';
+
 .copyright {
     text-align: center;
-    color: #fff;
     &__names {
         display: flex;
         width: 100%;
@@ -9,14 +9,13 @@
     &__name {
         position: relative;
         &:after {
+            position: absolute;
+            top: 4px;
+            right: -2px;
             display: block;
             width: 4px;
             height: 20px;
             content: '';
-            position: absolute;
-            right: -2px;
-            top: 4px;
-            background: #fff;
         }
         &:last-child:after {
             display: none;
@@ -26,21 +25,21 @@
         display: block;
         width: 40px;
         height: 60px;
-        margin-left: auto;
         margin-right: auto;
+        margin-left: auto;
         background-position: bottom center;
         background-repeat: no-repeat;
         &_tema {
-            background-image: url('../../assets/img/tema.png');
+            background-image: $avatarUrlTema;
         }
         &_nikita {
-            background-image: url('../../assets/img/nikita.png');
+            background-image: $avatarUrlNikita;
         }
         &_dima {
-            background-image: url('../../assets/img/dima.png');
+            background-image: $avatarUrlDima;
         }
         &_jenya {
-            background-image: url('../../assets/img/jenya.png');
+            background-image: $avatarUrlJenya;
         }
     }
 }
