@@ -1,4 +1,4 @@
-import {ApiSignInRequest, ApiSignUpRequest, ApiUserInfo} from '../../api/types';
+import type {ApiSignInRequest, ApiSignUpRequest, ApiUserInfo} from '../../api/types';
 
 export const enum USER_ACTION_TYPES {
     UPDATE = 'cog/user/update',

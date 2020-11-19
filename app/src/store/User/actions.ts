@@ -1,4 +1,3 @@
-import type {ApiUserInfo, ApiSignUpRequest, ApiSignInRequest} from '../../api/types';
 import {
     UserUpdateAction,
     UserRemoveAction,
@@ -7,6 +6,7 @@ import {
     SignOutAction,
     USER_ACTION_TYPES
 } from './types';
+import type {ApiUserInfo, ApiSignUpRequest, ApiSignInRequest} from '../../api/types';
 
 export function userUpdateAction(userInfo: Partial<ApiUserInfo>): UserUpdateAction {
     return {
