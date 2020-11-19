@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {signInAction, signOutAction} from '../../store/User/actions';
-import {Button} from '../button/Button';
+import {Button} from '../Button/Button';
 import type {AppStoreState} from '../../store/types';
 import type {AuthProps} from './types';
 
