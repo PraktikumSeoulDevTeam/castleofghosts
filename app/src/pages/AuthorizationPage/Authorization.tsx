@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import {Link} from 'react-router-dom';
 
 import {Button, FormControl} from '../../components';
-import {FormControlFields} from '../../components/FormControl/types';
+import {FormControlFields} from '../../components/formControl/types';
 
 import './Authorization.scss';
 

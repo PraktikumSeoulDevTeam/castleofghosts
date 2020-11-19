@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import 'yup-phone';
 
 import {Button, FormControl} from '../../components';
-import {FormControlFields} from '../../components/FormControl/types';
+import {FormControlFields} from '../../components/formControl/types';
 
 import './Registration.scss';
 
