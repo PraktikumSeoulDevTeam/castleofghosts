@@ -16,11 +16,6 @@ $fontFamily: 'ps2p', sans-serif;
 }
 
 @mixin t-title() {
-    font-family: $font-main;
-    line-height: 1.25;
-}
-
-@mixin t-title() {
     font-family: $fontFamily;
     font-size: $fontSize * 2.5;
     font-weight: normal;
