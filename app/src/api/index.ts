@@ -1,4 +1,4 @@
-import axios, {AxiosError, AxiosResponse} from 'axios';
+import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import type {
     ApiAddToLeaderboardRequest,
     ApiBadRequestError,
@@ -16,6 +16,7 @@ const API_URL = new URL('https://ya-praktikum.tech/api/v2');
  * Клиент для API https://ya-praktikum.tech/api/v2/swagger/
  */
 const ax = axios.create({baseURL: API_URL.href, withCredentials: true});
+ax.interceptors.request.use(requestHandler);
 ax.interceptors.response.use(responseHandler, responseErrorHandler);
 
 /**
@@ -121,13 +122,25 @@ export async function getLeaderboard(data: ApiGetLeaderboardRequest): Promise<Ap
 }
 
 /**
- * Перехватчик ответов от сервера. Позволяет выполнять обработку всех ответов,
+ * Перехватчик запросов на сервер. Позволяет выполнять обработку всех запросов
+ * до отправки в сетевой стэк
+ * @param request   Объект конфигурации запроса на сервер
+ */
+function requestHandler(request: AxiosRequestConfig): AxiosRequestConfig {
+    // eslint-disable-next-line no-console
+    console.log('[API req]', request);
+
+    return request;
+}
+
+/**
+ * Перехватчик ответов от сервера. Позволяет выполнять обработку всех ответов
  * до возвращения в промис вызвавшего метода
  * @param response  Объект ответ от сервера
  */
 function responseHandler<T>(response: AxiosResponse<T>): AxiosResponse<T> {
     // eslint-disable-next-line no-console
-    console.log('[API]', response);
+    console.log('[API resp]', response);
 
     return response;
 }
