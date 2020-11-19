@@ -10,9 +10,17 @@ $fontFamily: 'ps2p', sans-serif;
 
 @mixin t-main() {
     font-family: $fontFamily;
-    font-size: $fontSize * 1.5;
+
     font-weight: normal;
     line-height: 1.25;
+
+    font-size: $fontSize;
+    @media all and (min-width: 768px) {
+        font-size: $fontSize * 1.25;
+    }
+    @media all and (min-width: 1024px) {
+        font-size: $fontSize * 1.5;
+    }
 }
 
 @mixin t-title() {
@@ -21,4 +29,18 @@ $fontFamily: 'ps2p', sans-serif;
     font-weight: normal;
     line-height: 1.25;
     text-align: center;
+}
+
+@mixin t-biggest() {
+    font-family: $fontFamily;
+    font-weight: normal;
+    line-height: 1.25;
+    text-align: center;
+    font-size: $fontSize * 6;
+    @media all and (min-width: 768px) {
+        font-size: $fontSize * 10;
+    }
+    @media all and (min-width: 1024px) {
+        font-size: $fontSize * 15;
+    }
 }
