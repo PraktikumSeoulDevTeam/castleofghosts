@@ -1,0 +1,22 @@
+.scroll-containter {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-color: var(--color-second) transparent;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+        width: $baseline;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: var(--color-bg-dark);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--color-second);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-second);
+    }
+}
