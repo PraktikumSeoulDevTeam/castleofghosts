@@ -1,0 +1,10 @@
+@import '~/assets/scss/mixins/size';
+
+.welcome-page {
+    &__title-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        @include sizeByGridHor(height, 64);
+    }
+}
