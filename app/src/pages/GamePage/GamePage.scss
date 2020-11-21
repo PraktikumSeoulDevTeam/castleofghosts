@@ -1,0 +1,22 @@
+@import '~/assets/scss/variables';
+
+.game-page {
+    &__container {
+        position: relative;
+        border: 2px solid var(--color-accent);
+        background-color: var(--color-bg-dark);
+        > * {
+            position: absolute;
+            bottom: 0;
+        }
+    }
+    &__bg {
+        z-index: map-get($z-index, 'game-bg');
+    }
+    &__main {
+        z-index: map-get($z-index, 'game-main');
+    }
+    &__ui {
+        z-index: map-get($z-index, 'game-ui');
+    }
+}

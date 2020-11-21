@@ -2,7 +2,7 @@ import {cloneDeep} from 'lodash';
 import {GAME_ACTION_TYPES, GameState, GameActions} from './types';
 
 const gameState: GameState = {
-    character: {}
+    character: {id: 1, name: 'Sofa Warlord', points: 180} // TODO mock
 };
 
 export const gameReducer = (state = gameState, action: GameActions): GameState => {
