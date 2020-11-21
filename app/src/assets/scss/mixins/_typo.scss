@@ -37,9 +37,9 @@ $fontFamily: 'ps2p', sans-serif;
     line-height: 1.25;
     text-align: center;
     @media all and (min-width: 768px) {
-        font-size: $fontSize * 10;
+        font-size: $fontSize * 8;
     }
     @media all and (min-width: 1024px) {
-        font-size: $fontSize * 15;
+        font-size: $fontSize * 10;
     }
 }
