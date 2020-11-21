@@ -29,7 +29,8 @@ export const ErrorPage = ({type}: ErrorPageProps): JSX.Element => {
                 <div className="error__cnt">
                     {errorTxt}
                     <div className="mt-2" />
-                    Мы скоро всё исправим. <br />А пока можно начать с самого начала.
+                    <div>Мы скоро всё исправим.</div>
+                    <div>А пока можно начать с самого начала.</div>
                     <div className="mt-5" />
                     <Link to="/" className="link">
                         На старт
