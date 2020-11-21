@@ -29,7 +29,7 @@ const authorizationField: FormControlFields = {
     }
 };
 
-export function Authorization(): JSX.Element {
+export function AuthorizationPage(): JSX.Element {
     return (
         <main className="ui">
             <div className="ui__inner authentication">

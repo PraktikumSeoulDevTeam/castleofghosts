@@ -54,7 +54,7 @@ const registrationFields: FormControlFields = {
     }
 };
 
-export function Registration(): JSX.Element {
+export function RegistrationPage(): JSX.Element {
     return (
         <main className="ui">
             <div className="ui__inner authentication">

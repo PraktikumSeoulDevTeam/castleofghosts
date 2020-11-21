@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {PrivateRoute} from '../PrivateRoute/PrivateRoute';
-import {ErrorPage, GamePage, Authorization, Registration, WelcomePage} from '../../pages';
+import {ErrorPage, GamePage, AuthorizationPage, RegistrationPage, WelcomePage} from '../../pages';
 
 /**
  * Роутер
@@ -14,10 +14,10 @@ export function AppRouter(): JSX.Element {
                     <WelcomePage />
                 </Route>
                 <Route path="/registration">
-                    <Registration />
+                    <RegistrationPage />
                 </Route>
                 <Route path="/login">
-                    <Authorization />
+                    <AuthorizationPage />
                 </Route>
                 <PrivateRoute path="/game">
                     <GamePage />
