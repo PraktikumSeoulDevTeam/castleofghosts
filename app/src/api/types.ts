@@ -52,26 +52,36 @@ export interface ApiSignInRequest {
 }
 
 /**
+ * Информация о персонаже
+ */
+export interface ApiCharacterInfo {
+    id: number;
+    name: string;
+    points: number;
+}
+
+/**
  * Запрос на добавление в таблице рекордов
  */
 export interface ApiAddToLeaderboardRequest {
-    ratingFieldName: string;
-    data: ApiUserInfo; // TODO нужно выяснить формат
+    ratingFieldName: 'points';
+    data: ApiCharacterInfo;
 }
 
 /**
  * Запрос таблицы рекордов
  */
 export interface ApiGetLeaderboardRequest {
-    ratingFieldName: string;
+    ratingFieldName: 'points';
     cursor: number;
     limit: number;
 }
 
 /**
  * Ответ на запрос таблицы рекордов
+ * Возвращает сортированный список персонажей
  */
-export type ApiGetLeaderboardResponse = ApiUserInfo[]; // TODO нужно выяснить формат
+export type ApiGetLeaderboardResponse = ApiCharacterInfo[];
 
 /**
  * Ответ сервера с ошибкой
