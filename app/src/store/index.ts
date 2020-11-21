@@ -1,9 +1,8 @@
-import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
+import {createStore, compose, applyMiddleware} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {userWatcher} from './User/sagas';
-import {userReducer} from './User/reducer';
+import {rootReducer} from './rootReducer';
 
-const rootReducer = combineReducers({user: userReducer});
 const saga = createSagaMiddleware();
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

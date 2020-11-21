@@ -52,6 +52,15 @@ export interface ApiSignInRequest {
 }
 
 /**
+ * Информация о персонаже
+ */
+export interface ApiCharacterInfo {
+    id: number;
+    name: string;
+    points: number;
+}
+
+/**
  * Запрос на добавление в таблице рекордов
  */
 export interface ApiAddToLeaderboardRequest {
