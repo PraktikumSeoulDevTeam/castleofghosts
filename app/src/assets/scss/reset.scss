@@ -133,6 +133,7 @@ blockquote {
     }
 }
 
+a,
 button {
     color: unset;
     font: unset;
@@ -152,11 +153,6 @@ table {
 }
 
 //Additional
-div {
-    box-sizing: border-box;
-}
-
-main {
-    display: block;
+* {
     box-sizing: border-box;
 }

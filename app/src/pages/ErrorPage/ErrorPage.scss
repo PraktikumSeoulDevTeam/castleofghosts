@@ -1,20 +1,6 @@
-@import '~/assets/scss/mixins/_typo.scss';
+@import '~/assets/scss/mixins/typo';
 
-.error {
-    display: flex;
-    width: 100%;
-    min-height: 100vh;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    &__inner {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: auto;
-        margin-bottom: auto;
-    }
+.error-page {
     &__header {
         position: relative;
         align-self: center;
@@ -33,8 +19,5 @@
         display: inline-block;
         @include t-biggest;
         color: var(--color-bg-dark);
-    }
-    &__cnt {
-        text-align: center;
     }
 }

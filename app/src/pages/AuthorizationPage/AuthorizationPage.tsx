@@ -1,12 +1,11 @@
-import * as Yup from 'yup';
-import {Link} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
 import React, {useCallback} from 'react';
-
-import {Button, FormControl} from '../../components';
-import {FormControlFields} from '../../components/FormControl/types';
-
+import {useDispatch} from 'react-redux';
+import {Link} from 'react-router-dom';
+import * as Yup from 'yup';
 import {signInAction} from '../../store/User/actions';
+import {UiLayout} from '../../layouts';
+import {Button, FormControl} from '../../components';
+import type {FormControlFields} from '../../components/FormControl/types';
 
 const AuthorizationSchema = Yup.object().shape({
     login: Yup.string()
@@ -39,20 +38,18 @@ export function AuthorizationPage(): JSX.Element {
     }, []);
 
     return (
-        <main className="ui">
-            <div className="ui__inner authentication">
-                <h1 className="t-title authentication__title">Authorization</h1>
-                <FormControl schema={AuthorizationSchema} fields={authorizationField} onSubmit={onAuth}>
-                    <footer className="authentication__footer">
-                        <Link to="/registration" className="link mr-5">
-                            Registration
-                        </Link>
-                        <Button className="btn t-main" type="submit">
-                            Enter
-                        </Button>
-                    </footer>
-                </FormControl>
-            </div>
-        </main>
+        <UiLayout isBlock className="authentication">
+            <h1 className="t-title authentication__title">Authorization</h1>
+            <FormControl schema={AuthorizationSchema} fields={authorizationField} onSubmit={onAuth}>
+                <footer className="authentication__footer">
+                    <Link to="/registration" className="mr-5">
+                        Registration
+                    </Link>
+                    <Button type="submit">
+                        Enter
+                    </Button>
+                </footer>
+            </FormControl>
+        </UiLayout>
     );
 }

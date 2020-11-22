@@ -1,14 +1,13 @@
-import 'yup-phone';
-import * as Yup from 'yup';
-import {Link} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
 import React, {useCallback} from 'react';
-
-import {Button, FormControl} from '../../components';
-import {FormControlFields} from '../../components/FormControl/types';
-
-import {ApiSignUpRequest} from '../../api/types';
+import {useDispatch} from 'react-redux';
+import {Link} from 'react-router-dom';
+import * as Yup from 'yup';
+import 'yup-phone';
 import {signUpAction} from '../../store/User/actions';
+import {UiLayout} from '../../layouts';
+import {Button, FormControl} from '../../components';
+import type {FormControlFields} from '../../components/FormControl/types';
+import type {ApiSignUpRequest} from '../../api/types';
 
 const RegistrationSchema = Yup.object().shape({
     login: Yup.string()
@@ -74,21 +73,18 @@ export function RegistrationPage(): JSX.Element {
     }, []);
 
     return (
-        <main className="ui">
-            <div className="ui__inner authentication">
-                <h1 className="t-title authentication__title">Registration</h1>
-
-                <FormControl schema={RegistrationSchema} fields={registrationFields} onSubmit={onRegistration}>
-                    <footer className="authentication__footer">
-                        <Link to="/login" className="link mr-5">
-                            Authorization
-                        </Link>
-                        <Button className="btn t-main" type="submit">
-                            Register
-                        </Button>
-                    </footer>
-                </FormControl>
-            </div>
-        </main>
+        <UiLayout isBlock className="authentication">
+            <h1 className="t-title authentication__title">Registration</h1>
+            <FormControl schema={RegistrationSchema} fields={registrationFields} onSubmit={onRegistration}>
+                <footer className="authentication__footer">
+                    <Link to="/login" className="mr-5">
+                        Authorization
+                    </Link>
+                    <Button type="submit">
+                        Register
+                    </Button>
+                </footer>
+            </FormControl>
+        </UiLayout>
     );
 }
