@@ -41,7 +41,7 @@ const UserPasswordFields: FormControlFields = {
     }
 };
 
-export function UserPassword(): JSX.Element {
+export function UserPasswordChange(): JSX.Element {
     return (
         <FormControl
             schema={UserPasswordSchema}

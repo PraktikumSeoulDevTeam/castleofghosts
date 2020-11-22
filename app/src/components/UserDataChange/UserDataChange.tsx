@@ -44,7 +44,7 @@ const UserEditFields: FormControlFields = {
     }
 };
 
-export function UserEdit(): JSX.Element {
+export function UserDataChange(): JSX.Element {
     return (
         <FormControl
             schema={UserEditSchema}

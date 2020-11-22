@@ -1,5 +1,5 @@
 import React from 'react';
-import {UserEdit, UserPassword} from '../../components';
+import {UserDataChange, UserPasswordChange, UserAvatarChange} from '../../components';
 
 export const EditPage = (): JSX.Element => {
     return (
@@ -8,9 +8,9 @@ export const EditPage = (): JSX.Element => {
                 <div className="ui__top" />
                 <div className="ui__center">
                     <h1 className="t-title">Редактирование пользователя</h1>
-                    <UserEdit />
-                    <UserPassword />
-
+                    <UserDataChange />
+                    <UserPasswordChange />
+                    <UserAvatarChange />
                     <div className="mt-5" />
                 </div>
                 <div className="ui__bottom" />
