@@ -2,7 +2,8 @@ import React from 'react';
 import * as Yup from 'yup';
 import 'yup-phone';
 import {FormControlFields} from '../FormControl/types';
-import {Button, FormControl} from '../';
+import {Button} from '../Button/Button';
+import {FormControl} from '../FormControl/FormControl';
 
 const UserEditSchema = Yup.object().shape({
     login: Yup.string()
@@ -53,7 +54,8 @@ export function UserEdit(): JSX.Element {
                 console.log(formData);
             }}
         >
-            <footer className="authentication__footer">
+            <div className="mt-5" />
+            <footer>
                 <Button className="btn t-main" type="submit">
                     Save
                 </Button>
