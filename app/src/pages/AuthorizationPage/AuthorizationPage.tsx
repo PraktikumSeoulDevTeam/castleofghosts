@@ -1,11 +1,10 @@
 import React from 'react';
-// import * as Yup from 'yup';
-// import {Link} from 'react-router-dom';
+import * as Yup from 'yup';
+import {Link} from 'react-router-dom';
 
-// import {Button, FormControl} from '../../components';
-// import {FormControlFields} from '../../components/FormControl/types';
+import {Button, FormControl} from '../../components';
+import {FormControlFields} from '../../components/FormControl/types';
 
-/*
 const AuthorizationSchema = Yup.object().shape({
     login: Yup.string()
         .min(5, 'min length 5 symbols')
@@ -29,15 +28,13 @@ const authorizationField: FormControlFields = {
         title: 'Your password: '
     }
 };
-*/
+
 export function AuthorizationPage(): JSX.Element {
     return (
         <main className="ui">
             <div className="ui__inner authentication">
                 <h1 className="t-title authentication__title">Authorization</h1>
-                {
-                    {
-                        /* <FormControl
+                <FormControl
                     schema={AuthorizationSchema}
                     fields={authorizationField}
                     onSubmit={(formData) => {
@@ -53,9 +50,7 @@ export function AuthorizationPage(): JSX.Element {
                             Enter
                         </Button>
                     </footer>
-                </FormControl> */
-                    }
-                }
+                </FormControl>
             </div>
         </main>
     );
