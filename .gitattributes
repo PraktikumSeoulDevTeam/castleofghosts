@@ -1,2 +1,2 @@
 # Specify filepatterns you want to assign special attributes.
-*   eol=lf
+*   text=auto
