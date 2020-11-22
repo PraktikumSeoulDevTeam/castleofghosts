@@ -1,9 +1,8 @@
-import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
+import {createStore, compose, applyMiddleware} from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import {userWatcher} from './User/sagas';
-import {userReducer} from './User/reducer';
+import {rootReducer} from './rootReducer';
+import {rootSaga} from './rootSaga';
 
-const rootReducer = combineReducers({user: userReducer});
 const saga = createSagaMiddleware();
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -13,4 +12,4 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(saga)));
 
-saga.run(userWatcher);
+saga.run(rootSaga);

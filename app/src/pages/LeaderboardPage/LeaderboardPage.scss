@@ -1,0 +1,8 @@
+@import '~/assets/scss/mixins/size';
+
+.leaderboard-page {
+    height: 100%;
+    &__table {
+        @include sizeByGridHor(width, 96);
+    }
+}
