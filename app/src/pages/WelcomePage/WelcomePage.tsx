@@ -8,7 +8,7 @@ export function WelcomePage(): JSX.Element {
             <div className="ui__inner">
                 <div className="ui__top" />
                 <div className="ui__center">
-                    <h1 className="welcome-page__title t-title">
+                    <h1 className="t-title">
                         <div>Castle</div>
                         <div>of</div>
                         <div>Ghosts</div>
