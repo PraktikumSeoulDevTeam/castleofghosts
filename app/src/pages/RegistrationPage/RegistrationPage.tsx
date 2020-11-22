@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import * as Yup from 'yup';
+//  import {Link} from 'react-router-dom';
+//  import * as Yup from 'yup';
 import 'yup-phone';
 
-import {Button, FormControl} from '../../components';
-import {FormControlFields} from '../../components/FormControl/types';
-
+//  import {Button} from '../../components';
+//  import {FormControlFields} from '../../components/FormControl/types';
+/*
 const RegistrationSchema = Yup.object().shape({
     login: Yup.string()
         .min(5, 'min length 5 symbols')
@@ -53,13 +53,16 @@ const registrationFields: FormControlFields = {
         title: 'Create new password: '
     }
 };
-
+*/
 export function RegistrationPage(): JSX.Element {
     return (
         <main className="ui">
             <div className="ui__inner authentication">
                 <h1 className="t-title authentication__title">Registration</h1>
-                <FormControl
+                {
+                    {
+                        /*
+                        <FormControl
                     schema={RegistrationSchema}
                     fields={registrationFields}
                     onSubmit={(formData) => {
@@ -75,7 +78,9 @@ export function RegistrationPage(): JSX.Element {
                             Register
                         </Button>
                     </footer>
-                </FormControl>
+                </FormControl> */
+                    }
+                }
             </div>
         </main>
     );
