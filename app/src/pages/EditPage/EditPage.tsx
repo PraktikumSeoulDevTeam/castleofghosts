@@ -6,7 +6,7 @@ export const EditPage = (): JSX.Element => {
             <div className="ui__inner">
                 <div className="ui__top" />
                 <div className="ui__center">
-                    <h1 className="welcome-page__title t-title">Редактирование пользователя</h1>
+                    <h1 className="t-title">Редактирование пользователя</h1>
                     <div className="mt-5" />
                 </div>
                 <div className="ui__bottom" />
