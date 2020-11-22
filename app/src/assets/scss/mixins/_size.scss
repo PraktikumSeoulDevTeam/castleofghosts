@@ -1,3 +1,5 @@
+@import '../variables';
+
 $mediaQuery: 1200px 900px 512px;
 $baselineArray: $baseline $baseline * 0.9 $baseline * 0.75 $baseline * 0.5;
 

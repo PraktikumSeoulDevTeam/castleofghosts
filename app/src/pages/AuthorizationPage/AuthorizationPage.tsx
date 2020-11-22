@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 
 import {Button, FormControl} from '../../components';
 import {FormControlFields} from '../../components/FormControl/types';
+import {UiLayout} from '../../layouts';
 
 const AuthorizationSchema = Yup.object().shape({
     login: Yup.string()
@@ -31,27 +32,25 @@ const authorizationField: FormControlFields = {
 
 export function AuthorizationPage(): JSX.Element {
     return (
-        <main className="ui">
-            <div className="ui__inner authentication">
-                <h1 className="t-title authentication__title">Authorization</h1>
-                <FormControl
-                    schema={AuthorizationSchema}
-                    fields={authorizationField}
-                    onSubmit={(formData) => {
-                        // eslint-disable-next-line no-console
-                        console.log(formData);
-                    }}
-                >
-                    <footer className="authentication__footer">
-                        <Link to="/registration" className="link mr-5">
-                            Registration
-                        </Link>
-                        <Button className="btn t-main" type="submit">
-                            Enter
-                        </Button>
-                    </footer>
-                </FormControl>
-            </div>
-        </main>
+        <UiLayout isBlock className="authentication">
+            <h1 className="t-title">Authorization</h1>
+            <FormControl
+                schema={AuthorizationSchema}
+                fields={authorizationField}
+                onSubmit={(formData) => {
+                    // eslint-disable-next-line no-console
+                    console.log(formData);
+                }}
+            >
+                <footer className="authentication__footer">
+                    <Link to="/registration" className="mr-5">
+                        <span>Registration</span>
+                    </Link>
+                    <Button className="btn t-main" type="submit">
+                        <span>Enter</span>
+                    </Button>
+                </footer>
+            </FormControl>
+        </UiLayout>
     );
 }
