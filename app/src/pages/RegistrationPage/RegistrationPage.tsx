@@ -1,10 +1,14 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import * as Yup from 'yup';
 import 'yup-phone';
+import * as Yup from 'yup';
+import {Link} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import React, {useCallback} from 'react';
 
 import {Button, FormControl} from '../../components';
 import {FormControlFields} from '../../components/FormControl/types';
+
+import {ApiSignUpRequest} from '../../api/types';
+import {signUpAction} from '../../store/User/actions';
 
 const RegistrationSchema = Yup.object().shape({
     login: Yup.string()
@@ -55,19 +59,26 @@ const registrationFields: FormControlFields = {
 };
 
 export function RegistrationPage(): JSX.Element {
+    const dispatcher = useDispatch();
+    const onRegistration = useCallback((formData) => {
+        const userData: ApiSignUpRequest = {
+            first_name: formData.firstName,
+            second_name: formData.secondName,
+            email: formData.email,
+            login: formData.login,
+            password: formData.password,
+            phone: formData.phoneNumber
+        };
+
+        dispatcher(signUpAction(userData));
+    }, []);
+
     return (
         <main className="ui">
             <div className="ui__inner authentication">
                 <h1 className="t-title authentication__title">Registration</h1>
 
-                <FormControl
-                    schema={RegistrationSchema}
-                    fields={registrationFields}
-                    onSubmit={(formData) => {
-                        // eslint-disable-next-line no-console
-                        console.log(formData);
-                    }}
-                >
+                <FormControl schema={RegistrationSchema} fields={registrationFields} onSubmit={onRegistration}>
                     <footer className="authentication__footer">
                         <Link to="/login" className="link mr-5">
                             Authorization

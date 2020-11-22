@@ -1,9 +1,12 @@
-import React from 'react';
 import * as Yup from 'yup';
 import {Link} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import React, {useCallback} from 'react';
 
 import {Button, FormControl} from '../../components';
 import {FormControlFields} from '../../components/FormControl/types';
+
+import {signInAction} from '../../store/User/actions';
 
 const AuthorizationSchema = Yup.object().shape({
     login: Yup.string()
@@ -30,18 +33,16 @@ const authorizationField: FormControlFields = {
 };
 
 export function AuthorizationPage(): JSX.Element {
+    const dispatcher = useDispatch();
+    const onAuth = useCallback((userData) => {
+        dispatcher(signInAction(userData));
+    }, []);
+
     return (
         <main className="ui">
             <div className="ui__inner authentication">
                 <h1 className="t-title authentication__title">Authorization</h1>
-                <FormControl
-                    schema={AuthorizationSchema}
-                    fields={authorizationField}
-                    onSubmit={(formData) => {
-                        // eslint-disable-next-line no-console
-                        console.log(formData);
-                    }}
-                >
+                <FormControl schema={AuthorizationSchema} fields={authorizationField} onSubmit={onAuth}>
                     <footer className="authentication__footer">
                         <Link to="/registration" className="link mr-5">
                             Registration
