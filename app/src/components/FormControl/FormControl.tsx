@@ -12,7 +12,7 @@ const RenderFields = (fields: FormControlFields): JSX.Element[] =>
             </label>
             <ErrorMessage
                 name={fieldName}
-                render={(msg) => <span className="input-container__validation-message">{msg}</span>}
+                render={(msg: string) => <span className="input-container__validation-message">{msg}</span>}
             />
         </div>
     ));
