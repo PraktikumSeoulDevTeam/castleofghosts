@@ -48,6 +48,11 @@ div {
     cursor: pointer;
     text-align: center;
     text-decoration: underline;
+    background: none;
+    outline: none;
+    -webkit-appearance: none;
+    border: none;
+
     &:hover {
         text-decoration: none;
     }
