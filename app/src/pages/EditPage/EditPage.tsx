@@ -24,10 +24,10 @@ export const EditPage = (): JSX.Element => {
     }
 
     return (
-        <UiLayout isBlock className="userEdit">
+        <UiLayout isBlock className="edit-page">
             <h1 className="t-title">Редактирование пользователя</h1>
             <div className="mt-5" />
-            <div className="editPage__tab">
+            <div className="edit-page__tab">
                 <Button className="btn btn_txt mr-3" onClick={() => setView(ViewStatus.DATA_EDIT)}>
                     Данные пользователя
                 </Button>
