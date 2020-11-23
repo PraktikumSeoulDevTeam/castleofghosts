@@ -14,3 +14,8 @@ body {
 .t-title {
     @include t-title;
 }
+
+.t-center {
+    display: block;
+    text-align: center;
+}
