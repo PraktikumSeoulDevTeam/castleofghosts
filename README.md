@@ -3,13 +3,20 @@
 Браузерная игра, в жанре рогалик. Вам необходимо найти ключ и сбежать из замка
 Графика игры рисуется в Canvas. Интерфейс работает на React
 
+## Демо
+> https://castleofghosts.herokuapp.com/
+
+<br/>
+
+---
+
 ## Установка и запуск
 1. Клонировать репозиторий
 2. Выполнить команду `yarn` (`npm install`)
 3. Запустить игру командой `yarn start` (`npm run start`)
 4. Играть
 
-## Сервер
+## API
 В качестве сервера используется
 [__API Yandex Praktikum__](https://ya-praktikum.tech/api/v2/swagger/)
 (`https://ya-praktikum.tech/api/v2/`)
@@ -34,6 +41,7 @@
 -   Комманды:
     ```bash
     # Вместо 'yarn' может быть использовано 'npm run'
+
     # Запук валидации
     yarn lint:verify
 
@@ -46,6 +54,7 @@
 -   Комманды:
     ```bash
     # Вместо 'yarn' может быть использовано 'npm run'
+
     # Запук валидации
     yarn slint:verify
 
@@ -62,7 +71,7 @@
     2. __Stylelint__
     Для исправления части проблем выполнить `yarn slint:fix`
     3. __yarn check__
-    Для исправления выполнить `yarn --update-checksums`
+    Для исправления выполнить `yarn yarn:fix`
 
 
 ## Локальный сервер
@@ -74,6 +83,7 @@
 Комманды:
 ```bash
 # Вместо 'yarn' может быть использовано 'npm run'
+
 # Сборка сервера
 yarn server:build
 
@@ -96,10 +106,18 @@ yarn server:ts:watch
 yarn server:nodemon
 ```
 
-## Docker
-Комманды:
+## Дополнительные команды в `package.json`
 ```bash
 # Вместо 'yarn' может быть использовано 'npm run'
+
+# Анализ webpack сборки с выводом графика в браузер
+yarn app:analyze
+```
+
+### Docker
+```bash
+# Вместо 'yarn' может быть использовано 'npm run'
+
 # Сборка образа
 yarn docker:build
 
@@ -110,8 +128,6 @@ yarn docker:run
 yarn docker:heroku
 ```
 
-## Heroku
-Для запуска сервиса используется комманда `yarn start`.
+### Heroku
+`yarn start` - Для запуска сервиса
 
-Демо стенд доступен по ссылке:
-> https://castleofghosts.herokuapp.com/
