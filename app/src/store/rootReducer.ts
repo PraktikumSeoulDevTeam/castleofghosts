@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
-import {gameReducer} from './Game/reducer';
 import {userReducer} from './User/reducer';
+import {gameReducer} from './Game/reducer';
+import {leaderboardReducer} from './Leaderboard/reducer';
 
-export const rootReducer = combineReducers({user: userReducer, game: gameReducer});
+export const rootReducer = combineReducers({user: userReducer, game: gameReducer, leaderboard: leaderboardReducer});
