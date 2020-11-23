@@ -7,10 +7,7 @@ import {FormControlFields} from '../../components/FormControl/types';
 import {UiLayout} from '../../layouts';
 
 const AuthorizationSchema = Yup.object().shape({
-    login: Yup.string()
-        .min(5, 'min length 5 symbols')
-        .max(12, 'max length 12 symbols')
-        .required('field must be required'),
+    login: Yup.string().required('field must be required').max(12, 'max length 12 symbols'),
     password: Yup.string()
         .min(4, 'min length 4 symbols')
         .max(16, 'max length 16 symbols')

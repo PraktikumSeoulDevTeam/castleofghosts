@@ -6,10 +6,7 @@ import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
 
 const UserEditSchema = Yup.object().shape({
-    login: Yup.string()
-        .min(5, 'min length 5 symbols')
-        .max(22, 'max length 22 symbols')
-        .required('field must be required'),
+    login: Yup.string().required('field must be required').max(22, 'max length 22 symbols'),
     email: Yup.string().email('invalid email'),
     phoneNumber: Yup.string().phone('*', false, 'phone number is not valid').required('field must be required'),
     firstName: Yup.string(),
