@@ -1,25 +1,27 @@
-import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {AuthButton} from '../../components';
-import {AppStoreState} from '../../store/types';
+import React, {useRef} from 'react';
+import {GameUi} from './GameUi/GameUi';
+import {setMainCanvas} from '../../canvas/main';
+import './GamePage.scss';
+import {UiLayout} from '../../layouts';
 
-const mapState = (state: AppStoreState) => {
-    return {
-        user: state.user.info
-    };
-};
+const width = 1024;
+const height = 768;
 
-const connector = connect(mapState);
-
-const component = (props: ConnectedProps<typeof connector>): JSX.Element => {
-    const {user} = props;
+export const GamePage = (): JSX.Element => {
+    const bgCanvas = useRef<HTMLCanvasElement>();
+    const mainCanvas = useRef<HTMLCanvasElement>();
+    React.useEffect(() => {
+        // TODO добавить обработку bg-canvas
+        setMainCanvas(mainCanvas.current);
+    }, []);
 
     return (
-        <div>
-            <h3>Protected Game of {user.login}</h3>
-            <AuthButton />
-        </div>
+        <UiLayout className="game-page">
+            <div className="game-page__container" style={{width: width + 4, height: height + 50}}>
+                <canvas ref={bgCanvas} width={width} height={height} className="game-page__bg" />
+                <canvas ref={mainCanvas} width={width} height={height} className="game-page__main" />
+                <GameUi className="game-page__ui" />
+            </div>
+        </UiLayout>
     );
 };
-
-export const GamePage = connector(component);
