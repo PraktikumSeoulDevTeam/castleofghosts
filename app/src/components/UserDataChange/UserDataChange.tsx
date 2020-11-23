@@ -56,9 +56,7 @@ export function UserDataChange(): JSX.Element {
         >
             <div className="mt-5" />
             <footer>
-                <Button className="btn t-main" type="submit">
-                    Save
-                </Button>
+                <Button type="submit">Save</Button>
             </footer>
         </FormControl>
     );
