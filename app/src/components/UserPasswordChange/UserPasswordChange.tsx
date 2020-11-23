@@ -1,6 +1,5 @@
 import React from 'react';
 import * as Yup from 'yup';
-import 'yup-phone';
 import {FormControlFields} from '../FormControl/types';
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
