@@ -1,8 +1,10 @@
-import React, {useCallback} from 'react';
-import {useDispatch} from 'react-redux';
+import React from 'react';
+import {Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
 import * as Yup from 'yup';
 import 'yup-phone';
+
 import {signUpAction} from '../../store/User/actions';
 import {UiLayout} from '../../layouts';
 import {Button, FormControl} from '../../components';
@@ -57,21 +59,26 @@ const registrationFields: FormControlFields = {
     }
 };
 
-export function RegistrationPage(): JSX.Element {
-    const dispatcher = useDispatch();
-    const onRegistration = useCallback((formData) => {
-        const userData: ApiSignUpRequest = {
-            first_name: formData.firstName,
-            second_name: formData.secondName,
-            email: formData.email,
-            login: formData.login,
-            password: formData.password,
-            phone: formData.phoneNumber
-        };
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        onRegistration: (formData: {[key: string]: string}): void => {
+            const userData: ApiSignUpRequest = {
+                first_name: formData.firstName,
+                second_name: formData.secondName,
+                email: formData.email,
+                login: formData.login,
+                password: formData.password,
+                phone: formData.phoneNumber
+            };
 
-        dispatcher(signUpAction(userData));
-    }, []);
+            dispatch(signUpAction(userData));
+        }
+    };
+};
 
+const connecter = connect(null, mapDispatchToProps);
+
+function RegistrationComponent({onRegistration}: ConnectedProps<typeof connecter>): JSX.Element {
     return (
         <UiLayout isBlock className="authentication">
             <h1 className="t-title authentication__title">Registration</h1>
@@ -80,11 +87,11 @@ export function RegistrationPage(): JSX.Element {
                     <Link to="/login" className="mr-5">
                         Authorization
                     </Link>
-                    <Button type="submit">
-                        Register
-                    </Button>
+                    <Button type="submit">Register</Button>
                 </footer>
             </FormControl>
         </UiLayout>
     );
 }
+
+export const RegistrationPage = connecter(RegistrationComponent);
