@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {UserDataChange, UserPasswordChange, UserAvatarChange} from '../../components';
+import {UiLayout} from '../../layouts';
 import './EditPage.scss';
 
 enum ViewStatus {
@@ -23,32 +24,24 @@ export const EditPage = (): JSX.Element => {
     }
 
     return (
-        <main className="ui">
-            <div className="ui__inner">
-                <div className="ui__top" />
-                <div className="ui__center">
-                    <h1 className="t-title">Редактирование пользователя</h1>
-                    <div className="mt-5" />
-                    <div className="editPage__tab">
-                        <button className="editPag__tab-item link mr-3" onClick={() => setView(ViewStatus.DATA_EDIT)}>
-                            Данные пользователя
-                        </button>
-                        <button
-                            className="editPag__tab-item link mr-3"
-                            onClick={() => setView(ViewStatus.PASSWORD_CHANGE)}
-                        >
-                            Пароль
-                        </button>
-                        <button className="editPag__tab-item link" onClick={() => setView(ViewStatus.AVATAR_CHANGE)}>
-                            Аватарка
-                        </button>
-                    </div>
-                    <div className="mt-2" />
-                    {cnt}
-                    <div className="mt-5" />
-                </div>
-                <div className="ui__bottom" />
+        <UiLayout isBlock className="userEdit">
+            <h1 className="t-title">Редактирование пользователя</h1>
+            <div className="mt-5" />
+            <div className="editPage__tab">
+                <button className="editPag__tab-item link mr-3" onClick={() => setView(ViewStatus.DATA_EDIT)}>
+                    Данные пользователя
+                </button>
+                <button className="editPag__tab-item link mr-3" onClick={() => setView(ViewStatus.PASSWORD_CHANGE)}>
+                    Пароль
+                </button>
+                <button className="editPag__tab-item link" onClick={() => setView(ViewStatus.AVATAR_CHANGE)}>
+                    Аватарка
+                </button>
             </div>
-        </main>
+            <div className="mt-2" />
+            {cnt}
+            <div className="mt-5" />
+            <div className="ui__bottom" />
+        </UiLayout>
     );
 };
