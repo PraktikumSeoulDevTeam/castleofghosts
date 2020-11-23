@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, memo} from 'react';
 import {UserDataChange, UserPasswordChange, UserAvatarChange, Button} from '../../components';
 import {UiLayout} from '../../layouts';
 import './EditPage.scss';
@@ -8,7 +8,7 @@ enum ViewStatus {
     PASSWORD_CHANGE,
     AVATAR_CHANGE
 }
-export const EditPage = (): JSX.Element => {
+export const component = (): JSX.Element => {
     const [view, setView] = useState(ViewStatus.DATA_EDIT);
     let cnt: JSX.Element;
     switch (view) {
@@ -45,3 +45,5 @@ export const EditPage = (): JSX.Element => {
         </UiLayout>
     );
 };
+
+export const EditPage = memo(component);
