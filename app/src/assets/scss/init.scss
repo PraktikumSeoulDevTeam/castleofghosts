@@ -14,18 +14,3 @@ body {
 .t-title {
     @include t-title;
 }
-
-.link {
-    @include t-main;
-    border: none;
-    -webkit-appearance: none;
-    background: none;
-    cursor: pointer;
-    outline: none;
-    text-align: center;
-    text-decoration: underline;
-
-    &:hover {
-        text-decoration: none;
-    }
-}

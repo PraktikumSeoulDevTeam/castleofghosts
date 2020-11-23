@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {UserDataChange, UserPasswordChange, UserAvatarChange} from '../../components';
+import {UserDataChange, UserPasswordChange, UserAvatarChange, Button} from '../../components';
 import {UiLayout} from '../../layouts';
 import './EditPage.scss';
 
@@ -28,15 +28,15 @@ export const EditPage = (): JSX.Element => {
             <h1 className="t-title">Редактирование пользователя</h1>
             <div className="mt-5" />
             <div className="editPage__tab">
-                <button className="editPag__tab-item link mr-3" onClick={() => setView(ViewStatus.DATA_EDIT)}>
+                <Button className="btn btn_txt mr-3" onClick={() => setView(ViewStatus.DATA_EDIT)}>
                     Данные пользователя
-                </button>
-                <button className="editPag__tab-item link mr-3" onClick={() => setView(ViewStatus.PASSWORD_CHANGE)}>
+                </Button>
+                <Button className="btn btn_txt mr-3" onClick={() => setView(ViewStatus.PASSWORD_CHANGE)}>
                     Пароль
-                </button>
-                <button className="editPag__tab-item link" onClick={() => setView(ViewStatus.AVATAR_CHANGE)}>
+                </Button>
+                <Button className="btn btn_txt" onClick={() => setView(ViewStatus.AVATAR_CHANGE)}>
                     Аватарка
-                </button>
+                </Button>
             </div>
             <div className="mt-2" />
             {cnt}
