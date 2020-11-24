@@ -1,0 +1,16 @@
+.game-ui {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    &__bar {
+        display: flex;
+        height: 50px;
+        justify-content: space-between;
+    }
+    &__lvl {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+    }
+}

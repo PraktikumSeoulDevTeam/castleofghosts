@@ -3,11 +3,10 @@ import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
 import * as Yup from 'yup';
-import 'yup-phone';
-
 import {signUpAction} from '../../store/User/actions';
 import {UiLayout} from '../../layouts';
 import {Button, FormControl} from '../../components';
+import {FORMAT} from '../../utils';
 import type {FormControlFields} from '../../components/FormControl/types';
 import type {ApiSignUpRequest} from '../../api/types';
 
@@ -21,7 +20,10 @@ const RegistrationSchema = Yup.object().shape({
         .max(16, 'max length 16 symbols')
         .required('field must be required'),
     email: Yup.string().email('invalid email'),
-    phoneNumber: Yup.string().phone('*', false, 'phone number is not valid').required('field must be required'),
+    phoneNumber: Yup.string()
+        .trim()
+        .matches(...FORMAT.PHONE)
+        .required('field must be required'),
     firstName: Yup.string(),
     secondName: Yup.string()
 });

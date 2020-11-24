@@ -1,7 +1,9 @@
 import Yup from 'yup';
 
 type DefaultStringObject = {[key: string]: string};
+
 export type FormControlFieldType = 'text' | 'password' | 'email';
+
 export type FormControlFields = {
     [key: string]: {
         type: FormControlFieldType;
