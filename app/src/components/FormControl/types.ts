@@ -2,7 +2,9 @@ import {FieldInputProps, useFormik} from 'formik';
 import Yup from 'yup';
 
 type DefaultStringObject = {[key: string]: string};
+
 export type FormControlFieldType = 'text' | 'password' | 'email' | 'file';
+
 export type FormControlFields = {
     [key: string]: {
         type: FormControlFieldType;

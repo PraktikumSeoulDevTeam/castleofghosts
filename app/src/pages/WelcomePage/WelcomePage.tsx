@@ -13,7 +13,7 @@ export function WelcomePage(): JSX.Element {
                     <div>of</div>
                     <div>Ghosts</div>
                 </h1>
-                <Link to="/login" className="t-center mt-5">
+                <Link to="/game" className="t-center mt-5">
                     <Button>Start</Button>
                 </Link>
                 <Link to="/leaderboard" className="t-center mt-5">
