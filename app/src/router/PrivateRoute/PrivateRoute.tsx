@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import {Redirect, Route, RouteProps} from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
 import type {AppStoreState} from '../../store/types';
+import {PrivateRouteProps} from './types';
 
 const mapState = (state: AppStoreState) => {
     return {
@@ -12,28 +13,24 @@ const mapState = (state: AppStoreState) => {
 const connector = connect(mapState);
 
 /**
- * Компонент защищенного роута. Перед переходом при необходимости перенаправляет на роут авторизации
+ * Компонент защищенного роута. Перед переходом, при необходимости,
+ * перенаправляет на корневой роут
  */
-function component(params: RouteProps & ConnectedProps<typeof connector>): JSX.Element {
-    const {children, isAuthenticated, ...rest} = params;
+export const PrivateRoute = connector(
+    (params: PrivateRouteProps & ConnectedProps<typeof connector>): JSX.Element => {
+        const {children, publicExclusive, isAuthenticated, ...rest} = params;
 
-    return (
-        <Route
-            {...rest}
-            render={({location}) =>
-                isAuthenticated ? (
-                    children
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: '/login',
-                            state: {from: location}
-                        }}
-                    />
-                )
-            }
-        />
-    );
-}
-
-export const PrivateRoute = connector(component);
+        return (
+            <Route
+                {...rest}
+                render={() =>
+                    (isAuthenticated && !publicExclusive) || (!isAuthenticated && publicExclusive) ? (
+                        children
+                    ) : (
+                        <Redirect to="/" />
+                    )
+                }
+            />
+        );
+    }
+);
