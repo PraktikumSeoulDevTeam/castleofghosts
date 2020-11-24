@@ -1,10 +1,14 @@
 import React from 'react';
+import {Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
 import * as Yup from 'yup';
-import {Button, FormControl} from '../../components';
+import {signUpAction} from '../../store/User/actions';
 import {UiLayout} from '../../layouts';
+import {Button, FormControl} from '../../components';
 import {FORMAT} from '../../utils';
 import type {FormControlFields} from '../../components/FormControl/types';
+import type {ApiSignUpRequest} from '../../api/types';
 
 const RegistrationSchema = Yup.object().shape({
     login: Yup.string()
@@ -57,27 +61,39 @@ const registrationFields: FormControlFields = {
     }
 };
 
-export function RegistrationPage(): JSX.Element {
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        onRegistration: (formData: {[key: string]: string}): void => {
+            const userData: ApiSignUpRequest = {
+                first_name: formData.firstName,
+                second_name: formData.secondName,
+                email: formData.email,
+                login: formData.login,
+                password: formData.password,
+                phone: formData.phoneNumber
+            };
+
+            dispatch(signUpAction(userData));
+        }
+    };
+};
+
+const connecter = connect(null, mapDispatchToProps);
+
+function RegistrationComponent({onRegistration}: ConnectedProps<typeof connecter>): JSX.Element {
     return (
         <UiLayout isBlock className="authentication">
-            <h1 className="t-title">Registration</h1>
-            <FormControl
-                schema={RegistrationSchema}
-                fields={registrationFields}
-                onSubmit={(formData) => {
-                    // eslint-disable-next-line no-console
-                    console.log(formData);
-                }}
-            >
+            <h1 className="t-title authentication__title">Registration</h1>
+            <FormControl schema={RegistrationSchema} fields={registrationFields} onSubmit={onRegistration}>
                 <footer className="authentication__footer">
                     <Link to="/login" className="mr-5">
-                        <span>Authorization</span>
+                        Authorization
                     </Link>
-                    <Button className="btn t-main" type="submit">
-                        <span>Register</span>
-                    </Button>
+                    <Button type="submit">Register</Button>
                 </footer>
             </FormControl>
         </UiLayout>
     );
 }
+
+export const RegistrationPage = connecter(RegistrationComponent);
