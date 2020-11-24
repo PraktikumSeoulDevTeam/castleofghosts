@@ -106,6 +106,9 @@ typings/
 # JetBrains
 .idea
 
+#Visual Studio Code
+.vscode
+
 # App
 dist/*
 

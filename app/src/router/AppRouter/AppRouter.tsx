@@ -1,7 +1,15 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {PrivateRoute} from '../PrivateRoute/PrivateRoute';
-import {ErrorPage, GamePage, LeaderboardPage, AuthorizationPage, RegistrationPage, WelcomePage} from '../../pages';
+import {
+    ErrorPage,
+    GamePage,
+    LeaderboardPage,
+    AuthorizationPage,
+    RegistrationPage,
+    EditPage,
+    WelcomePage
+} from '../../pages';
 
 /**
  * Роутер
@@ -19,6 +27,9 @@ export function AppRouter(): JSX.Element {
                 <Route path="/login">
                     <AuthorizationPage />
                 </Route>
+                <PrivateRoute path="/user">
+                    <EditPage />
+                </PrivateRoute>
                 <PrivateRoute path="/game">
                     <GamePage />
                 </PrivateRoute>
