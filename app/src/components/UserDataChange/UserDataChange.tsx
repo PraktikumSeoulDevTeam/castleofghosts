@@ -1,14 +1,17 @@
 import React from 'react';
 import * as Yup from 'yup';
-import 'yup-phone';
-import {FormControlFields} from '../FormControl/types';
+import {FORMAT} from '../../utils';
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
+import type {FormControlFields} from '../FormControl/types';
 
 const UserEditSchema = Yup.object().shape({
     login: Yup.string().required('field must be required').max(22, 'max length 22 symbols'),
     email: Yup.string().email('invalid email'),
-    phoneNumber: Yup.string().phone('*', false, 'phone number is not valid').required('field must be required'),
+    phoneNumber: Yup.string()
+    .trim()
+    .matches(...FORMAT.PHONE)
+    .required('field must be required'),
     firstName: Yup.string(),
     secondName: Yup.string()
 });
