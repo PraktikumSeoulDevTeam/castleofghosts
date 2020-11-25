@@ -1,7 +1,6 @@
 import React, {useState, memo} from 'react';
 import {UserDataChange, UserPasswordChange, UserAvatarChange, Button} from '../../components';
 import {UiLayout} from '../../layouts';
-import './EditPage.scss';
 
 enum ViewStatus {
     DATA_EDIT,
@@ -24,24 +23,20 @@ export const component = (): JSX.Element => {
     }
 
     return (
-        <UiLayout isBlock className="edit-page">
+        <UiLayout isBlock>
             <h1 className="t-title">Редактирование пользователя</h1>
-            <div className="mt-5" />
-            <div className="edit-page__tab">
-                <Button className="btn btn_txt mr-3" onClick={() => setView(ViewStatus.DATA_EDIT)}>
+            <div className="button-bar mt-2">
+                <Button className="btn btn_txt" onClick={() => setView(ViewStatus.DATA_EDIT)}>
                     Данные пользователя
                 </Button>
-                <Button className="btn btn_txt mr-3" onClick={() => setView(ViewStatus.PASSWORD_CHANGE)}>
+                <Button className="btn btn_txt" onClick={() => setView(ViewStatus.PASSWORD_CHANGE)}>
                     Пароль
                 </Button>
                 <Button className="btn btn_txt" onClick={() => setView(ViewStatus.AVATAR_CHANGE)}>
                     Аватарка
                 </Button>
             </div>
-            <div className="mt-2" />
-            {cnt}
-            <div className="mt-5" />
-            <div className="ui__bottom" />
+            <div>{cnt}</div>
         </UiLayout>
     );
 };

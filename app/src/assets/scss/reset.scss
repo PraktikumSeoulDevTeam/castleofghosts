@@ -139,6 +139,13 @@ button {
     font: unset;
 }
 
+input,
+textarea,
+button {
+    -webkit-appearance: none;
+    outline: none;
+}
+
 q {
     &:before,
     &:after {

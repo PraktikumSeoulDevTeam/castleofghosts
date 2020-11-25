@@ -11,16 +11,16 @@ import type {FormControlFields} from '../../components/FormControl/types';
 import type {ApiSignUpRequest} from '../../api/types';
 
 const RegistrationSchema = Yup.object().shape({
-    login: Yup.string().required('field must be required').max(22, 'max length 22 symbols'),
+    login: Yup.string().required('field is required').max(22, 'max length 22 symbols'),
     password: Yup.string()
         .min(4, 'min length 4 symbols')
         .max(16, 'max length 16 symbols')
-        .required('field must be required'),
+        .required('field is required'),
     email: Yup.string().email('invalid email'),
     phoneNumber: Yup.string()
         .trim()
         .matches(...FORMAT.PHONE)
-        .required('field must be required'),
+        .required('field is required'),
     firstName: Yup.string(),
     secondName: Yup.string()
 });
@@ -28,32 +28,32 @@ const RegistrationSchema = Yup.object().shape({
 const registrationFields: FormControlFields = {
     login: {
         type: 'text',
-        placeholder: 'Input your login',
+        placeholder: 'Login',
         title: 'Create new login: '
     },
     email: {
         type: 'email',
-        placeholder: 'Input your email',
+        placeholder: 'Email',
         title: 'Input your email: '
     },
     phoneNumber: {
         type: 'text',
-        placeholder: 'Input your phone',
+        placeholder: 'Phone',
         title: 'Input your phone: '
     },
     firstName: {
         type: 'text',
-        placeholder: 'Input your first name',
+        placeholder: 'First name',
         title: 'What is your first name: '
     },
     secondName: {
         type: 'text',
-        placeholder: 'Input your second name',
+        placeholder: 'Second name',
         title: 'What is your second name: '
     },
     password: {
         type: 'password',
-        placeholder: 'Input your password',
+        placeholder: 'Password',
         title: 'Create new password: '
     }
 };
@@ -79,12 +79,12 @@ const connecter = connect(null, mapDispatchToProps);
 
 function RegistrationComponent({onRegistration}: ConnectedProps<typeof connecter>): JSX.Element {
     return (
-        <UiLayout isBlock className="authentication">
-            <h1 className="t-title authentication__title">Registration</h1>
+        <UiLayout isBlock>
+            <h1 className="t-title">Registration</h1>
             <FormControl schema={RegistrationSchema} fields={registrationFields} onSubmit={onRegistration}>
-                <footer className="authentication__footer">
-                    <Link to="/login" className="mr-5">
-                        Authorization
+                <footer className="button-bar mt-5">
+                    <Link to="/login">
+                        <Button className="btn btn_txt">Authorization</Button>
                     </Link>
                     <Button type="submit">Register</Button>
                 </footer>

@@ -4,6 +4,10 @@ body {
     @include t-main;
 }
 
+input {
+    @include t-main;
+}
+
 /*
 * Typo
 */
