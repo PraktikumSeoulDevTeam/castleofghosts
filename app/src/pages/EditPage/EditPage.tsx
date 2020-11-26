@@ -8,7 +8,8 @@ enum ViewStatus {
     PASSWORD_CHANGE,
     AVATAR_CHANGE
 }
-export const component = (): JSX.Element => {
+
+const component = (): JSX.Element => {
     const [view, setView] = useState(ViewStatus.DATA_EDIT);
     let cnt: JSX.Element;
     switch (view) {

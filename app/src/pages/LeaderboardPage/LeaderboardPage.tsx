@@ -15,7 +15,7 @@ const mapState = (state: AppStoreState) => {
 
 const connector = connect(mapState);
 
-export function component({leaderboard}: ConnectedProps<typeof connector>): JSX.Element {
+function component({leaderboard}: ConnectedProps<typeof connector>): JSX.Element {
     const leaderboardRecords = leaderboard.map((character, index) => (
         <LeaderboardRecord key={character.id} position={index + 1} character={character} />
     ));
