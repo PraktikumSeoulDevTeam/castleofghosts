@@ -1,8 +1,8 @@
 import React from 'react';
 import * as Yup from 'yup';
-import {FormControlFields} from '../FormControl/types';
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
+import type {FormControlFields} from '../FormControl/types';
 
 const fileConditions = {
     MAX_FILE_SIZE: 1000000,
@@ -38,8 +38,7 @@ export function UserAvatarChange(): JSX.Element {
                 console.log(formData);
             }}
         >
-            <div className="mt-5" />
-            <footer>
+            <footer className="button-bar mt-5">
                 <Button type="submit">Change</Button>
             </footer>
         </FormControl>

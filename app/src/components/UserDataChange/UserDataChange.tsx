@@ -6,12 +6,12 @@ import {FormControl} from '../FormControl/FormControl';
 import type {FormControlFields} from '../FormControl/types';
 
 const UserEditSchema = Yup.object().shape({
-    login: Yup.string().required('field must be required').max(22, 'max length 22 symbols'),
+    login: Yup.string().required('field is required').max(22, 'max length 22 symbols'),
     email: Yup.string().email('invalid email'),
     phoneNumber: Yup.string()
         .trim()
         .matches(...FORMAT.PHONE)
-        .required('field must be required'),
+        .required('field is required'),
     firstName: Yup.string(),
     secondName: Yup.string()
 });
@@ -19,27 +19,27 @@ const UserEditSchema = Yup.object().shape({
 const UserEditFields: FormControlFields = {
     login: {
         type: 'text',
-        placeholder: 'Input your login',
+        placeholder: 'Login',
         title: 'Login: '
     },
     email: {
         type: 'email',
-        placeholder: 'Input your email',
+        placeholder: 'Email',
         title: 'Email: '
     },
     phoneNumber: {
         type: 'text',
-        placeholder: 'Input your phone',
+        placeholder: 'Phone',
         title: 'Phone: '
     },
     firstName: {
         type: 'text',
-        placeholder: 'Input your first name',
+        placeholder: 'First name',
         title: 'First name: '
     },
     secondName: {
         type: 'text',
-        placeholder: 'Input your second name',
+        placeholder: 'Second name',
         title: 'Second name: '
     }
 };
@@ -54,8 +54,7 @@ export function UserDataChange(): JSX.Element {
                 console.log(formData);
             }}
         >
-            <div className="mt-5" />
-            <footer>
+            <footer className="button-bar mt-">
                 <Button type="submit">Save</Button>
             </footer>
         </FormControl>
