@@ -12,6 +12,8 @@ export function* userWatcher(): Generator<ForkEffect<never>> {
 }
 
 function* userSignUpWorker(action: SignUpAction) {
+    yield put(utilitySetLoading(true));
+
     try {
         const isOk: boolean = yield call(signUp, action.payload);
         if (isOk) {
@@ -27,6 +29,8 @@ function* userSignUpWorker(action: SignUpAction) {
 }
 
 function* userSignInWorker(action: SignInAction) {
+    yield put(utilitySetLoading(true));
+
     try {
         const isOk: boolean = yield call(signIn, action.payload);
         if (isOk) {

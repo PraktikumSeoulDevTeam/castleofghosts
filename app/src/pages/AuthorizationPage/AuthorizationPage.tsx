@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {compose, Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
@@ -9,7 +9,6 @@ import {UiLayout} from '../../layouts';
 import {Button, FormControl} from '../../components';
 import type {FormControlFields} from '../../components/FormControl/types';
 import type {ApiSignInRequest} from '../../api/types';
-import {withLoading, WithLoadingProps} from '../../hoc/withLoading';
 
 const AuthorizationSchema = Yup.object().shape({
     login: Yup.string().required('field is required').max(12, 'max length 12 symbols'),
@@ -44,19 +43,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 const connecter = connect(null, mapDispatchToProps);
 
-function AuthorizationComponent({
-    onAuth,
-    setLoading
-}: ConnectedProps<typeof connecter> & WithLoadingProps): JSX.Element {
-    const onAuthMethod = useCallback((forMData) => {
-        setLoading(true);
-        onAuth(forMData);
-    }, []);
-
+function AuthorizationComponent({onAuth}: ConnectedProps<typeof connecter>): JSX.Element {
     return (
         <UiLayout isBlock>
             <h1 className="t-title">Authorization</h1>
-            <FormControl schema={AuthorizationSchema} fields={authorizationField} onSubmit={onAuthMethod}>
+            <FormControl schema={AuthorizationSchema} fields={authorizationField} onSubmit={onAuth}>
                 <footer className="button-bar mt-5">
                     <Link to="/registration">
                         <Button className="btn btn_txt">Registration</Button>
@@ -68,4 +59,4 @@ function AuthorizationComponent({
     );
 }
 
-export const AuthorizationPage = compose(connecter, withLoading)(AuthorizationComponent);
+export const AuthorizationPage = compose(connecter)(AuthorizationComponent);

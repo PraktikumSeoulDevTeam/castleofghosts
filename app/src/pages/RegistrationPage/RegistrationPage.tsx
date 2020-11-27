@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {compose, Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
@@ -9,7 +9,6 @@ import {Button, FormControl} from '../../components';
 import {FORMAT} from '../../utils';
 import type {FormControlFields} from '../../components/FormControl/types';
 import type {ApiSignUpRequest} from '../../api/types';
-import {withLoading, WithLoadingProps} from '../../hoc/withLoading';
 
 const RegistrationSchema = Yup.object().shape({
     login: Yup.string().required('field is required').max(22, 'max length 22 symbols'),
@@ -78,19 +77,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 const connecter = connect(null, mapDispatchToProps);
 
-function RegistrationComponent({
-    onRegistration,
-    setLoading
-}: ConnectedProps<typeof connecter> & WithLoadingProps): JSX.Element {
-    const onRegistrationMethod = useCallback((formData) => {
-        setLoading(true);
-        onRegistration(formData);
-    }, []);
-
+function RegistrationComponent({onRegistration}: ConnectedProps<typeof connecter>): JSX.Element {
     return (
         <UiLayout isBlock>
             <h1 className="t-title">Registration</h1>
-            <FormControl schema={RegistrationSchema} fields={registrationFields} onSubmit={onRegistrationMethod}>
+            <FormControl schema={RegistrationSchema} fields={registrationFields} onSubmit={onRegistration}>
                 <footer className="button-bar mt-5">
                     <Link to="/login">
                         <Button className="btn btn_txt">Authorization</Button>
@@ -102,4 +93,4 @@ function RegistrationComponent({
     );
 }
 
-export const RegistrationPage = compose(connecter, withLoading)(RegistrationComponent);
+export const RegistrationPage = compose(connecter)(RegistrationComponent);
