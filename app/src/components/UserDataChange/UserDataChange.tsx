@@ -9,9 +9,9 @@ const UserEditSchema = Yup.object().shape({
     login: Yup.string().required('field must be required').max(22, 'max length 22 symbols'),
     email: Yup.string().email('invalid email'),
     phoneNumber: Yup.string()
-    .trim()
-    .matches(...FORMAT.PHONE)
-    .required('field must be required'),
+        .trim()
+        .matches(...FORMAT.PHONE)
+        .required('field must be required'),
     firstName: Yup.string(),
     secondName: Yup.string()
 });
