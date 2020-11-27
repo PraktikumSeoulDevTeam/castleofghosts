@@ -2,26 +2,22 @@
     display: inline-block;
     min-width: 320px;
     height: 50px;
-    box-sizing: border-box;
     border: 2px solid var(--color-second);
-    -webkit-appearance: none;
     background: var(--color-accent);
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     line-height: 50px;
-    outline: none;
     &:hover {
         background: var(--color-second);
         color: var(--color-accent);
     }
     &_txt {
         min-width: initial;
-        height: auto;
         border: none;
         background: none;
-        line-height: initial;
         text-align: center;
         text-decoration: underline;
+        white-space: nowrap;
         &:hover {
             background: none;
             text-decoration: none;
