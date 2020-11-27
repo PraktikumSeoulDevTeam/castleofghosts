@@ -19,12 +19,14 @@ const authorizationField: FormControlFields = {
     login: {
         type: 'text',
         placeholder: 'Login',
-        title: 'Your login: '
+        title: 'Your login: ',
+        autocomplete: 'username'
     },
     password: {
         type: 'password',
         placeholder: 'Password',
-        title: 'Your password: '
+        title: 'Your password: ',
+        autocomplete: 'current-password'
     }
 };
 
