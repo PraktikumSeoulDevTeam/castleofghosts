@@ -1,5 +1,5 @@
 import React from 'react';
-import {compose, Dispatch} from 'redux';
+import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
 import * as Yup from 'yup';
@@ -93,4 +93,4 @@ function RegistrationComponent({onRegistration}: ConnectedProps<typeof connecter
     );
 }
 
-export const RegistrationPage = compose(connecter)(RegistrationComponent);
+export const RegistrationPage = connecter(RegistrationComponent);

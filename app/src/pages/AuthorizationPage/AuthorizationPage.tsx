@@ -1,5 +1,5 @@
 import React from 'react';
-import {compose, Dispatch} from 'redux';
+import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
 import * as Yup from 'yup';
@@ -59,4 +59,4 @@ function AuthorizationComponent({onAuth}: ConnectedProps<typeof connecter>): JSX
     );
 }
 
-export const AuthorizationPage = compose(connecter)(AuthorizationComponent);
+export const AuthorizationPage = connecter(AuthorizationComponent);
