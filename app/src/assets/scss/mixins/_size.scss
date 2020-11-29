@@ -1,0 +1,15 @@
+@import '../variables';
+
+$mediaQuery: 1200px 900px 512px;
+$baselineArray: $baseline $baseline * 0.9 $baseline * 0.75 $baseline * 0.5;
+
+@mixin sizeByGridHor($propName, $multiplier: 1) {
+    #{$propName}: nth($baselineArray, 1) * $multiplier;
+    @each $currentMediaQuery in $mediaQuery {
+        $i: index($mediaQuery, $currentMediaQuery);
+        @media (max-width: $currentMediaQuery) {
+            #{$propName}: nth($baselineArray, $i + 1) * $multiplier;
+        }
+    }
+}
+

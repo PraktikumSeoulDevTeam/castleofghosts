@@ -1,0 +1,23 @@
+.ui {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        &_block {
+            max-width: 1024px;
+            border: 10px solid var(--color-accent);
+            background: var(--color-bg-dark);
+        }
+    }
+
+    &_static {
+        height: 100vh;
+    }
+}

@@ -1,0 +1,26 @@
+.btn {
+    display: inline-block;
+    min-width: 320px;
+    height: 50px;
+    border: 2px solid var(--color-second);
+    background: var(--color-accent);
+    border-radius: 12px;
+    cursor: pointer;
+    line-height: 50px;
+    &:hover {
+        background: var(--color-second);
+        color: var(--color-accent);
+    }
+    &_txt {
+        min-width: initial;
+        border: none;
+        background: none;
+        text-align: center;
+        text-decoration: underline;
+        white-space: nowrap;
+        &:hover {
+            background: none;
+            text-decoration: none;
+        }
+    }
+}

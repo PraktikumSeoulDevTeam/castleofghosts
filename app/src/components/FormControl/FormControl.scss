@@ -1,0 +1,36 @@
+@import '../../assets/scss/variables';
+
+.input {
+    display: flex;
+    width: 100%;
+    height: 96px;
+    flex-direction: column;
+
+    &__field {
+        width: 100%;
+        height: 56px;
+        box-sizing: border-box;
+        padding: 0 16px;
+        border: 4px solid darkgoldenrod;
+        background-color: var(--color-bg);
+        border-radius: 4px;
+        caret-color: var(--color-second);
+        color: var(--color-second);
+        &::placeholder {
+            color: var(--color-dim);
+        }
+        &:focus {
+            border-color: goldenrod;
+            &::placeholder {
+                color: transparent;
+            }
+        }
+    }
+
+    &__validation-message {
+        height: 12px;
+        color: indianred;
+        font-size: $fontSize * 0.8;
+        line-height: 12px;
+    }
+}

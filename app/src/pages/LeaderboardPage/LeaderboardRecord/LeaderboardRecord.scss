@@ -1,0 +1,11 @@
+.lb-record {
+    &__position {
+        width: 50px;
+        color: var(--color-second);
+        text-align: end;
+    }
+    &__points {
+        width: 150px;
+        text-align: end;
+    }
+}

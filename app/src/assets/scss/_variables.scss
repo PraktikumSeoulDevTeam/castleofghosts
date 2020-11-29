@@ -1,0 +1,24 @@
+$baseline: 8px;
+
+$z-index: (
+    'dialog': 2100,
+    'overlay': 2000,
+    'game-ui': 1200,
+    'game-main': 1100,
+    'game-bg': 1000,
+    'base': 0
+);
+
+$colorMain: white;
+$colorAccent: #d34549;
+$colorSecond: #6daa2c;
+$colorDim: #a9a5ae;
+$colorBg: #291e34;
+$colorBgDark: #140c1c;
+
+$fontSize: 1rem;
+
+$avatarUrlTema: url('~/assets/img/tema.png');
+$avatarUrlNikita: url('~/assets/img/nikita.png');
+$avatarUrlDima: url('~/assets/img/dima.png');
+$avatarUrlJenya: url('~/assets/img/jenya.png');

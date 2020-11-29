@@ -1,0 +1,57 @@
+$sizes: 1 2 3 4 5 6 7 8 9 10;
+
+.p {
+    @each $i in $sizes {
+        &l-#{$i} {
+            @include sizeByGridHor(padding-left, $i);
+        }
+        &r-#{$i} {
+            @include sizeByGridHor(padding-right, $i);
+        }
+        &t-#{$i} {
+            @include sizeByGridHor(padding-top, $i);
+        }
+        &b-#{$i} {
+            @include sizeByGridHor(padding-bottom, $i);
+        }
+        &x-#{$i} {
+            @include sizeByGridHor(padding-left, $i);
+            @include sizeByGridHor(padding-right, $i);
+        }
+        &y-#{$i} {
+            @include sizeByGridHor(padding-top, $i);
+            @include sizeByGridHor(padding-bottom, $i);
+        }
+        &a-#{$i} {
+            @include sizeByGridHor(padding, $i);
+        }
+    }
+}
+
+.m {
+    @each $i in $sizes {
+        &l-#{$i} {
+            @include sizeByGridHor(margin-left, $i);
+        }
+        &r-#{$i} {
+            @include sizeByGridHor(margin-right, $i);
+        }
+        &t-#{$i} {
+            @include sizeByGridHor(margin-top, $i);
+        }
+        &b-#{$i} {
+            @include sizeByGridHor(margin-bottom, $i);
+        }
+        &x-#{$i} {
+            @include sizeByGridHor(margin-left, $i);
+            @include sizeByGridHor(margin-right, $i);
+        }
+        &y-#{$i} {
+            @include sizeByGridHor(margin-top, $i);
+            @include sizeByGridHor(margin-bottom, $i);
+        }
+        &a-#{$i} {
+            @include sizeByGridHor(margin, $i);
+        }
+    }
+}
