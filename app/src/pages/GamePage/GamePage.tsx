@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {GameUi} from './GameUi/GameUi';
-import {setBgCanvas} from '../../canvas/bg';
-import {setMainCanvas} from '../../canvas/main';
+import {setBgCanvas} from '../../core/bg.canvas';
+import {setMainCanvas} from '../../core/main.canvas';
 import {UiLayout} from '../../layouts';
 import './GamePage.scss';
 
