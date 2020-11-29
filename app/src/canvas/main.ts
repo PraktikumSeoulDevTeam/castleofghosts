@@ -1,18 +1,20 @@
-const grid = 32;
+import {characterSprites} from './sprites/character';
+import {GRID} from './sprites/utils';
+import type {Sprite} from './types';
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 
+let width: number;
+let height: number;
+
 let cx: number;
 let cy: number;
-
-let icx: number;
-let icy: number;
 
 let fleft: number;
 let ftop: number;
 
-let character: HTMLImageElement;
+let character: Sprite;
 
 export function setMainCanvas(canvasElement: HTMLCanvasElement): void {
     if (!canvasElement) {
@@ -20,46 +22,55 @@ export function setMainCanvas(canvasElement: HTMLCanvasElement): void {
     }
     canvas = canvasElement;
     ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    width = canvas.width / GRID;
+    height = canvas.height / GRID;
+    cx = width / 2;
+    cy = height / 2;
 
-    cx = canvas.width / 2;
-    cy = canvas.height / 2;
+    fleft = cx;
+    ftop = cy;
 
-    character = new Image();
-    character.src = './tema.png';
-    character.onload = () => {
-        icx = character.naturalWidth / 2;
-        icy = character.naturalHeight / 2;
-        fleft = cx - icx;
-        ftop = cy - icy;
-        drawImage();
-    };
-
-    window.addEventListener('keydown', (e) => {
-        switch (e.key) {
-            case 'ArrowLeft':
-                movef(-1, 0);
-                break;
-            case 'ArrowRight':
-                movef(1, 0);
-                break;
-            case 'ArrowUp':
-                movef(0, -1);
-                break;
-            case 'ArrowDown':
-                movef(0, 1);
-                break;
-            default:
-        }
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawImage();
+    Promise.all([characterSprites]).then(([CHAR]) => {
+        character = CHAR.PALADIN;
+        drawImage(fleft, ftop, character);
+        window.addEventListener('keydown', (e) => {
+            ctx.clearRect(fleft * GRID, ftop * GRID, character.width, character.height);
+            switch (e.key) {
+                case 'ArrowLeft':
+                    movef(-1, 0);
+                    break;
+                case 'ArrowRight':
+                    movef(1, 0);
+                    break;
+                case 'ArrowUp':
+                    movef(0, -1);
+                    break;
+                case 'ArrowDown':
+                    movef(0, 1);
+                    break;
+                default:
+            }
+            drawImage(fleft, ftop, character);
+        });
     });
 }
 
-function drawImage() {
-    ctx.drawImage(character, fleft, ftop);
+function drawImage(x: number, y: number, sprite: Sprite) {
+    ctx.drawImage(
+        sprite.image,
+        sprite.posx,
+        sprite.posy,
+        sprite.width,
+        sprite.height,
+        GRID * x,
+        GRID * y,
+        sprite.width,
+        sprite.height
+    );
 }
 
 function movef(x: number, y: number) {
-    fleft = (fleft + x * grid + canvas.width) % canvas.width;
-    ftop = (ftop + y * grid + canvas.height) % canvas.height;
+    fleft = (fleft + x + width) % width;
+    ftop = (ftop + y + height) % height;
 }

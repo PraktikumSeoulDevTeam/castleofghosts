@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 import {GameUi} from './GameUi/GameUi';
+import {setBgCanvas} from '../../canvas/bg';
 import {setMainCanvas} from '../../canvas/main';
 import {UiLayout} from '../../layouts';
 import './GamePage.scss';
@@ -11,7 +12,7 @@ export const GamePage = (): JSX.Element => {
     const bgCanvas = useRef<HTMLCanvasElement>();
     const mainCanvas = useRef<HTMLCanvasElement>();
     React.useEffect(() => {
-        // TODO добавить обработку bg-canvas
+        setBgCanvas(bgCanvas.current);
         setMainCanvas(mainCanvas.current);
     }, []);
 
