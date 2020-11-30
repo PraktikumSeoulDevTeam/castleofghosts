@@ -3,7 +3,7 @@ import Yup from 'yup';
 
 type DefaultStringObject = {[key: string]: string};
 
-export type FormControlFieldType = 'text' | 'password' | 'email' | 'file';
+export type FormControlFieldType = 'text' | 'password' | 'email' | 'file' | 'hidden';
 
 export type FormControlFields = {
     [key: string]: {

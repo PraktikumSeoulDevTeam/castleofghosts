@@ -19,7 +19,7 @@ export interface UserGetAction {
 
 export interface UserUpdateAction {
     type: USER_ACTION_TYPES.UPDATE;
-    payload: Partial<ApiUserInfo>;
+    payload: ApiUserInfo;
 }
 
 export interface UserRemoveAction {

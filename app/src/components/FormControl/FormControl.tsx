@@ -12,26 +12,37 @@ const FormFile = ({form, field}: FormFieldComponentProps): JSX.Element => (
         onChange={(e) => form.setFieldValue(field.name, e.target.files[0])}
     />
 );
+
 const RenderFields = (fields: FormControlFields): JSX.Element[] => {
-    return Object.entries(fields).map(([fieldName, {placeholder, type, title}]) => (
-        <div className="input mb-4" key={fieldName}>
-            <label htmlFor={fieldName}>
-                <div className="input__title">{title}</div>
-                <Field
-                    placeholder={placeholder}
-                    className="input__field my-1"
-                    type={type}
+    return Object.entries(fields).map(([fieldName, {placeholder, type, title}]) => {
+        if (type === 'hidden') {
+            return (
+                <div key={fieldName}>
+                    <Field type={type} name={fieldName} id={fieldName} />
+                </div>
+            );
+        }
+
+        return (
+            <div className="input mb-4" key={fieldName}>
+                <label htmlFor={fieldName}>
+                    <div className="input__title">{title}</div>
+                    <Field
+                        placeholder={placeholder}
+                        className="input__field my-1"
+                        type={type}
+                        name={fieldName}
+                        id={fieldName}
+                        component={type === 'file' ? FormFile : null}
+                    />
+                </label>
+                <ErrorMessage
                     name={fieldName}
-                    id={fieldName}
-                    component={type === 'file' ? FormFile : null}
+                    render={(msg: string) => <span className="input__validation-message">{msg}</span>}
                 />
-            </label>
-            <ErrorMessage
-                name={fieldName}
-                render={(msg: string) => <span className="input__validation-message">{msg}</span>}
-            />
-        </div>
-    ));
+            </div>
+        );
+    });
 };
 
 export function FormControl({fields, schema, onSubmit, children}: FormControlProps): JSX.Element {
