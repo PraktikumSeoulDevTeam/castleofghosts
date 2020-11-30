@@ -3,6 +3,7 @@ import {getUserInfo, signUp, signIn, signOut} from '../../api';
 import {userRemoveAction, userUpdateAction} from './actions';
 import {SignInAction, SignUpAction, USER_ACTION_TYPES} from './types';
 import type {ApiUserInfo} from '../../api/types';
+import {toasterAddAction} from '../Toaster/actions';
 
 export function* userWatcher(): Generator<ForkEffect<never>> {
     yield takeLeading(USER_ACTION_TYPES.SIGN_UP, userSignUpWorker);
@@ -31,6 +32,12 @@ function* userSignInWorker(action: SignInAction) {
             yield put(userUpdateAction(userInfo));
         }
     } catch (error) {
+        yield put(
+            toasterAddAction({
+                text: 'Login or password is incorrect',
+                duration: 1000
+            })
+        );
         // eslint-disable-next-line no-console
         console.log('[userSignInWorker error] ', error);
     }

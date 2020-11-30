@@ -1,0 +1,32 @@
+.toast-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.toast-element {
+    position: relative;
+    display: flex;
+    width: 400px;
+    min-height: 100px;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 40px 20px 20px;
+    background-color: white;
+    color: black;
+
+    &__exit {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 30px;
+        height: 30px;
+        background: black;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+    }
+}
