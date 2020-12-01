@@ -1,6 +1,7 @@
 import {cloneDeep} from 'lodash';
 import {LB_ACTION_TYPES, LeadeboardState, LbActions} from './types';
 
+// TODO mock
 const leadeboardState: LeadeboardState = {
     list: [
         {id: 1, name: 'user1', points: 100},

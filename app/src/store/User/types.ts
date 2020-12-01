@@ -1,6 +1,7 @@
 import type {ApiSignInRequest, ApiSignUpRequest, ApiUserInfo} from '../../api/types';
 
 export const enum USER_ACTION_TYPES {
+    GET = 'cog/user/get',
     UPDATE = 'cog/user/update',
     REMOVE = 'cog/user/remove',
     SIGN_UP = 'cog/user/signup',
@@ -10,6 +11,10 @@ export const enum USER_ACTION_TYPES {
 
 export interface UserState {
     info: Partial<ApiUserInfo>;
+}
+
+export interface UserGetAction {
+    type: USER_ACTION_TYPES.GET;
 }
 
 export interface UserUpdateAction {
@@ -35,4 +40,10 @@ export interface SignOutAction {
     type: USER_ACTION_TYPES.SIGN_OUT;
 }
 
-export type UserActions = UserUpdateAction | UserRemoveAction | SignUpAction | SignInAction | SignOutAction;
+export type UserActions =
+    | UserGetAction
+    | UserUpdateAction
+    | UserRemoveAction
+    | SignUpAction
+    | SignInAction
+    | SignOutAction;
