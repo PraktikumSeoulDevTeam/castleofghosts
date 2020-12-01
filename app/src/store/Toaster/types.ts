@@ -10,6 +10,7 @@ export interface ToasterState {
 
 export const enum TOASTER_ACTION_TYPES {
     ADD_TOASTER = 'cost/toaster/add',
+    CREATE_TOASTER = 'cost/toaster/create',
     REMOVE_TOASTER = 'cost/toaster/remove'
 }
 
@@ -21,9 +22,18 @@ export interface ToasterAddAction {
     };
 }
 
+export interface ToasterCreateAction {
+    type: TOASTER_ACTION_TYPES.CREATE_TOASTER;
+    payload: {
+        text: string;
+        duration: number;
+        id: string;
+    };
+}
+
 export interface ToasterRemoveAction {
     type: TOASTER_ACTION_TYPES.REMOVE_TOASTER;
     payload: string;
 }
 
-export type ToasterAction = ToasterAddAction | ToasterRemoveAction;
+export type ToasterAction = ToasterAddAction | ToasterRemoveAction | ToasterCreateAction;
