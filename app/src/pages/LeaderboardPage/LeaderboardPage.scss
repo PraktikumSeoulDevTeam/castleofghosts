@@ -1,8 +1,14 @@
-@import '~/assets/scss/mixins/size';
-
 .leaderboard-page {
-    height: 100%;
+    min-height: 348px;
+    max-height: 100%;
     &__table {
-        @include sizeByGridHor(width, 96);
+        width: 100%;
+        > table {
+            width: inherit;
+            min-width: 640px;
+        }
+    }
+    &__empty {
+        color: var(--color-second);
     }
 }

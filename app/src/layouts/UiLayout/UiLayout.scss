@@ -1,6 +1,6 @@
 .ui {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -10,10 +10,14 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
+        &_block {
+            max-width: 1024px;
+            border: 10px solid var(--color-accent);
+            background: var(--color-bg-dark);
+        }
     }
 
-    &__block {
-        border: 10px solid var(--color-accent);
-        background: var(--color-bg-dark);
+    &_static {
+        height: 100vh;
     }
 }

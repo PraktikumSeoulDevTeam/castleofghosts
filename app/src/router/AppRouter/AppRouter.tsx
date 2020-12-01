@@ -21,21 +21,21 @@ export function AppRouter(): JSX.Element {
                 <Route exact path="/">
                     <WelcomePage />
                 </Route>
-                <Route path="/registration">
+                <PrivateRoute publicExclusive path="/registration">
                     <RegistrationPage />
-                </Route>
-                <Route path="/login">
+                </PrivateRoute>
+                <PrivateRoute publicExclusive path="/login">
                     <AuthorizationPage />
-                </Route>
+                </PrivateRoute>
                 <PrivateRoute path="/user">
                     <EditPage />
                 </PrivateRoute>
                 <PrivateRoute path="/game">
                     <GamePage />
                 </PrivateRoute>
-                <Route path="/leaderboard">
+                <PrivateRoute path="/leaderboard">
                     <LeaderboardPage />
-                </Route>
+                </PrivateRoute>
                 <Route path="*">
                     <ErrorPage type="404" />
                 </Route>

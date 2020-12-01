@@ -6,9 +6,20 @@ import type {ApiUserInfo} from '../../api/types';
 import {utilitySetLoading} from '../Utility/actions';
 
 export function* userWatcher(): Generator<ForkEffect<never>> {
+    yield takeLeading(USER_ACTION_TYPES.GET, userGetWorker);
     yield takeLeading(USER_ACTION_TYPES.SIGN_UP, userSignUpWorker);
     yield takeLeading(USER_ACTION_TYPES.SIGN_IN, userSignInWorker);
     yield takeLeading(USER_ACTION_TYPES.SIGN_OUT, userSignOutWorker);
+}
+
+function* userGetWorker() {
+    try {
+        const userInfo: ApiUserInfo = yield call(getUserInfo);
+        yield put(userUpdateAction(userInfo));
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log('[userSignUpWorker error] ', error);
+    }
 }
 
 function* userSignUpWorker(action: SignUpAction) {
