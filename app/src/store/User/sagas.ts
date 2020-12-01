@@ -1,12 +1,20 @@
 import {call, ForkEffect, put, takeLeading} from 'redux-saga/effects';
-import {getUserInfo, updateUserInfo, updateUserPassword, signUp, signIn, signOut} from '../../api';
+import {getUserInfo, updateUserInfo, updateUserAvatar, updateUserPassword, signUp, signIn, signOut} from '../../api';
 import {userRemoveAction, userUpdateAction} from './actions';
-import {SignInAction, SignUpAction, UserUpdateAction, UserUpdatePasswordAction, USER_ACTION_TYPES} from './types';
+import {
+    SignInAction,
+    SignUpAction,
+    UserUpdateAction,
+    UserUpdateAvatarAction,
+    UserUpdatePasswordAction,
+    USER_ACTION_TYPES
+} from './types';
 import type {ApiUserInfo} from '../../api/types';
 
 export function* userWatcher(): Generator<ForkEffect<never>> {
     yield takeLeading(USER_ACTION_TYPES.GET, userGetWorker);
     yield takeLeading(USER_ACTION_TYPES.UPDATE, userSaveWorker);
+    yield takeLeading(USER_ACTION_TYPES.UPDATE_AVATAR, userChangeAvatarWorker);
     yield takeLeading(USER_ACTION_TYPES.UPDATE_PASSWORD, userChangePasswordWorker);
     yield takeLeading(USER_ACTION_TYPES.SIGN_UP, userSignUpWorker);
     yield takeLeading(USER_ACTION_TYPES.SIGN_IN, userSignInWorker);
@@ -29,7 +37,16 @@ function* userSaveWorker(action: UserUpdateAction) {
         yield put(userUpdateAction(userData));
     } catch (error) {
         // eslint-disable-next-line no-console
-        console.log('[userSignUpWorker error] ', error);
+        console.log('[userSaveWorker error] ', error);
+    }
+}
+
+function* userChangeAvatarWorker(action: UserUpdateAvatarAction) {
+    try {
+        yield call(updateUserAvatar, action.payload);
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log('[userChangeAvatarWorker error] ', error);
     }
 }
 
@@ -38,7 +55,7 @@ function* userChangePasswordWorker(action: UserUpdatePasswordAction) {
         yield call(updateUserPassword, action.payload);
     } catch (error) {
         // eslint-disable-next-line no-console
-        console.log('[userSignUpWorker error] ', error);
+        console.log('[userChangePasswordWorker error] ', error);
     }
 }
 

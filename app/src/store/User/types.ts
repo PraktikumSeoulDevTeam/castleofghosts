@@ -1,9 +1,16 @@
-import type {ApiChangePasswordRequest, ApiSignInRequest, ApiSignUpRequest, ApiUserInfo} from '../../api/types';
+import type {
+    ApiChangeAvatarRequest,
+    ApiChangePasswordRequest,
+    ApiSignInRequest,
+    ApiSignUpRequest,
+    ApiUserInfo
+} from '../../api/types';
 
 export const enum USER_ACTION_TYPES {
     GET = 'cog/user/get',
     UPDATE = 'cog/user/update',
     UPDATE_PASSWORD = 'cog/user/updatepassword',
+    UPDATE_AVATAR = 'cog/user/updateavatar',
     REMOVE = 'cog/user/remove',
     SIGN_UP = 'cog/user/signup',
     SIGN_IN = 'cog/user/signin',
@@ -21,6 +28,11 @@ export interface UserGetAction {
 export interface UserUpdateAction {
     type: USER_ACTION_TYPES.UPDATE;
     payload: ApiUserInfo;
+}
+
+export interface UserUpdateAvatarAction {
+    type: USER_ACTION_TYPES.UPDATE_AVATAR;
+    payload: ApiChangeAvatarRequest;
 }
 
 export interface UserUpdatePasswordAction {
@@ -50,6 +62,7 @@ export type UserActions =
     | UserGetAction
     | UserUpdateAction
     | UserUpdatePasswordAction
+    | UserUpdateAvatarAction
     | UserRemoveAction
     | SignUpAction
     | SignInAction
