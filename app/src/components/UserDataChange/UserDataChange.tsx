@@ -20,27 +20,32 @@ const UserEditFields: FormControlFields = {
     login: {
         type: 'text',
         placeholder: 'Login',
-        title: 'Login: '
+        title: 'Login: ',
+        autocomplete: 'username'
     },
     email: {
         type: 'email',
         placeholder: 'Email',
-        title: 'Email: '
+        title: 'Email: ',
+        autocomplete: 'email'
     },
     phoneNumber: {
         type: 'text',
         placeholder: 'Phone',
-        title: 'Phone: '
+        title: 'Phone: ',
+        autocomplete: 'tel'
     },
     firstName: {
         type: 'text',
         placeholder: 'First name',
-        title: 'First name: '
+        title: 'First name: ',
+        autocomplete: 'given-name'
     },
     secondName: {
         type: 'text',
         placeholder: 'Second name',
-        title: 'Second name: '
+        title: 'Second name: ',
+        autocomplete: 'family-name'
     }
 };
 

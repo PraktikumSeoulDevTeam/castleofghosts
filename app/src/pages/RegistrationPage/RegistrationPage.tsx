@@ -29,32 +29,38 @@ const registrationFields: FormControlFields = {
     login: {
         type: 'text',
         placeholder: 'Login',
-        title: 'Create new login: '
+        title: 'Create new login: ',
+        autocomplete: 'username'
     },
     email: {
         type: 'email',
         placeholder: 'Email',
-        title: 'Input your email: '
+        title: 'Input your email: ',
+        autocomplete: 'email'
     },
     phoneNumber: {
         type: 'text',
         placeholder: 'Phone',
-        title: 'Input your phone: '
+        title: 'Input your phone: ',
+        autocomplete: 'tel'
     },
     firstName: {
         type: 'text',
         placeholder: 'First name',
-        title: 'What is your first name: '
+        title: 'What is your first name: ',
+        autocomplete: 'given-name'
     },
     secondName: {
         type: 'text',
         placeholder: 'Second name',
-        title: 'What is your second name: '
+        title: 'What is your second name: ',
+        autocomplete: 'family-name'
     },
     password: {
         type: 'password',
         placeholder: 'Password',
-        title: 'Create new password: '
+        title: 'Create new password: ',
+        autocomplete: 'new-password'
     }
 };
 

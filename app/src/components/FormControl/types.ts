@@ -10,6 +10,16 @@ export type FormControlFields = {
         type: FormControlFieldType;
         placeholder: string;
         title: string;
+        autocomplete?:
+            | 'given-name'
+            | 'family-name'
+            | 'username'
+            | 'nickname'
+            | 'new-password'
+            | 'current-password'
+            | 'tel'
+            | 'email'
+            | 'off';
         initialValue?: string;
     };
 };
