@@ -43,7 +43,8 @@ function* userSaveWorker(action: UserUpdateAction) {
 
 function* userChangeAvatarWorker(action: UserUpdateAvatarAction) {
     try {
-        yield call(updateUserAvatar, action.payload);
+        const userData: ApiUserInfo = yield call(updateUserAvatar, action.payload);
+        yield put(userSetAction(userData));
     } catch (error) {
         // eslint-disable-next-line no-console
         console.log('[userChangeAvatarWorker error] ', error);
