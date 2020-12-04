@@ -1,6 +1,5 @@
 import React from 'react';
-import {Dispatch} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
+import {connect, ConnectedProps, DispatchProp} from 'react-redux';
 import {AppStoreState} from 'store/types';
 import * as Yup from 'yup';
 import {ApiUserInfo} from 'api/types';
@@ -23,11 +22,6 @@ const UserEditSchema = Yup.object().shape({
 });
 
 const UserEditFields: FormControlFields = {
-    id: {
-        type: 'hidden',
-        placeholder: '',
-        title: 'id'
-    },
     login: {
         type: 'text',
         placeholder: 'Login',
@@ -60,17 +54,25 @@ const UserEditFields: FormControlFields = {
     }
 };
 
-const mapState = (state: AppStoreState) => {
+type MappedState = {
+    user: Partial<ApiUserInfo>;
+};
+
+const mapState = (state: AppStoreState): MappedState => {
     return {
         user: state.user.info
     };
 };
 
-const mapDispatch = (dispatch: Dispatch) => {
+const mergeProps = (mappedState: MappedState, dispatchProps: DispatchProp) => {
+    const {dispatch} = dispatchProps;
+    const {user} = mappedState;
+
     return {
+        user,
         onUpdate: (formData: {[key: string]: string}) => {
             const userData: ApiUserInfo = {
-                id: parseInt(formData.id, 10),
+                id: user.id,
                 ...formData
             } as ApiUserInfo;
             dispatch(userUpdateAction(userData));
@@ -78,7 +80,7 @@ const mapDispatch = (dispatch: Dispatch) => {
     };
 };
 
-const connector = connect(mapState, mapDispatch);
+const connector = connect(mapState, null, mergeProps);
 
 function component(props: ConnectedProps<typeof connector>): JSX.Element {
     const {user, onUpdate} = props;

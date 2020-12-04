@@ -15,14 +15,6 @@ const FormFile = ({form, field}: FormFieldComponentProps): JSX.Element => (
 
 const RenderFields = (fields: FormControlFields): JSX.Element[] => {
     return Object.entries(fields).map(([fieldName, {placeholder, type, title}]) => {
-        if (type === 'hidden') {
-            return (
-                <div key={fieldName}>
-                    <Field type={type} name={fieldName} id={fieldName} />
-                </div>
-            );
-        }
-
         return (
             <div className="input mb-4" key={fieldName}>
                 <label htmlFor={fieldName}>
