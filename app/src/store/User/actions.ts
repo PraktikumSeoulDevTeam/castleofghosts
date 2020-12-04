@@ -10,13 +10,7 @@ import {
     SignOutAction,
     USER_ACTION_TYPES
 } from './types';
-import type {
-    ApiUserInfo,
-    ApiChangePasswordRequest,
-    ApiSignUpRequest,
-    ApiSignInRequest,
-    ApiChangeAvatarRequest
-} from '../../api/types';
+import type {ApiUserInfo, ApiChangePasswordRequest, ApiSignUpRequest, ApiSignInRequest} from '../../api/types';
 
 export function userGetAction(): UserGetAction {
     return {
@@ -38,7 +32,7 @@ export function userUpdateAction(userInfo: ApiUserInfo): UserUpdateAction {
     };
 }
 
-export function userUpdateAvatarAction(userAvatar: ApiChangeAvatarRequest): UserUpdateAvatarAction {
+export function userUpdateAvatarAction(userAvatar: FormData): UserUpdateAvatarAction {
     return {
         type: USER_ACTION_TYPES.UPDATE_AVATAR,
         payload: userAvatar

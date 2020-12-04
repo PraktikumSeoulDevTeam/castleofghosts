@@ -2,7 +2,6 @@ import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import type {
     ApiAddToLeaderboardRequest,
     ApiBadRequestError,
-    ApiChangeAvatarRequest,
     ApiChangePasswordRequest,
     ApiGetLeaderboardRequest,
     ApiGetLeaderboardResponse,
@@ -82,7 +81,7 @@ export async function updateUserInfo(data: ApiUserInfo): Promise<ApiUserInfo> {
  * @param data  Форма с файлом аватара
  * @return      Информация о пользователе
  */
-export async function updateUserAvatar(data: ApiChangeAvatarRequest): Promise<ApiUserInfo> {
+export async function updateUserAvatar(data: FormData): Promise<ApiUserInfo> {
     const response = await ax.put<ApiUserInfo>('/user/profile/avatar', data);
 
     return getWithUpdatedAvatarPath(response.data);

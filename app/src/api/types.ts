@@ -25,13 +25,6 @@ export interface ApiChangePasswordRequest {
 }
 
 /**
- * Запрос смены аватара
- */
-export interface ApiChangeAvatarRequest {
-    avatar: File;
-}
-
-/**
  * Запрос регистрации
  */
 export interface ApiSignUpRequest {
