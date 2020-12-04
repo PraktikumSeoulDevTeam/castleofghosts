@@ -34,7 +34,8 @@ const UserAvatarFields: FormControlFields = {
 
 const mapState = (state: AppStoreState) => {
     return {
-        user: state.user.info
+        avatar: state.user.info.avatar,
+        firstName: state.user.info.first_name
     };
 };
 
@@ -51,11 +52,13 @@ const mapDispatch = (dispatch: Dispatch) => {
 const connector = connect(mapState, mapDispatch);
 
 function component(props: ConnectedProps<typeof connector>): JSX.Element {
-    const {user, onUpdate} = props;
+    const {avatar, firstName, onUpdate} = props;
 
     return (
         <div>
-            {user.avatar && <img src={user.avatar} alt={user.first_name} className="my-2" />}
+
+            {user.avatar && <img src={avatar} alt={firstName} className="my-2" />}
+
             <FormControl schema={UserAvatarSchema} fields={UserAvatarFields} onSubmit={onUpdate}>
                 <footer className="button-bar mt-5">
                     <Button type="submit">Change</Button>
