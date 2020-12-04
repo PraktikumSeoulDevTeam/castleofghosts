@@ -1,5 +1,9 @@
 import React from 'react';
+import {Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
+import {AppStoreState} from 'store/types';
 import * as Yup from 'yup';
+import {userUpdateAvatarAction} from '../../store/User/actions';
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
 import type {FormControlFields} from '../FormControl/types';
@@ -28,19 +32,39 @@ const UserAvatarFields: FormControlFields = {
     }
 };
 
-export function UserAvatarChange(): JSX.Element {
+const mapState = (state: AppStoreState) => {
+    return {
+        avatar: state.user.info.avatar,
+        firstName: state.user.info.first_name
+    };
+};
+
+const mapDispatch = (dispatch: Dispatch) => {
+    return {
+        onUpdate: (formData: {[key: string]: File}) => {
+            const data = new FormData();
+            data.append('avatar', formData.avatar);
+            dispatch(userUpdateAvatarAction(data));
+        }
+    };
+};
+
+const connector = connect(mapState, mapDispatch);
+
+function component(props: ConnectedProps<typeof connector>): JSX.Element {
+    const {avatar, firstName, onUpdate} = props;
+
     return (
-        <FormControl
-            schema={UserAvatarSchema}
-            fields={UserAvatarFields}
-            onSubmit={(formData) => {
-                // eslint-disable-next-line no-console
-                console.log(formData);
-            }}
-        >
-            <footer className="button-bar mt-5">
-                <Button type="submit">Change</Button>
-            </footer>
-        </FormControl>
+        <div>
+            {avatar && <img src={avatar} alt={firstName} className="my-2" />}
+
+            <FormControl schema={UserAvatarSchema} fields={UserAvatarFields} onSubmit={onUpdate}>
+                <footer className="button-bar mt-5">
+                    <Button type="submit">Change</Button>
+                </footer>
+            </FormControl>
+        </div>
     );
 }
+
+export const UserAvatarChange = connector(component);
