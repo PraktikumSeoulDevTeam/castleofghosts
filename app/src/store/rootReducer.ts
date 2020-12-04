@@ -9,6 +9,6 @@ export const rootReducer = combineReducers({
     user: userReducer,
     game: gameReducer,
     leaderboard: leaderboardReducer,
-    toaster: toasterReducer
+    toaster: toasterReducer,
     utility: utilityReducer
 });
