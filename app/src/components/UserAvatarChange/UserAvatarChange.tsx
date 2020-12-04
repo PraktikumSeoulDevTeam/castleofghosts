@@ -56,8 +56,7 @@ function component(props: ConnectedProps<typeof connector>): JSX.Element {
 
     return (
         <div>
-
-            {user.avatar && <img src={avatar} alt={firstName} className="my-2" />}
+            {avatar && <img src={avatar} alt={firstName} className="my-2" />}
 
             <FormControl schema={UserAvatarSchema} fields={UserAvatarFields} onSubmit={onUpdate}>
                 <footer className="button-bar mt-5">
