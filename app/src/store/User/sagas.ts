@@ -1,6 +1,6 @@
 import {call, ForkEffect, put, takeLeading} from 'redux-saga/effects';
 import {getUserInfo, updateUserInfo, updateUserAvatar, updateUserPassword, signUp, signIn, signOut} from '../../api';
-import {userRemoveAction, userUpdateAction} from './actions';
+import {userSetAction, userRemoveAction} from './actions';
 import {
     SignInAction,
     SignUpAction,
@@ -24,7 +24,7 @@ export function* userWatcher(): Generator<ForkEffect<never>> {
 function* userGetWorker() {
     try {
         const userInfo: ApiUserInfo = yield call(getUserInfo);
-        yield put(userUpdateAction(userInfo));
+        yield put(userSetAction(userInfo));
     } catch (error) {
         // eslint-disable-next-line no-console
         console.log('[userSignUpWorker error] ', error);
@@ -34,7 +34,7 @@ function* userGetWorker() {
 function* userSaveWorker(action: UserUpdateAction) {
     try {
         const userData: ApiUserInfo = yield call(updateUserInfo, action.payload);
-        yield put(userUpdateAction(userData));
+        yield put(userSetAction(userData));
     } catch (error) {
         // eslint-disable-next-line no-console
         console.log('[userSaveWorker error] ', error);
@@ -64,7 +64,7 @@ function* userSignUpWorker(action: SignUpAction) {
         const isOk: boolean = yield call(signUp, action.payload);
         if (isOk) {
             const userInfo: ApiUserInfo = yield call(getUserInfo);
-            yield put(userUpdateAction(userInfo));
+            yield put(userSetAction(userInfo));
         }
     } catch (error) {
         // eslint-disable-next-line no-console
@@ -77,7 +77,7 @@ function* userSignInWorker(action: SignInAction) {
         const isOk: boolean = yield call(signIn, action.payload);
         if (isOk) {
             const userInfo: ApiUserInfo = yield call(getUserInfo);
-            yield put(userUpdateAction(userInfo));
+            yield put(userSetAction(userInfo));
         }
     } catch (error) {
         // eslint-disable-next-line no-console

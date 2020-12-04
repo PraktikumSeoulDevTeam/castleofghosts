@@ -8,6 +8,7 @@ import type {
 
 export const enum USER_ACTION_TYPES {
     GET = 'cog/user/get',
+    SET = 'cog/user/set',
     UPDATE = 'cog/user/update',
     UPDATE_PASSWORD = 'cog/user/updatepassword',
     UPDATE_AVATAR = 'cog/user/updateavatar',
@@ -23,6 +24,11 @@ export interface UserState {
 
 export interface UserGetAction {
     type: USER_ACTION_TYPES.GET;
+}
+
+export interface UserSetAction {
+    type: USER_ACTION_TYPES.SET;
+    payload: ApiUserInfo;
 }
 
 export interface UserUpdateAction {
@@ -60,6 +66,7 @@ export interface SignOutAction {
 
 export type UserActions =
     | UserGetAction
+    | UserSetAction
     | UserUpdateAction
     | UserUpdatePasswordAction
     | UserUpdateAvatarAction

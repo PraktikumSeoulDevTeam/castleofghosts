@@ -1,5 +1,6 @@
 import {
     UserGetAction,
+    UserSetAction,
     UserUpdateAction,
     UserUpdatePasswordAction,
     UserUpdateAvatarAction,
@@ -20,6 +21,13 @@ import type {
 export function userGetAction(): UserGetAction {
     return {
         type: USER_ACTION_TYPES.GET
+    };
+}
+
+export function userSetAction(userInfo: ApiUserInfo): UserSetAction {
+    return {
+        type: USER_ACTION_TYPES.SET,
+        payload: userInfo
     };
 }
 
