@@ -25,32 +25,38 @@ const UserEditFields: FormControlFields = {
     login: {
         type: 'text',
         placeholder: 'Login',
-        title: 'Login: '
+        title: 'Login: ',
+        autocomplete: 'username'
     },
     email: {
         type: 'email',
         placeholder: 'Email',
-        title: 'Email: '
+        title: 'Email: ',
+        autocomplete: 'email'
     },
     phone: {
         type: 'text',
         placeholder: 'Phone',
-        title: 'Phone: '
+        title: 'Phone: ',
+        autocomplete: 'tel'
     },
     first_name: {
         type: 'text',
         placeholder: 'First name',
-        title: 'First name: '
+        title: 'First name: ',
+        autocomplete: 'given-name'
     },
     second_name: {
         type: 'text',
         placeholder: 'Second name',
-        title: 'Second name: '
+        title: 'Second name: ',
+        autocomplete: 'family-name'
     },
     display_name: {
         type: 'text',
         placeholder: 'Display name',
-        title: 'Display name: '
+        title: 'Display name: ',
+        autocomplete: 'nickname'
     }
 };
 
@@ -94,7 +100,7 @@ function component(props: ConnectedProps<typeof connector>): JSX.Element {
 
     return (
         <FormControl schema={UserEditSchema} fields={FilledUserEditFields} onSubmit={onUpdate}>
-            <footer className="button-bar mt-">
+            <footer className="button-bar mt-5">
                 <Button type="submit">Save</Button>
             </footer>
         </FormControl>

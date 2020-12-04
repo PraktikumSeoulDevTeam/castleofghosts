@@ -14,7 +14,7 @@ const FormFile = ({form, field}: FormFieldComponentProps): JSX.Element => (
 );
 
 const RenderFields = (fields: FormControlFields): JSX.Element[] => {
-    return Object.entries(fields).map(([fieldName, {placeholder, type, title}]) => {
+    return Object.entries(fields).map(([fieldName, {placeholder, type, title, autocomplete = 'off'}]) => {
         return (
             <div className="input mb-4" key={fieldName}>
                 <label htmlFor={fieldName}>
@@ -22,9 +22,11 @@ const RenderFields = (fields: FormControlFields): JSX.Element[] => {
                     <Field
                         placeholder={placeholder}
                         className="input__field my-1"
+                        spellCheck="false"
                         type={type}
                         name={fieldName}
                         id={fieldName}
+                        autoComplete={autocomplete}
                         component={type === 'file' ? FormFile : null}
                     />
                 </label>
