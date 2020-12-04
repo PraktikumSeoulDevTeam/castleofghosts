@@ -1,4 +1,5 @@
 $baseline: 8px;
+$iconSize: 32px;
 
 $z-index: (
     'dialog': 2100,
@@ -18,7 +19,8 @@ $colorBgDark: #140c1c;
 
 $fontSize: 1rem;
 
-$avatarUrlTema: url('~/assets/img/tema.png');
-$avatarUrlNikita: url('~/assets/img/nikita.png');
-$avatarUrlDima: url('~/assets/img/dima.png');
-$avatarUrlJenya: url('~/assets/img/jenya.png');
+$charMapUrl: url('~/assets/img/char.png');
+$charSprite1: 0 0;
+$charSprite2: -1 * $iconSize 0;
+$charSprite3: -2 * $iconSize 0;
+$charSprite4: -3 * $iconSize 0;
