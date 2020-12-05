@@ -1,5 +1,9 @@
+import {ApiChangePasswordRequest} from 'api/types';
 import React from 'react';
+import {connect, ConnectedProps} from 'react-redux';
+import {Dispatch} from 'redux';
 import * as Yup from 'yup';
+import {userUpdatePasswordAction} from '../../store/User/actions';
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
 import type {FormControlFields} from '../FormControl/types';
@@ -41,19 +45,30 @@ const UserPasswordFields: FormControlFields = {
     }
 };
 
-export function UserPasswordChange(): JSX.Element {
+const mapDispatch = (dispatch: Dispatch) => {
+    return {
+        onUpdate: (formData: {[key: string]: string}) => {
+            const data: ApiChangePasswordRequest = {
+                oldPassword: formData.passwordCurrent,
+                newPassword: formData.passwordNew
+            };
+            dispatch(userUpdatePasswordAction(data));
+        }
+    };
+};
+
+const connector = connect(null, mapDispatch);
+
+function component(props: ConnectedProps<typeof connector>): JSX.Element {
+    const {onUpdate} = props;
+
     return (
-        <FormControl
-            schema={UserPasswordSchema}
-            fields={UserPasswordFields}
-            onSubmit={(formData) => {
-                // eslint-disable-next-line no-console
-                console.log(formData);
-            }}
-        >
+        <FormControl schema={UserPasswordSchema} fields={UserPasswordFields} onSubmit={onUpdate}>
             <footer className="button-bar mt-5">
                 <Button type="submit">Change</Button>
             </footer>
         </FormControl>
     );
 }
+
+export const UserPasswordChange = connector(component);

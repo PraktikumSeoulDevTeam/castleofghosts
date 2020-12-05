@@ -7,7 +7,7 @@ const userState: UserState = {
 
 export const userReducer = (state = userState, action: UserActions): UserState => {
     switch (action.type) {
-        case USER_ACTION_TYPES.UPDATE: {
+        case USER_ACTION_TYPES.SET: {
             const newState = cloneDeep(state);
             newState.info = action.payload;
 

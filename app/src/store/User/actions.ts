@@ -1,13 +1,16 @@
 import {
     UserGetAction,
+    UserSetAction,
     UserUpdateAction,
+    UserUpdatePasswordAction,
+    UserUpdateAvatarAction,
     UserRemoveAction,
     SignUpAction,
     SignInAction,
     SignOutAction,
     USER_ACTION_TYPES
 } from './types';
-import type {ApiUserInfo, ApiSignUpRequest, ApiSignInRequest} from '../../api/types';
+import type {ApiUserInfo, ApiChangePasswordRequest, ApiSignUpRequest, ApiSignInRequest} from '../../api/types';
 
 export function userGetAction(): UserGetAction {
     return {
@@ -15,10 +18,31 @@ export function userGetAction(): UserGetAction {
     };
 }
 
-export function userUpdateAction(userInfo: Partial<ApiUserInfo>): UserUpdateAction {
+export function userSetAction(userInfo: ApiUserInfo): UserSetAction {
+    return {
+        type: USER_ACTION_TYPES.SET,
+        payload: userInfo
+    };
+}
+
+export function userUpdateAction(userInfo: ApiUserInfo): UserUpdateAction {
     return {
         type: USER_ACTION_TYPES.UPDATE,
         payload: userInfo
+    };
+}
+
+export function userUpdateAvatarAction(userAvatar: FormData): UserUpdateAvatarAction {
+    return {
+        type: USER_ACTION_TYPES.UPDATE_AVATAR,
+        payload: userAvatar
+    };
+}
+
+export function userUpdatePasswordAction(userPasswordData: ApiChangePasswordRequest): UserUpdatePasswordAction {
+    return {
+        type: USER_ACTION_TYPES.UPDATE_PASSWORD,
+        payload: userPasswordData
     };
 }
 

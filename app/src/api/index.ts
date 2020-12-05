@@ -151,7 +151,7 @@ function responseHandler<T>(response: AxiosResponse<T>): AxiosResponse<T> {
  * до возвращения в промис вызвавшего метода
  * @param response  Объект ошибки от сервера
  */
-function responseErrorHandler<T extends unknown>(responseError: AxiosError<T>): AxiosError<T> {
+function responseErrorHandler(responseError: AxiosError<unknown>): Promise<ApiBadRequestError> {
     let badRequestError: ApiBadRequestError;
 
     if (responseError.request.responseType === 'text' && typeof responseError.response.data === 'string') {
@@ -171,9 +171,9 @@ function responseErrorHandler<T extends unknown>(responseError: AxiosError<T>): 
         badRequestError.status = responseError.response.status;
     }
     // eslint-disable-next-line no-console
-    console.error('[API error]', badRequestError || responseError);
+    console.error('[API error]', badRequestError, responseError.response);
 
-    return responseError;
+    return Promise.reject(badRequestError);
 }
 
 /**
