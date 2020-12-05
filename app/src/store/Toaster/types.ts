@@ -9,9 +9,9 @@ export interface ToasterState {
 }
 
 export const enum TOASTER_ACTION_TYPES {
-    ADD_TOASTER = 'cost/toaster/add',
-    CREATE_TOASTER = 'cost/toaster/create',
-    REMOVE_TOASTER = 'cost/toaster/remove'
+    ADD_TOASTER = 'cog/toaster/add',
+    CREATE_TOASTER = 'cog/toaster/create',
+    REMOVE_TOASTER = 'cog/toaster/remove'
 }
 
 export interface ToasterAddAction {

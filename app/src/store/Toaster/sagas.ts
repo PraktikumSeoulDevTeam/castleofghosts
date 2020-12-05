@@ -9,8 +9,7 @@ export function* toasterWatcher(): Generator<ForkEffect<never>> {
 }
 
 function* toasterAdd(action: ToasterAddAction) {
-    const toasterId = `${Date.now()}_${Math.trunc(Math.random() * Date.now())}`;
-
+    const toasterId = `${Date.now()}`;
     yield put(
         toasterCreateAction({
             id: toasterId,

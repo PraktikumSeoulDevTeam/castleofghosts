@@ -1,4 +1,4 @@
-import {ToasterAddAction, TOASTER_ACTION_TYPES, ToasterAction, ToasterCreateAction} from './types';
+import {ToasterAddAction, TOASTER_ACTION_TYPES, ToasterAction, ToasterCreateAction, Toast} from './types';
 
 export function toasterAddAction({text, duration}: {text: string; duration?: number}): ToasterAddAction {
     return {
@@ -10,15 +10,7 @@ export function toasterAddAction({text, duration}: {text: string; duration?: num
     };
 }
 
-export function toasterCreateAction({
-    text,
-    duration,
-    id
-}: {
-    text: string;
-    id: string;
-    duration?: number;
-}): ToasterCreateAction {
+export function toasterCreateAction({text, duration, id}: Toast): ToasterCreateAction {
     return {
         type: TOASTER_ACTION_TYPES.CREATE_TOASTER,
         payload: {
