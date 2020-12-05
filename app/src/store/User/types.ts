@@ -1,8 +1,11 @@
-import type {ApiSignInRequest, ApiSignUpRequest, ApiUserInfo} from '../../api/types';
+import type {ApiChangePasswordRequest, ApiSignInRequest, ApiSignUpRequest, ApiUserInfo} from '../../api/types';
 
 export const enum USER_ACTION_TYPES {
     GET = 'cog/user/get',
+    SET = 'cog/user/set',
     UPDATE = 'cog/user/update',
+    UPDATE_PASSWORD = 'cog/user/updatepassword',
+    UPDATE_AVATAR = 'cog/user/updateavatar',
     REMOVE = 'cog/user/remove',
     SIGN_UP = 'cog/user/signup',
     SIGN_IN = 'cog/user/signin',
@@ -17,9 +20,24 @@ export interface UserGetAction {
     type: USER_ACTION_TYPES.GET;
 }
 
+export interface UserSetAction {
+    type: USER_ACTION_TYPES.SET;
+    payload: ApiUserInfo;
+}
+
 export interface UserUpdateAction {
     type: USER_ACTION_TYPES.UPDATE;
-    payload: Partial<ApiUserInfo>;
+    payload: ApiUserInfo;
+}
+
+export interface UserUpdateAvatarAction {
+    type: USER_ACTION_TYPES.UPDATE_AVATAR;
+    payload: FormData;
+}
+
+export interface UserUpdatePasswordAction {
+    type: USER_ACTION_TYPES.UPDATE_PASSWORD;
+    payload: ApiChangePasswordRequest;
 }
 
 export interface UserRemoveAction {
@@ -42,7 +60,10 @@ export interface SignOutAction {
 
 export type UserActions =
     | UserGetAction
+    | UserSetAction
     | UserUpdateAction
+    | UserUpdatePasswordAction
+    | UserUpdateAvatarAction
     | UserRemoveAction
     | SignUpAction
     | SignInAction

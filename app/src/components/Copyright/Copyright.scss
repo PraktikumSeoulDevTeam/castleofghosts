@@ -23,23 +23,25 @@
     }
     &__icon {
         display: block;
-        width: 40px;
-        height: 60px;
+        width: $iconSize;
+        height: $iconSize;
         margin-right: auto;
         margin-left: auto;
-        background-position: bottom center;
+        background-image: $charMapUrl;
         background-repeat: no-repeat;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
         &_tema {
-            background-image: $avatarUrlTema;
+            background-position: $charSprite1;
         }
         &_nikita {
-            background-image: $avatarUrlNikita;
+            background-position: $charSprite2;
         }
         &_dima {
-            background-image: $avatarUrlDima;
+            background-position: $charSprite3;
         }
         &_jenya {
-            background-image: $avatarUrlJenya;
+            background-position: $charSprite4;
         }
     }
 }
