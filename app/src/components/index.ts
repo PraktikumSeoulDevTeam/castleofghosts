@@ -5,3 +5,5 @@ export * from './UserDataChange/UserDataChange';
 export * from './UserPasswordChange/UserPasswordChange';
 export * from './UserAvatarChange/UserAvatarChange';
 export * from './Menu/Menu';
+export * from './Leaderboard/Leaderboard';
+export * from './LeaderboardRecord/LeaderboardRecord';

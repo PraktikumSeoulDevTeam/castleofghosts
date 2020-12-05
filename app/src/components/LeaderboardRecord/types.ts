@@ -1,4 +1,4 @@
-import {ApiCharacterInfo} from '../../../api/types';
+import {ApiCharacterInfo} from '~/api/types';
 
 export interface LeaderboardRecordProps {
     position: number;
