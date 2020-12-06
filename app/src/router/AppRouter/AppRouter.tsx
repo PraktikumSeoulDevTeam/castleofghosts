@@ -8,7 +8,8 @@ import {
     AuthorizationPage,
     RegistrationPage,
     EditPage,
-    WelcomePage
+    WelcomePage,
+    LevelGenerator
 } from '../../pages';
 
 /**
@@ -20,6 +21,9 @@ export function AppRouter(): JSX.Element {
             <Switch>
                 <Route exact path="/">
                     <WelcomePage />
+                </Route>
+                <Route path="/generator">
+                    <LevelGenerator />
                 </Route>
                 <PrivateRoute publicExclusive path="/registration">
                     <RegistrationPage />

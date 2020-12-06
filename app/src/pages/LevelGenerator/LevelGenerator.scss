@@ -1,0 +1,13 @@
+.generator-grid {
+    display: grid;
+    grid-template-columns: repeat(30, auto);
+    grid-template-rows: repeat(15, auto);
+}
+
+.generator-grid__cell {
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    text-align: center;
+}
