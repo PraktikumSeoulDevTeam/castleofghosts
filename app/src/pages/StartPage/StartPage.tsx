@@ -20,7 +20,7 @@ const mergeProps = (mappedState: MappedState, dispatchProps: DispatchProp) => {
 
     return {
         characterName,
-        onStartGame: () => {
+        gameStart: () => {
             // eslint-disable-next-line no-console
             console.warn(dispatch);
             // alert('start game');
@@ -31,7 +31,7 @@ const mergeProps = (mappedState: MappedState, dispatchProps: DispatchProp) => {
 const connector = connect(mapState, null, mergeProps);
 
 function component(props: ConnectedProps<typeof connector>): JSX.Element {
-    const {characterName} = props;
+    const {characterName, gameStart} = props;
     const [isCountdown, setIsCountdown] = useState(false);
 
     return (
@@ -46,7 +46,7 @@ function component(props: ConnectedProps<typeof connector>): JSX.Element {
                     Run Game
                 </Button>
             </footer>
-            {isCountdown ? <Countdown /> : null}
+            {isCountdown ? <Countdown onFinish={gameStart} /> : null}
         </UiLayout>
     );
 }
