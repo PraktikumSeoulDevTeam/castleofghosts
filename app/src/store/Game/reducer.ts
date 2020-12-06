@@ -3,7 +3,7 @@ import {GAME_ACTION_TYPES, GameState, GameActions} from './types';
 
 // TODO mock
 const gameState: GameState = {
-    character: {id: 1, name: 'Sofa Warlord', points: 180}
+    character: {}
 };
 
 export const gameReducer = (state = gameState, action: GameActions): GameState => {

@@ -7,3 +7,4 @@ export * from './UserAvatarChange/UserAvatarChange';
 export * from './Menu/Menu';
 export * from './Leaderboard/Leaderboard';
 export * from './LeaderboardRecord/LeaderboardRecord';
+export * from './CharNameInput/CharNameInput';
