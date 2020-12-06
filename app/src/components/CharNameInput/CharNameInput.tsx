@@ -2,6 +2,7 @@ import React, {ChangeEvent, useEffect} from 'react';
 import {connect, ConnectedProps, DispatchProp} from 'react-redux';
 import {AppStoreState} from 'store/types';
 import {gameSetCharNameAction} from '~/store/Game/actions';
+import './CharNameInput.scss';
 
 type MappedState = {
     userDisplayName: string;
@@ -42,7 +43,11 @@ function component(props: ConnectedProps<typeof connector>): JSX.Element {
         }
     }, []);
 
-    return <input type="text" value={characterName} onChange={onChange} />;
+    return (
+        <div className="charNameInput mt-2">
+            <input className="input__field" type="text" value={characterName} onChange={onChange} />
+        </div>
+    );
 }
 
 export const CharNameInput = connector(component);

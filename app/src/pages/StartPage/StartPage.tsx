@@ -24,6 +24,7 @@ function component(props: ConnectedProps<typeof connector>): JSX.Element {
             <h1 className="t-title mt-5">Start You Game</h1>
             <h2 className="t-title_2 mt-5">Best warriors</h2>
             <Leaderboard />
+            <h2 className="t-title_2 mt-5">New warrior name</h2>
             <CharNameInput />
             <footer className="button-bar mt-5">
                 <Button type="button" onClick={onStartGame}>
