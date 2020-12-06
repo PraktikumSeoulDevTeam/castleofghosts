@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {memo} from 'react';
 import './Countdown.scss';
 import {CountdownProps} from './types';
 
-export function Countdown(props: CountdownProps): JSX.Element {
+function Component(props: CountdownProps): JSX.Element {
     const {onFinish} = props;
 
     return (
@@ -17,3 +17,5 @@ export function Countdown(props: CountdownProps): JSX.Element {
         </div>
     );
 }
+
+export const Countdown = memo(Component);

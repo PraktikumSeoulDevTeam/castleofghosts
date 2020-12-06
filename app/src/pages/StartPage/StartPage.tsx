@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {connect, ConnectedProps, DispatchProp} from 'react-redux';
 import {AppStoreState} from 'store/types';
+import {gameStartAction} from '~/store/Game/actions';
 import {Leaderboard, Button, CharNameInput, Countdown} from '~/components';
 import {UiLayout} from '~/layouts';
+import history from '~/utils/history';
 
 type MappedState = {
     characterName: string;
@@ -21,9 +23,8 @@ const mergeProps = (mappedState: MappedState, dispatchProps: DispatchProp) => {
     return {
         characterName,
         gameStart: () => {
-            // eslint-disable-next-line no-console
-            console.warn(dispatch);
-            // alert('start game');
+            dispatch(gameStartAction());
+            history.push('/game');
         }
     };
 };

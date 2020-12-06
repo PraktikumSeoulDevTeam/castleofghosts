@@ -3,6 +3,7 @@ import {GAME_ACTION_TYPES, GameState, GameActions} from './types';
 
 // TODO mock
 const gameState: GameState = {
+    inProgress: false,
     character: {}
 };
 
@@ -20,6 +21,13 @@ export const gameReducer = (state = gameState, action: GameActions): GameState =
 
             return newState;
         }
+        case GAME_ACTION_TYPES.START: {
+            const newState = cloneDeep(state);
+            newState.inProgress = true;
+
+            return newState;
+        }
+
         case GAME_ACTION_TYPES.REMOVE: {
             const newState = cloneDeep(state);
             newState.character = {};

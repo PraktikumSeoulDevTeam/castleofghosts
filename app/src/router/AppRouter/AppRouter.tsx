@@ -1,14 +1,15 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Router, Switch, Route} from 'react-router-dom';
 import {PrivateRoute} from '../PrivateRoute/PrivateRoute';
 import {ErrorPage, StartPage, GamePage, AuthorizationPage, RegistrationPage, EditPage, WelcomePage} from '../../pages';
+import history from '~/utils/history';
 
 /**
  * Роутер
  */
 export function AppRouter(): JSX.Element {
     return (
-        <Router>
+        <Router history={history}>
             <Switch>
                 <Route exact path="/">
                     <WelcomePage />
