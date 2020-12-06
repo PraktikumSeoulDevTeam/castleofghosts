@@ -1,31 +1,36 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
+import {Dispatch} from 'redux';
 import {UiLayout} from '../../layouts';
-import type {AppStoreState} from '../../store/types';
-import './StartPage.scss';
-import {Leaderboard} from '~/components';
+import {Leaderboard, Button} from '~/components';
 
-const mapState = (state: AppStoreState) => {
+const mapDispatch = (dispatch: Dispatch) => {
     return {
-        leaderboard: state.leaderboard.list
+        onStartGame: () => {
+            // eslint-disable-next-line no-console
+            console.warn(dispatch);
+            // alert('start game');
+        }
     };
 };
 
-const connector = connect(mapState);
+const connector = connect(null, mapDispatch);
 
-export const StartPage = connector(
-    ({leaderboard}: ConnectedProps<typeof connector>): JSX.Element => {
-        // eslint-disable-next-line no-console
-        console.warn(leaderboard);
+function component(props: ConnectedProps<typeof connector>): JSX.Element {
+    const {onStartGame} = props;
 
-        return (
-            <UiLayout isStatic isBlock className="start-page">
-                <h1 className="t-title mt-5">Start You Game</h1>
-                <h1 className="t-title_2 mt-5">Best warriors</h1>
-                <Leaderboard />
+    return (
+        <UiLayout isStatic isBlock className="start-page">
+            <h1 className="t-title mt-5">Start You Game</h1>
+            <h2 className="t-title_2 mt-5">Best warriors</h2>
+            <Leaderboard />
+            <footer className="button-bar mt-5">
+                <Button type="button" onClick={onStartGame}>
+                    Run Game
+                </Button>
+            </footer>
+        </UiLayout>
+    );
+}
 
-                <h2 className="t-title_2 mt-2">Enter you name</h2>
-            </UiLayout>
-        );
-    }
-);
+export const StartPage = connector(component);
