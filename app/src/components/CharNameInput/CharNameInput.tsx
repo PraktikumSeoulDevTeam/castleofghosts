@@ -45,7 +45,13 @@ function component(props: ConnectedProps<typeof connector>): JSX.Element {
 
     return (
         <div className="charNameInput mt-2">
-            <input className="input__field" type="text" value={characterName} onChange={onChange} />
+            <input
+                placeholder="Enter character name for begin"
+                className="input__field"
+                type="text"
+                value={characterName}
+                onChange={onChange}
+            />
         </div>
     );
 }

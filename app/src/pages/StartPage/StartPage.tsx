@@ -1,11 +1,25 @@
-import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {Dispatch} from 'redux';
-import {UiLayout} from '../../layouts';
-import {Leaderboard, Button, CharNameInput} from '~/components';
+import React, {useState} from 'react';
+import {connect, ConnectedProps, DispatchProp} from 'react-redux';
+import {AppStoreState} from 'store/types';
+import {Leaderboard, Button, CharNameInput, Countdown} from '~/components';
+import {UiLayout} from '~/layouts';
 
-const mapDispatch = (dispatch: Dispatch) => {
+type MappedState = {
+    characterName: string;
+};
+
+const mapState = (state: AppStoreState) => {
     return {
+        characterName: state.game.character.name ?? ''
+    };
+};
+
+const mergeProps = (mappedState: MappedState, dispatchProps: DispatchProp) => {
+    const {dispatch} = dispatchProps;
+    const {characterName} = mappedState;
+
+    return {
+        characterName,
         onStartGame: () => {
             // eslint-disable-next-line no-console
             console.warn(dispatch);
@@ -14,10 +28,11 @@ const mapDispatch = (dispatch: Dispatch) => {
     };
 };
 
-const connector = connect(null, mapDispatch);
+const connector = connect(mapState, null, mergeProps);
 
 function component(props: ConnectedProps<typeof connector>): JSX.Element {
-    const {onStartGame} = props;
+    const {characterName} = props;
+    const [isCountdown, setIsCountdown] = useState(false);
 
     return (
         <UiLayout isStatic isBlock className="start-page">
@@ -27,10 +42,11 @@ function component(props: ConnectedProps<typeof connector>): JSX.Element {
             <h2 className="t-title_2 mt-5">New warrior name</h2>
             <CharNameInput />
             <footer className="button-bar mt-5">
-                <Button type="button" onClick={onStartGame}>
+                <Button type="button" onClick={() => setIsCountdown(true)} disabled={!characterName}>
                     Run Game
                 </Button>
             </footer>
+            {isCountdown ? <Countdown /> : null}
         </UiLayout>
     );
 }
