@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Button} from '../Button/Button';
 import {signOutAction} from '../../store/User/actions';
+import {gameSetStateAction} from '../../store/Game/actions';
 import type {AppStoreState} from '../../store/types';
 import type {MenuProps} from './types';
 import './Menu.scss';
@@ -14,13 +15,23 @@ const mapState = (state: AppStoreState) => {
 };
 
 const mapDispatch = {
-    signOut: signOutAction
+    signOut: signOutAction,
+    startGame: gameSetStateAction
 };
 
 const connector = connect(mapState, mapDispatch);
 
 export const Menu = connector(
-    ({isAuthenticated, signOut, className = ''}: MenuProps & ConnectedProps<typeof connector>): JSX.Element => {
+    (props: MenuProps & ConnectedProps<typeof connector>): JSX.Element => {
+        const {isAuthenticated, signOut, startGame, className = ''} = props;
+
+        useEffect(() => {
+            // TODO удалить после создания страницы старта игры
+            if (isAuthenticated) {
+                startGame('START');
+            }
+        });
+
         return (
             <div className={`menu ${className}`}>
                 {isAuthenticated ? (
