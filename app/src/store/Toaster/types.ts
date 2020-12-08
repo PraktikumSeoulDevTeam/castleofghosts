@@ -1,5 +1,5 @@
 export interface Toast {
-    id: string;
+    id: number;
     text: string;
     duration: number; // in ms
 }
@@ -16,24 +16,12 @@ export const enum TOASTER_ACTION_TYPES {
 
 export interface ToasterAddAction {
     type: TOASTER_ACTION_TYPES.ADD_TOASTER;
-    payload: {
-        text: string;
-        duration: number;
-    };
-}
-
-export interface ToasterCreateAction {
-    type: TOASTER_ACTION_TYPES.CREATE_TOASTER;
-    payload: {
-        text: string;
-        duration: number;
-        id: string;
-    };
+    payload: Toast;
 }
 
 export interface ToasterRemoveAction {
     type: TOASTER_ACTION_TYPES.REMOVE_TOASTER;
-    payload: string;
+    payload: number;
 }
 
-export type ToasterAction = ToasterAddAction | ToasterRemoveAction | ToasterCreateAction;
+export type ToasterAction = ToasterAddAction | ToasterRemoveAction;

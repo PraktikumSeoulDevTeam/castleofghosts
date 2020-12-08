@@ -7,7 +7,7 @@ const inititalState: ToasterState = {
 
 export const toasterReducer = (state = inititalState, action: ToasterAction): ToasterState => {
     switch (action.type) {
-        case TOASTER_ACTION_TYPES.CREATE_TOASTER: {
+        case TOASTER_ACTION_TYPES.ADD_TOASTER: {
             const newState = cloneDeep(state);
             newState.toastes.push(action.payload);
 

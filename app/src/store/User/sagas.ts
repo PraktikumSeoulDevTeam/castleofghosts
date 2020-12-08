@@ -75,7 +75,8 @@ function* userSignUpWorker(action: SignUpAction) {
         yield put(
             toasterAddAction({
                 text: error?.reason ?? 'Oopss, something worong :(',
-                duration: 2000
+                duration: 2000,
+                id: Date.now()
             })
         );
         // eslint-disable-next-line no-console
@@ -98,7 +99,8 @@ function* userSignInWorker(action: SignInAction) {
         yield put(
             toasterAddAction({
                 text: error?.reason ?? 'Oopss, something worong :(',
-                duration: 2000
+                duration: 2000,
+                id: Date.now()
             })
         );
         // eslint-disable-next-line no-console
