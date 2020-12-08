@@ -1,7 +1,5 @@
 import {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {ax} from './index';
-import {store} from '../store';
-import {toasterAddAction} from '../store/Toaster/actions';
 import {ApiBadRequestError} from './types';
 
 ax.interceptors.response.use(responseHandler, responseErrorHandler);
@@ -56,12 +54,6 @@ function responseErrorHandler(responseError: AxiosError<unknown>): Promise<ApiBa
         badRequestError.status = responseError.response.status;
     }
 
-    store.dispatch(
-        toasterAddAction({
-            text: badRequestError.reason ?? 'Что-то пошло не так :(',
-            duration: 2000
-        })
-    );
     // eslint-disable-next-line no-console
     console.error('[API error]', badRequestError, responseError.response);
 

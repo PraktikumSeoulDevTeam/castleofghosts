@@ -11,6 +11,7 @@ import {
 } from './types';
 import {utilitySetLoading} from '../Utility/actions';
 import type {ApiUserInfo} from '../../api/types';
+import {toasterAddAction} from '../Toaster/actions';
 
 export function* userWatcher(): Generator<ForkEffect<never>> {
     yield takeLeading(USER_ACTION_TYPES.GET, userGetWorker);
@@ -71,6 +72,12 @@ function* userSignUpWorker(action: SignUpAction) {
             yield put(userSetAction(userInfo));
         }
     } catch (error) {
+        yield put(
+            toasterAddAction({
+                text: error?.reason ?? 'Oopss, something worong :(',
+                duration: 2000
+            })
+        );
         // eslint-disable-next-line no-console
         console.log('[userSignUpWorker error] ', error);
     } finally {
@@ -88,6 +95,12 @@ function* userSignInWorker(action: SignInAction) {
             yield put(userSetAction(userInfo));
         }
     } catch (error) {
+        yield put(
+            toasterAddAction({
+                text: error?.reason ?? 'Oopss, something worong :(',
+                duration: 2000
+            })
+        );
         // eslint-disable-next-line no-console
         console.log('[userSignInWorker error] ', error);
     } finally {
