@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {connect, ConnectedProps, DispatchProp} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import {AppStoreState} from 'store/types';
 import {gameStartAction} from '~/store/Game/actions';
 import {Button, CharNameInput, Countdown} from '~/components';
 import {UiLayout} from '~/layouts';
-import history from '~/utils/history';
 
 type MappedState = {
     characterName: string;
@@ -22,7 +22,7 @@ const mergeProps = (mappedState: MappedState, dispatchProps: DispatchProp) => {
 
     return {
         characterName,
-        gameStart: () => {
+        gameStart: (history) => {
             dispatch(gameStartAction());
             history.push('/game');
         }
@@ -34,6 +34,7 @@ const connector = connect(mapState, null, mergeProps);
 function component(props: ConnectedProps<typeof connector>): JSX.Element {
     const {characterName, gameStart} = props;
     const [isCountdown, setIsCountdown] = useState(false);
+    const history = useHistory();
 
     return (
         <UiLayout isStatic isBlock className="start-page">
@@ -45,7 +46,7 @@ function component(props: ConnectedProps<typeof connector>): JSX.Element {
                     Run Game
                 </Button>
             </footer>
-            {isCountdown ? <Countdown onFinish={gameStart} /> : null}
+            {isCountdown ? <Countdown onFinish={() => gameStart(history)} /> : null}
         </UiLayout>
     );
 }
