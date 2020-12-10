@@ -28,6 +28,9 @@ export const Menu = connector(
                         <Link to="/start" className="t-center mt-5">
                             <Button>New game</Button>
                         </Link>
+                        <Link to="/leaderboard" className="t-center mt-5">
+                            <Button>Leaderboard</Button>
+                        </Link>
                         <Link to="/user" className="t-center mt-5">
                             <Button>User info</Button>
                         </Link>

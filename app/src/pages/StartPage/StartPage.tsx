@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {connect, ConnectedProps, DispatchProp} from 'react-redux';
 import {AppStoreState} from 'store/types';
 import {gameStartAction} from '~/store/Game/actions';
-import {Leaderboard, Button, CharNameInput, Countdown} from '~/components';
+import {Button, CharNameInput, Countdown} from '~/components';
 import {UiLayout} from '~/layouts';
 import history from '~/utils/history';
 
@@ -38,8 +38,6 @@ function component(props: ConnectedProps<typeof connector>): JSX.Element {
     return (
         <UiLayout isStatic isBlock className="start-page">
             <h1 className="t-title mt-5">Start You Game</h1>
-            <h2 className="t-title_2 mt-5">Best warriors</h2>
-            <Leaderboard />
             <h2 className="t-title_2 mt-5">New warrior name</h2>
             <CharNameInput />
             <footer className="button-bar mt-5">
