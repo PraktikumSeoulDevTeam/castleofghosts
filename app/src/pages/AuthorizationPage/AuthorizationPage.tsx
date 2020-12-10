@@ -4,11 +4,11 @@ import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
 import * as Yup from 'yup';
 
-import {signInAction} from '../../store/User/actions';
-import {UiLayout} from '../../layouts';
-import {Button, FormControl} from '../../components';
-import type {FormControlFields} from '../../components/FormControl/types';
-import type {ApiSignInRequest} from '../../api/types';
+import {signInAction} from '~/store/User/actions';
+import {UiLayout} from '~/layouts';
+import {Button, FormControl} from '~/components';
+import type {FormControlFields} from '~/components/FormControl/types';
+import type {ApiSignInRequest} from '~/api/types';
 
 const AuthorizationSchema = Yup.object().shape({
     login: Yup.string().required('field is required').max(12, 'max length 12 symbols'),

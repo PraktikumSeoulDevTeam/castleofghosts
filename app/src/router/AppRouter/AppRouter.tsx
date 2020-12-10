@@ -10,7 +10,7 @@ import {
     RegistrationPage,
     EditPage,
     WelcomePage
-} from '../../pages';
+} from '~/pages';
 
 /**
  * Роутер

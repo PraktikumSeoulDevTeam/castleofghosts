@@ -3,7 +3,7 @@ import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {AppStoreState} from 'store/types';
 import * as Yup from 'yup';
-import {userUpdateAvatarAction} from '../../store/User/actions';
+import {userUpdateAvatarAction} from '~/store/User/actions';
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
 import type {FormControlFields} from '../FormControl/types';

@@ -1,8 +1,8 @@
 import React, {useRef} from 'react';
 import {GameUi} from './GameUi/GameUi';
-import {setBgCanvas} from '../../core/bg.canvas';
-import {setMainCanvas} from '../../core/main.canvas';
-import {UiLayout} from '../../layouts';
+import {setBgCanvas} from '~/core/bg.canvas';
+import {setMainCanvas} from '~/core/main.canvas';
+import {UiLayout} from '~/layouts';
 import './GamePage.scss';
 
 const width = 1024;

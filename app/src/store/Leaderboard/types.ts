@@ -1,4 +1,4 @@
-import type {ApiCharacterInfo, ApiGetLeaderboardRequest} from '../../api/types';
+import type {ApiCharacterInfo, ApiGetLeaderboardRequest} from '~/api/types';
 
 export const enum LB_ACTION_TYPES {
     ADD = 'cog/lb/add',

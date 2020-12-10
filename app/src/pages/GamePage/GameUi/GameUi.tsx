@@ -1,6 +1,6 @@
 import React, {HTMLAttributes} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import {AppStoreState} from '../../../store/types';
+import {AppStoreState} from '~/store/types';
 import './GameUi.scss';
 
 const mapState = (state: AppStoreState) => {

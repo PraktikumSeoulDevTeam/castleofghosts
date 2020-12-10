@@ -1,6 +1,6 @@
 import React from 'react';
-import {Copyright, Menu} from '../../components';
-import {UiLayout} from '../../layouts';
+import {Copyright, Menu} from '~/components';
+import {UiLayout} from '~/layouts';
 
 export function WelcomePage(): JSX.Element {
     return (

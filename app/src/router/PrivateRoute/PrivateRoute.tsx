@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Redirect, Route} from 'react-router-dom';
-import type {AppStoreState} from '../../store/types';
+import type {AppStoreState} from '~/store/types';
 import {PrivateRouteProps} from './types';
 
 const mapState = (state: AppStoreState) => {

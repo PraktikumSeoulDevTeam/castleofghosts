@@ -1,4 +1,4 @@
-import type {ApiCharacterInfo} from '../../api/types';
+import type {ApiCharacterInfo} from '~/api/types';
 
 export const enum GAME_ACTION_TYPES {
     SET_CHAR_NAME = 'cog/game/set-char-name',

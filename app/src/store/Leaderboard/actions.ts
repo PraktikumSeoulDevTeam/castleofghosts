@@ -1,5 +1,5 @@
 import {LB_ACTION_TYPES, LbAddAction, LbUploadAction, LbDownloadAction, LbRemoveAction} from './types';
-import type {ApiCharacterInfo, ApiGetLeaderboardRequest} from '../../api/types';
+import type {ApiCharacterInfo, ApiGetLeaderboardRequest} from '~/api/types';
 
 export function lbAddAction(leaderboardInfo: ApiCharacterInfo[]): LbAddAction {
     return {

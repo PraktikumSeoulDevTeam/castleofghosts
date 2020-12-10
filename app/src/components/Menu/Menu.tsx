@@ -2,8 +2,8 @@ import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Button} from '../Button/Button';
-import {signOutAction} from '../../store/User/actions';
-import type {AppStoreState} from '../../store/types';
+import {signOutAction} from '~/store/User/actions';
+import type {AppStoreState} from '~/store/types';
 import type {MenuProps} from './types';
 import './Menu.scss';
 

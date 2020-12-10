@@ -10,7 +10,7 @@ import {
     SignOutAction,
     USER_ACTION_TYPES
 } from './types';
-import type {ApiUserInfo, ApiChangePasswordRequest, ApiSignUpRequest, ApiSignInRequest} from '../../api/types';
+import type {ApiUserInfo, ApiChangePasswordRequest, ApiSignUpRequest, ApiSignInRequest} from '~/api/types';
 
 export function userGetAction(): UserGetAction {
     return {

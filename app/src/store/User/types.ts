@@ -1,4 +1,4 @@
-import type {ApiChangePasswordRequest, ApiSignInRequest, ApiSignUpRequest, ApiUserInfo} from '../../api/types';
+import type {ApiChangePasswordRequest, ApiSignInRequest, ApiSignUpRequest, ApiUserInfo} from '~/api/types';
 
 export const enum USER_ACTION_TYPES {
     GET = 'cog/user/get',
