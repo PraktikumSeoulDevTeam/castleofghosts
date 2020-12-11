@@ -5,6 +5,12 @@
   "repository": "https://github.com/PraktikumSeoulDevTeam/castleofghosts.git",
   "author": "Artyom Mozgovoy, Dmitry Kuznetsov, Nikita Ivanov",
   "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=12.13",
+    "npm": "use-yarn-instead",
+    "yarn": ">=1.22"
+  },
   "scripts": {
     "start": "run-s app:build server:build server:run",
     "app:serve": "webpack serve -c ./app/webpack.config.js --mode development --watch",
