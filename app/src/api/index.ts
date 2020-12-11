@@ -1,10 +1,10 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import type {
     ApiAddToLeaderboardRequest,
+    ApiBadRequestError,
     ApiChangePasswordRequest,
     ApiGetLeaderboardRequest,
     ApiGetLeaderboardResponse,
-    ApiBadRequestError,
     ApiSignInRequest,
     ApiSignUpRequest,
     ApiSignUpResponce,
@@ -16,7 +16,9 @@ const API_URL = new URL('https://ya-praktikum.tech/api/v2');
 /**
  * Клиент для API https://ya-praktikum.tech/api/v2/swagger/
  */
-export const ax = axios.create({baseURL: API_URL.href, withCredentials: true});
+const ax = axios.create({baseURL: API_URL.href, withCredentials: true});
+ax.interceptors.request.use(requestHandler);
+ax.interceptors.response.use(responseHandler, responseErrorHandler);
 
 /**
  * Запрос регистрации
@@ -121,23 +123,6 @@ export async function getLeaderboard(data: ApiGetLeaderboardRequest): Promise<Ap
 }
 
 /**
- * Утилитный метод, изменяющий пути до аватаров на сервере с относительного адреса, на абсолютный.
- * Необходим, т.к. пути возвращаемые сервером невозможно использвать в чистом виде
- * @param objectWithAvatar  Объект содержащий аватар
- */
-function getWithUpdatedAvatarPath(objectWithAvatar: ApiUserInfo) {
-    const {avatar} = objectWithAvatar;
-
-    return {
-        ...objectWithAvatar,
-        avatar: avatar && avatar.startsWith('/') ? `${API_URL.origin}${avatar}` : avatar
-    };
-}
-
-ax.interceptors.response.use(responseHandler, responseErrorHandler);
-ax.interceptors.request.use(requestHandler);
-
-/**
  * Перехватчик запросов на сервер. Позволяет выполнять обработку всех запросов
  * до отправки в сетевой стэк
  * @param request   Объект конфигурации запроса на сервер
@@ -185,9 +170,22 @@ function responseErrorHandler(responseError: AxiosError<unknown>): Promise<ApiBa
     if (badRequestError) {
         badRequestError.status = responseError.response.status;
     }
-
     // eslint-disable-next-line no-console
     console.error('[API error]', badRequestError, responseError.response);
 
     return Promise.reject(badRequestError);
+}
+
+/**
+ * Утилитный метод, изменяющий пути до аватаров на сервере с относительного адреса, на абсолютный.
+ * Необходим, т.к. пути возвращаемые сервером невозможно использвать в чистом виде
+ * @param objectWithAvatar  Объект содержащий аватар
+ */
+function getWithUpdatedAvatarPath(objectWithAvatar: ApiUserInfo) {
+    const {avatar} = objectWithAvatar;
+
+    return {
+        ...objectWithAvatar,
+        avatar: avatar && avatar.startsWith('/') ? `${API_URL.origin}${avatar}` : avatar
+    };
 }
