@@ -1,8 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
-import {Button, LeaderboardRecord} from '~/components';
+import {Button} from '~/components';
 import {UiLayout} from '~/layouts';
+import {LeaderboardRecord} from './LeaderboardRecord/LeaderboardRecord';
 import type {AppStoreState} from '~/store/types';
 import './LeaderboardPage.scss';
 

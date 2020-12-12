@@ -5,8 +5,8 @@ import {
     ErrorPage,
     StartPage,
     GamePage,
-    AuthorizationPage,
     LeaderboardPage,
+    AuthorizationPage,
     RegistrationPage,
     EditPage,
     WelcomePage
