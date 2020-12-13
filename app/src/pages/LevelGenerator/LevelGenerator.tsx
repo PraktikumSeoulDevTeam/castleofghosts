@@ -12,15 +12,16 @@ export const LevelGenerator = (): JSX.Element => {
 
     const changeState = (i, j, v) => {
         setMap((oldState) => {
-            oldState[i][j] = parseInt(v, 10);
-            console.log(`change ->`);
-            return oldState;
+            const newState = [...oldState];
+            newState[i][j] = v;
+
+            return newState;
         });
     };
 
     return (
         <UiLayout isStatic isBlock className="leaderboard-page">
-            <h1 className="t-title mt-5">Create Map</h1>
+            <h1 className="t-title mt-5">Map Creator for DEV</h1>
 
             <div className="generator-grid mt-5">
                 {map.map((row, i) => {
@@ -28,7 +29,9 @@ export const LevelGenerator = (): JSX.Element => {
                         return (
                             <input
                                 className="generator-grid__cell"
-                                key={`${cell}_${Date.now()}_${Math.round(Math.random() * 99999)}`}
+                                key={`${cell}_${Date.now()}_${Math.round(
+                                    Math.random() * 99999
+                                )}_${Date.now()}_${Math.round(Math.random() * 10000000)}`}
                                 value={cell}
                                 onChange={((i1, j1) => (ev) => {
                                     const val = ev.target.value;
@@ -41,7 +44,30 @@ export const LevelGenerator = (): JSX.Element => {
             </div>
 
             <div className="mt-5">
-                <Button>Save</Button>
+                <Button
+                    onClick={() => {
+                        let result = '[';
+                        for (let i = 0; i < map.length; i += 1) {
+                            result += '[';
+                            for (let j = 0; j < map[i].length; j += 1) {
+                                result += map[i][j];
+                                if (j + 1 !== map[i].length) {
+                                    result += ',';
+                                }
+                            }
+                            result += ']';
+                            if (i + 1 !== map.length) {
+                                result += ',';
+                            }
+                        }
+                        result += ']';
+
+                        // eslint-disable-next-line no-console
+                        console.log(result);
+                    }}
+                >
+                    Save
+                </Button>
             </div>
         </UiLayout>
     );
