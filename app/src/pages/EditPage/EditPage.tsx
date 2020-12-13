@@ -2,42 +2,43 @@ import React, {useState, memo} from 'react';
 import {UserDataChange, UserPasswordChange, UserAvatarChange, Button} from '../../components';
 import {UiLayout} from '../../layouts';
 
-enum ViewStatus {
-    DATA_EDIT,
-    PASSWORD_CHANGE,
-    AVATAR_CHANGE
+const enum VIEW_TAB {
+    DATA = 'User info',
+    PASSWORD = 'Password',
+    AVATAR = 'Avatar'
 }
 
 const component = (): JSX.Element => {
-    const [view, setView] = useState(ViewStatus.DATA_EDIT);
+    const [view, setView] = useState(VIEW_TAB.DATA);
     let cnt: JSX.Element;
     switch (view) {
-        case ViewStatus.PASSWORD_CHANGE:
+        case VIEW_TAB.DATA:
+            cnt = <UserDataChange />;
+            break;
+        case VIEW_TAB.PASSWORD:
             cnt = <UserPasswordChange />;
             break;
-        case ViewStatus.AVATAR_CHANGE:
+        case VIEW_TAB.AVATAR:
             cnt = <UserAvatarChange />;
             break;
         default:
-            cnt = <UserDataChange />;
-            break;
     }
 
     return (
         <UiLayout isBlock>
-            <h1 className="t-title">Редактирование пользователя</h1>
+            <h1 className="t-title">{view}</h1>
             <div className="button-bar mt-2">
-                <Button className="btn btn_txt" onClick={() => setView(ViewStatus.DATA_EDIT)}>
-                    Данные пользователя
+                <Button className="btn btn_txt" onClick={() => setView(VIEW_TAB.DATA)}>
+                    {VIEW_TAB.DATA}
                 </Button>
-                <Button className="btn btn_txt" onClick={() => setView(ViewStatus.PASSWORD_CHANGE)}>
-                    Пароль
+                <Button className="btn btn_txt" onClick={() => setView(VIEW_TAB.PASSWORD)}>
+                    {VIEW_TAB.PASSWORD}
                 </Button>
-                <Button className="btn btn_txt" onClick={() => setView(ViewStatus.AVATAR_CHANGE)}>
-                    Аватарка
+                <Button className="btn btn_txt" onClick={() => setView(VIEW_TAB.AVATAR)}>
+                    {VIEW_TAB.AVATAR}
                 </Button>
             </div>
-            <div>{cnt}</div>
+            {cnt}
         </UiLayout>
     );
 };
