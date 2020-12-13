@@ -10,6 +10,19 @@
 
 $fontFamily: 'ps2p', sans-serif;
 
+@mixin t-small() {
+    font-family: $fontFamily;
+    font-size: $fontSize;
+    font-weight: normal;
+    line-height: 1.25;
+    @media all and (min-width: 768px) {
+        font-size: $fontSize * 0.95;
+    }
+    @media all and (min-width: 1024px) {
+        font-size: $fontSize * 1.15;
+    }
+}
+
 @mixin t-main() {
     font-family: $fontFamily;
     font-size: $fontSize;

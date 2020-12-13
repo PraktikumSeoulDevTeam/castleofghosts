@@ -4,4 +4,5 @@ export * from './FormControl/FormControl';
 export * from './UserDataChange/UserDataChange';
 export * from './UserPasswordChange/UserPasswordChange';
 export * from './UserAvatarChange/UserAvatarChange';
+export * from './Toaster/Toaster';
 export * from './Menu/Menu';
