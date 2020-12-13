@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
-import {Dispatch} from 'redux';
+import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import {useHistory} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import * as Yup from 'yup';
 import {AppStoreState} from 'store/types';
 import type {FormControlFields} from '~/components/FormControl/types';
@@ -23,47 +22,41 @@ const formFields: FormControlFields = {
 
 const mapState = (state: AppStoreState) => {
     return {
-        characterName: state.game.character.name || state.user.info.display_name
+        characterName: state.game.character.name,
+        userName: state.user.info.display_name,
+        progress: state.game.inProgress
     };
 };
 
-const mapDispatch = (dispatch: Dispatch) => {
-    return {
-        setCharacterName: (formData) => {
-            dispatch(gameSetCharNameAction(formData.characterName));
-        },
-        gameStart: (history) => {
-            dispatch(gameStartAction());
-            history.push('/game');
-        }
-    };
+const mapDispatch = {
+    setCharacterName: gameSetCharNameAction,
+    gameStart: gameStartAction
 };
 
 const connector = connect(mapState, mapDispatch);
 
 function component(props: ConnectedProps<typeof connector>): JSX.Element {
-    const {characterName, gameStart, setCharacterName} = props;
-    const [isCountdown, setIsCountdown] = useState(false);
-    formFields.characterName.initialValue = characterName ?? '';
-    const history = useHistory();
+    const {characterName, userName, progress, gameStart, setCharacterName} = props;
+    formFields.characterName.initialValue = characterName || userName;
 
-    return (
-        <UiLayout isStatic isBlock className="start-page">
-            <h1 className="t-title mt-5">Start You Game</h1>
+    return progress ? (
+        <Redirect push to="/game" />
+    ) : (
+        <UiLayout isBlock className="start-page">
+            <h1 className="t-title">Start You Game</h1>
 
             <FormControl
                 schema={formSchema}
                 fields={formFields}
                 onSubmit={(formData) => {
-                    setIsCountdown(true);
-                    setCharacterName(formData);
+                    setCharacterName(formData.characterName);
                 }}
             >
-                <footer className="button-bar mt-5">
+                <footer className="t-center mt-5">
                     <Button type="submit">Run Game</Button>
                 </footer>
             </FormControl>
-            {isCountdown ? <Countdown onFinish={() => gameStart(history)} /> : null}
+            {characterName && <Countdown onFinish={gameStart} />}
         </UiLayout>
     );
 }
