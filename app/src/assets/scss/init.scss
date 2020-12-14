@@ -11,6 +11,10 @@ input {
 /*
 * Typo
 */
+.t-small {
+    @include t-small
+}
+
 .t-main {
     @include t-main;
 }
