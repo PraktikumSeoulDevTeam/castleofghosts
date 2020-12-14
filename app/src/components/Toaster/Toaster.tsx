@@ -12,9 +12,9 @@ const mapStateToProps = (state: AppStoreState) => ({
     toasts: state.toaster.toastes
 });
 
-const mapActionToProps = (dispatch: Dispatch) => ({
-    removeToast: (id: string) => dispatch(toasterRemoveAction(id))
-});
+const mapActionToProps = {
+    removeToast: toasterRemoveAction
+};
 
 const connector = connect(mapStateToProps, mapActionToProps);
 
