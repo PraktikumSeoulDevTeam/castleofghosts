@@ -11,7 +11,6 @@ export const enum GAME_ACTION_TYPES {
 
 export interface GameState {
     inProgress: boolean;
-    character: Partial<ApiCharacterInfo>;
     character: Partial<GameCharacterInfo>;
     level: Partial<GameLevel>;
     state: GameStatePoint;
