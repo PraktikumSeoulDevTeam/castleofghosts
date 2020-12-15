@@ -1,4 +1,4 @@
-import {cloneDeep} from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import {UserActions, UserState, USER_ACTION_TYPES} from './types';
 
 const userState: UserState = {
