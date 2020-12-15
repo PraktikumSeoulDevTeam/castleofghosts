@@ -1,5 +1,4 @@
 import type {ApiCharacterInfo} from '../../api/types';
-import {Level} from './Level/types';
 
 export const enum GAME_ACTION_TYPES {
     SET_CHAR_NAME = 'cog/game/set-char-name',
@@ -10,7 +9,6 @@ export const enum GAME_ACTION_TYPES {
 
 export interface GameState {
     character: Partial<ApiCharacterInfo>;
-    levels: Level[];
     currentLevel: number;
     gameEnd: boolean;
 }
