@@ -34,25 +34,6 @@ export function setMainCanvas(canvasElement: HTMLCanvasElement): void {
     Promise.all([characterSprites]).then(([CHAR]) => {
         character = CHAR.PALADIN;
         drawImage(fleft, ftop, character);
-        window.addEventListener('keydown', (e) => {
-            ctx.clearRect(fleft * GRID, ftop * GRID, character.width, character.height);
-            switch (e.key) {
-                case 'ArrowLeft':
-                    movef(-1, 0);
-                    break;
-                case 'ArrowRight':
-                    movef(1, 0);
-                    break;
-                case 'ArrowUp':
-                    movef(0, -1);
-                    break;
-                case 'ArrowDown':
-                    movef(0, 1);
-                    break;
-                default:
-            }
-            drawImage(fleft, ftop, character);
-        });
     });
 }
 
@@ -70,7 +51,9 @@ function drawImage(x: number, y: number, sprite: Sprite) {
     );
 }
 
-function movef(x: number, y: number) {
+export function movef(x: number, y: number): void {
+    ctx.clearRect(fleft * GRID, ftop * GRID, character.width, character.height);
     fleft = (fleft + x + width) % width;
     ftop = (ftop + y + height) % height;
+    drawImage(fleft, ftop, character);
 }

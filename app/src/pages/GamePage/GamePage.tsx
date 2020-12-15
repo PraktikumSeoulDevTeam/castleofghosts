@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {GameUi} from './GameUi/GameUi';
 import {setBgCanvas} from '../../core/bg.canvas';
 import {setMainCanvas} from '../../core/main.canvas';
@@ -11,7 +11,7 @@ const height = 768;
 export const GamePage = (): JSX.Element => {
     const bgCanvas = useRef<HTMLCanvasElement>();
     const mainCanvas = useRef<HTMLCanvasElement>();
-    React.useEffect(() => {
+    useEffect(() => {
         setBgCanvas(bgCanvas.current);
         setMainCanvas(mainCanvas.current);
     }, []);

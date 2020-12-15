@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 
+import type {GameCharacterInfo} from '../core/types';
+
 /**
  * Формат объекта 'пользователь' API
  * Запрос обновления информации по пользователю
@@ -52,20 +54,11 @@ export interface ApiSignInRequest {
 }
 
 /**
- * Информация о персонаже
- */
-export interface ApiCharacterInfo {
-    id: number;
-    name: string;
-    points: number;
-}
-
-/**
  * Запрос на добавление в таблице рекордов
  */
 export interface ApiAddToLeaderboardRequest {
     ratingFieldName: 'points';
-    data: ApiCharacterInfo;
+    data: GameCharacterInfo;
 }
 
 /**
@@ -81,7 +74,7 @@ export interface ApiGetLeaderboardRequest {
  * Ответ на запрос таблицы рекордов
  * Возвращает сортированный список персонажей
  */
-export type ApiGetLeaderboardResponse = ApiCharacterInfo[];
+export type ApiGetLeaderboardResponse = GameCharacterInfo[];
 
 /**
  * Ответ сервера с ошибкой
