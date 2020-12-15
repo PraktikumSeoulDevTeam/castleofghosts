@@ -5,7 +5,6 @@ import {GAME_ACTION_TYPES, GameState, GameActions} from './types';
 const gameState: GameState = {
     character: {id: 1, name: 'Sofa Warlord', points: 180},
     currentLevel: 0,
-    levels: [],
     gameEnd: false
 };
 

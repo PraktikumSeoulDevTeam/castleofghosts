@@ -1,18 +1,36 @@
 import React, {useRef} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 import {GameUi} from './GameUi/GameUi';
 import {setBgCanvas} from '../../core/bg.canvas';
 import {setMainCanvas} from '../../core/main.canvas';
 import {UiLayout} from '../../layouts';
+import {Level} from '../../store/Level/types';
 import './GamePage.scss';
+import {AppStoreState} from '../../store/types';
 
 const width = 1024;
 const height = 768;
 
-export const GamePage = (): JSX.Element => {
+/**
+ * Selector
+ * @param state
+ */
+const currentLevel = (state: AppStoreState): Level => state.level.levels[state.game.currentLevel];
+
+const mapStateToProps = (state: AppStoreState) => {
+    return {
+        level: currentLevel(state)
+    };
+};
+
+const connector = connect(mapStateToProps);
+
+const GamePageComponent = ({level}: ConnectedProps<typeof connector>): JSX.Element => {
     const bgCanvas = useRef<HTMLCanvasElement>();
     const mainCanvas = useRef<HTMLCanvasElement>();
+
     React.useEffect(() => {
-        setBgCanvas(bgCanvas.current);
+        setBgCanvas(bgCanvas.current, level.map);
         setMainCanvas(mainCanvas.current);
     }, []);
 
@@ -26,3 +44,5 @@ export const GamePage = (): JSX.Element => {
         </UiLayout>
     );
 };
+
+export const GamePage = connector(GamePageComponent);

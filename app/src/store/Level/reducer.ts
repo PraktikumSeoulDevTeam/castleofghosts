@@ -1,7 +1,8 @@
 import {LevelActions, LevelState, LEVEL_ACTION_TYPES} from './types';
+import {Levels} from '../../services/LevelGenerator/__levels';
 
 const initialState: LevelState = {
-    levels: []
+    levels: [...Levels]
 };
 
 export const levelReducer = (state = initialState, action: LevelActions): LevelState => {

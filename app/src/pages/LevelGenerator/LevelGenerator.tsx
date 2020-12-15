@@ -5,10 +5,11 @@ import './LevelGenerator.scss';
 
 export const LevelGenerator = (): JSX.Element => {
     const [map, setMap] = useState(
-        Array(15)
+        Array(32)
             .fill([])
-            .map(() => Array(30).fill(0))
+            .map(() => Array(32).fill(0))
     );
+
 
     const changeState = (i, j, v) => {
         setMap((oldState) => {
