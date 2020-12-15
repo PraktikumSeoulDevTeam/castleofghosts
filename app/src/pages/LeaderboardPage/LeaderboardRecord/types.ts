@@ -1,6 +1,6 @@
-import {ApiCharacterInfo} from '~/api/types';
+import type {GameCharacterInfo} from '~/core/types';
 
 export interface LeaderboardRecordProps {
     position: number;
-    character: ApiCharacterInfo;
+    character: GameCharacterInfo;
 }
