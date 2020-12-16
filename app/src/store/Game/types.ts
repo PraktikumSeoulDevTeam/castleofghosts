@@ -3,14 +3,12 @@ import type {GameCharacterInfo, GameLevel, GameStatePoint} from '~/core/types';
 export const enum GAME_ACTION_TYPES {
     CHAR_SET_NAME = 'cog/game/char-set-name',
     CHAR_SET_POINTS = 'cog/game/char-set-points',
-    START = 'cog/game/start',
     SET_LEVEL = 'cog/game/set-level',
     SET_STATE = 'cog/game/set-state',
     REMOVE = 'cog/game/remove'
 }
 
 export interface GameState {
-    inProgress: boolean;
     character: Partial<GameCharacterInfo>;
     level: Partial<GameLevel>;
     state: GameStatePoint;
@@ -24,10 +22,6 @@ export interface GameCharSetNameAction {
 export interface GameCharSetPointsAction {
     type: GAME_ACTION_TYPES.CHAR_SET_POINTS;
     payload: number;
-}
-
-export interface GameStartAction {
-    type: GAME_ACTION_TYPES.START;
 }
 
 export interface GameSetLevelAction {
@@ -47,7 +41,6 @@ export interface GameRemoveAction {
 export type GameActions =
     | GameCharSetNameAction
     | GameCharSetPointsAction
-    | GameStartAction
     | GameSetLevelAction
     | GameSetStateAction
     | GameRemoveAction;
