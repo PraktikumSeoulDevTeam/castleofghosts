@@ -11,6 +11,10 @@
         background: var(--color-second);
         color: var(--color-accent);
     }
+    &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
     &_txt {
         min-width: initial;
         border: none;

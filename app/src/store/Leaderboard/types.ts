@@ -1,5 +1,5 @@
-import type {ApiGetLeaderboardRequest} from '../../api/types';
-import type {GameCharacterInfo} from '../../core/types';
+import type {ApiGetLeaderboardRequest} from '~/api/types';
+import type {GameCharacterInfo} from '~/core/types';
 
 export const enum LB_ACTION_TYPES {
     ADD = 'cog/lb/add',

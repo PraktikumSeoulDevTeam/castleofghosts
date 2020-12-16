@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Button} from '../Button/Button';
-import {signOutAction} from '../../store/User/actions';
-import {gameSetStateAction} from '../../store/Game/actions';
-import type {AppStoreState} from '../../store/types';
+import {signOutAction} from '~/store/User/actions';
+import {gameSetStateAction} from '~/store/Game/actions';
+import type {AppStoreState} from '~/store/types';
 import type {MenuProps} from './types';
 import './Menu.scss';
 
@@ -36,7 +36,7 @@ export const Menu = connector(
             <div className={`menu ${className}`}>
                 {isAuthenticated ? (
                     <>
-                        <Link to="/game" className="t-center mt-5">
+                        <Link to="/start" className="t-center mt-5">
                             <Button>New game</Button>
                         </Link>
                         <Link to="/leaderboard" className="t-center mt-5">

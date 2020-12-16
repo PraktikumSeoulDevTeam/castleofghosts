@@ -3,7 +3,7 @@ import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Dispatch} from 'redux';
 import * as Yup from 'yup';
-import {userUpdatePasswordAction} from '../../store/User/actions';
+import {userUpdatePasswordAction} from '~/store/User/actions';
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
 import type {FormControlFields} from '../FormControl/types';

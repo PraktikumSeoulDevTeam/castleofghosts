@@ -3,13 +3,14 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {PrivateRoute} from '../PrivateRoute/PrivateRoute';
 import {
     ErrorPage,
+    StartPage,
     GamePage,
     LeaderboardPage,
     AuthorizationPage,
     RegistrationPage,
     EditPage,
     WelcomePage
-} from '../../pages';
+} from '~/pages';
 
 /**
  * Роутер
@@ -30,11 +31,14 @@ export function AppRouter(): JSX.Element {
                 <PrivateRoute path="/user">
                     <EditPage />
                 </PrivateRoute>
-                <PrivateRoute path="/game">
-                    <GamePage />
+                <PrivateRoute path="/start">
+                    <StartPage />
                 </PrivateRoute>
                 <PrivateRoute path="/leaderboard">
                     <LeaderboardPage />
+                </PrivateRoute>
+                <PrivateRoute path="/game">
+                    <GamePage />
                 </PrivateRoute>
                 <Route path="*">
                     <ErrorPage type="404" />

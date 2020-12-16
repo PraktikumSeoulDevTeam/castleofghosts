@@ -1,6 +1,6 @@
 import React, {useState, memo} from 'react';
-import {UserDataChange, UserPasswordChange, UserAvatarChange, Button} from '../../components';
-import {UiLayout} from '../../layouts';
+import {UserDataChange, UserPasswordChange, UserAvatarChange, Button} from '~/components';
+import {UiLayout} from '~/layouts';
 
 const enum VIEW_TAB {
     DATA = 'User info',

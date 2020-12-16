@@ -1,11 +1,11 @@
 import React, {HTMLAttributes, useCallback, useEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Redirect} from 'react-router-dom';
-import {Button} from '../../../components';
-import {createPauseListener, createGameListener} from '../../../core/engine';
-import {movef} from '../../../core/main.canvas';
-import {gameSetStateAction} from '../../../store/Game/actions';
-import {AppStoreState} from '../../../store/types';
+import {Button} from '~/components';
+import {createPauseListener, createGameListener} from '~/core/engine';
+import {movef} from '~/core/main.canvas';
+import {gameSetStateAction} from '~/store/Game/actions';
+import {AppStoreState} from '~/store/types';
 import './GameUi.scss';
 
 const mapState = (state: AppStoreState) => {

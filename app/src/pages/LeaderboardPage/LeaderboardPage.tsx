@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
+import {Button} from '~/components';
+import {UiLayout} from '~/layouts';
 import {LeaderboardRecord} from './LeaderboardRecord/LeaderboardRecord';
-import {Button} from '../../components';
-import {UiLayout} from '../../layouts';
-import type {AppStoreState} from '../../store/types';
+import type {AppStoreState} from '~/store/types';
 import './LeaderboardPage.scss';
 
 const mapState = (state: AppStoreState) => {

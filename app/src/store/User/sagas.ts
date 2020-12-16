@@ -1,5 +1,5 @@
 import {call, ForkEffect, put, takeLeading} from 'redux-saga/effects';
-import {getUserInfo, updateUserInfo, updateUserAvatar, updateUserPassword, signUp, signIn, signOut} from '../../api';
+import {getUserInfo, updateUserInfo, updateUserAvatar, updateUserPassword, signUp, signIn, signOut} from '~/api';
 import {userSetAction, userRemoveAction} from './actions';
 import {
     SignInAction,
@@ -9,9 +9,10 @@ import {
     UserUpdatePasswordAction,
     USER_ACTION_TYPES
 } from './types';
-import {utilitySetLoading} from '../Utility/actions';
-import type {ApiUserInfo} from '../../api/types';
-import {toasterAddAction} from '../Toaster/actions';
+
+import type {ApiUserInfo} from '~/api/types';
+import {utilitySetLoading} from '~/store/Utility/actions';
+import {toasterAddAction} from '~/store/Toaster/actions';
 
 export function* userWatcher(): Generator<ForkEffect<never>> {
     yield takeLeading(USER_ACTION_TYPES.GET, userGetWorker);

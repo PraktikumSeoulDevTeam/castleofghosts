@@ -1,0 +1,47 @@
+@import '~/assets/scss/variables';
+
+.countdown {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+
+    &__inner {
+        display: flex;
+        width: 500%;
+        height: 100%;
+        align-items: center;
+        animation: countdown 3s;
+        animation-delay: 1s;
+        animation-fill-mode: forwards;
+        will-change: transform;
+    }
+    &__item {
+        width: 20%;
+        flex: 0 0 20%;
+        font-size: 100px;
+        text-align: center;
+    }
+}
+
+@keyframes countdown {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-20%);
+    }
+    50% {
+        transform: translateX(-40%);
+    }
+    75% {
+        transform: translateX(-60%);
+    }
+    100% {
+        transform: translateX(-80%);
+    }
+}
