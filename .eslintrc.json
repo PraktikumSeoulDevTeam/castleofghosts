@@ -34,7 +34,6 @@
     "no-console": "warn",
     "no-plusplus": "off",
     "no-shadow": "off",
-    "arrow-body-style": "off", // TODO необходимо удалить и привести код в соответствие правилу, отдельным патчем
     "curly": ["warn", "all"],
     "newline-before-return": "warn",
     "@typescript-eslint/no-shadow": ["error"],
