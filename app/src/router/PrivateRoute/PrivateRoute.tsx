@@ -4,11 +4,9 @@ import {Redirect, Route} from 'react-router-dom';
 import type {AppStoreState} from '~/store/types';
 import {PrivateRouteProps} from './types';
 
-const mapState = (state: AppStoreState) => {
-    return {
-        isAuthenticated: !!state.user.info.id
-    };
-};
+const mapState = (state: AppStoreState) => ({
+    isAuthenticated: !!state.user.info.id
+});
 
 const connector = connect(mapState);
 

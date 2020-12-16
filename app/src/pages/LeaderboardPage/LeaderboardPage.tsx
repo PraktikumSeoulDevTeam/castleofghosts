@@ -7,11 +7,9 @@ import {LeaderboardRecord} from './LeaderboardRecord/LeaderboardRecord';
 import type {AppStoreState} from '~/store/types';
 import './LeaderboardPage.scss';
 
-const mapState = (state: AppStoreState) => {
-    return {
-        leaderboard: state.leaderboard.list
-    };
-};
+const mapState = (state: AppStoreState) => ({
+    leaderboard: state.leaderboard.list
+});
 
 const connector = connect(mapState);
 

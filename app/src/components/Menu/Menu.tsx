@@ -8,11 +8,9 @@ import type {AppStoreState} from '~/store/types';
 import type {MenuProps} from './types';
 import './Menu.scss';
 
-const mapState = (state: AppStoreState) => {
-    return {
-        isAuthenticated: !!state.user.info.id
-    };
-};
+const mapState = (state: AppStoreState) => ({
+    isAuthenticated: !!state.user.info.id
+});
 
 const mapDispatch = {
     signOut: signOutAction,

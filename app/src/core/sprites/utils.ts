@@ -1,4 +1,4 @@
-import type {AssetVariant, Sprite} from '../types';
+import type {AssetMap, AssetVariant, Sprite} from '../types';
 
 /**
  * Эквивалени единицы размера в игре.
@@ -41,12 +41,12 @@ export function spriteVariant(sprite: Sprite, variant: AssetVariant): Sprite {
  * @param sprites Набор спрайтов
  * @param variant Вариант набора спрайтов
  */
-export function variantFactory<T>(sprites: T, variant: AssetVariant): T {
-    return Object.entries(sprites).reduce((acc, [key, value]) => {
+export function variantFactory(sprites: AssetMap, variant: AssetVariant): AssetMap {
+    return Object.entries(sprites).reduce<AssetMap>((acc, [key, value]) => {
         acc[key] = spriteVariant(value, variant);
 
         return acc;
-    }, {} as T);
+    }, {});
 }
 
 /**

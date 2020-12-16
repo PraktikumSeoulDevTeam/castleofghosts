@@ -1,11 +1,10 @@
 import React from 'react';
-import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {toasterRemoveAction} from '../../store/Toaster/actions';
-import {AppStoreState} from '../../store/types';
+import {toasterRemoveAction} from '~/store/Toaster/actions';
+import {AppStoreState} from '~/store/types';
 import {Button} from '../Button/Button';
-
+import type {toasterProps} from './types';
 import './Toaster.scss';
 
 const mapStateToProps = (state: AppStoreState) => ({
@@ -18,7 +17,7 @@ const mapActionToProps = {
 
 const connector = connect(mapStateToProps, mapActionToProps);
 
-const Toast = ({text, onClick}) => (
+const Toast = ({text, onClick}: toasterProps) => (
     <li className="toast-element mt-4 t-small">
         <Button className="toast-element__exit" onClick={onClick}>
             x
@@ -27,14 +26,12 @@ const Toast = ({text, onClick}) => (
     </li>
 );
 
-function ToasterComponent({toasts, removeToast}: ConnectedProps<typeof connector>): JSX.Element {
-    return (
+export const Toaster = connector(
+    ({toasts, removeToast}: ConnectedProps<typeof connector>): JSX.Element => (
         <ul className="toast-container mr-4">
             {toasts.map((toast) => (
                 <Toast key={toast.id} text={toast.text} onClick={() => removeToast(toast.id)} />
             ))}
         </ul>
-    );
-}
-
-export const Toaster = connector(ToasterComponent);
+    )
+);
