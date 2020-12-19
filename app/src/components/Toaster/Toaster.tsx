@@ -1,5 +1,4 @@
 import React from 'react';
-import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {toasterRemoveAction} from '../../store/Toaster/actions';
