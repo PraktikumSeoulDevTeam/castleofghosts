@@ -20,6 +20,11 @@ const levels: GameLevel[] = [
     }
 ];
 
+let charPosition = {
+    x: 0,
+    y: 0
+};
+
 export function createGame(): GameActions {
     // eslint-disable-next-line no-console
     console.log('[createGame]');
@@ -65,9 +70,9 @@ export function createPauseListener(cb: EmptyCallback): EmptyCallback {
     };
 }
 
-export function createGameListener(cbEscape: EmptyCallback, cbArrow: ArrowPressCallback): EmptyCallback {
+export function createGameListener(cbEscape: EmptyCallback): EmptyCallback {
     const escapeHandler = createEscapeHandler(cbEscape);
-    const arrowHandler = createArrowsHandler(cbArrow);
+    const arrowHandler = createArrowsHandler(move);
     window.addEventListener('keydown', escapeHandler);
     window.addEventListener('keydown', arrowHandler);
 
@@ -105,22 +110,37 @@ function createArrowsHandler(cb: ArrowPressCallback) {
     };
 }
 
+export function move(x: number, y: number): void {
+    charPosition = {
+        x: x + xV,
+        y: y + yV
+    };
+}
+
 let gameState: GameStatePoint = 'OFF';
 
 function setState(newGameState: GameStatePoint): void {
     gameState = newGameState;
 }
 
-export const gameEngineMiddleware: Middleware = (store) => (next) => (action) => {
-    const storeData: AppStoreState = store.getState();
-    setState(storeData.game.state);
+export const gameEngineMiddleware: Middleware = (store) => {
+    return (next) => (action) => {
+        const returnValue = next(action);
+        const afterActionState: AppStoreState = store.getState();
+        setState(afterActionState.game.state);
 
-    return next(action);
+        return returnValue;
+    };
 };
 
 function loop() {
+    checkLimit();
     if (gameState !== 'GAME') {
         return;
     }
     requestAnimationFrame(loop);
+}
+
+function checkLimit() {
+    return charPosition;
 }
