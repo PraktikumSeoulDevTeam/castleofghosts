@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import {AppStoreState} from 'store/types';
 import type {FormControlFields} from '~/components/FormControl/types';
 import {Button, Countdown, FormControl} from '~/components';
-import {gameSetCharNameAction, gameStartAction} from '~/store/Game/actions';
+import {gameCharSetNameAction, gameStartAction} from '~/store/Game/actions';
 import {UiLayout} from '~/layouts';
 
 const formSchema = Yup.object().shape({
@@ -29,7 +29,7 @@ const mapState = (state: AppStoreState) => {
 };
 
 const mapDispatch = {
-    setCharacterName: gameSetCharNameAction,
+    setCharacterName: gameCharSetNameAction,
     gameStart: gameStartAction
 };
 
