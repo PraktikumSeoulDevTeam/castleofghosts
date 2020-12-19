@@ -1,6 +1,8 @@
+import {Middleware} from 'redux';
+import {AppStoreState} from '~/store/types';
 import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '../store/Game/actions';
-import type {ArrowPressCallback, EmptyCallback, GameLevel} from './types';
 import type {GameActions} from '../store/Game/types';
+import type {ArrowPressCallback, EmptyCallback, GameLevel, GameStatePoint} from './types';
 
 // TODO mock
 const levels: GameLevel[] = [
@@ -36,11 +38,15 @@ export function loadLevel(): GameActions {
 export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
+    gameSetStateAction('GAME');
+    loop();
 }
 
-export function pauseGame(): void {
+export function pauseGame(): GameActions {
     // eslint-disable-next-line no-console
     console.log('[pauseGame]');
+
+    return gameSetStateAction('PAUSE');
 }
 
 export function exitGame(): GameActions {
@@ -97,4 +103,24 @@ function createArrowsHandler(cb: ArrowPressCallback) {
             default:
         }
     };
+}
+
+let gameState: GameStatePoint = 'OFF';
+
+function setState(newGameState: GameStatePoint): void {
+    gameState = newGameState;
+}
+
+export const gameEngineMiddleware: Middleware = (store) => (next) => (action) => {
+    const storeData: AppStoreState = store.getState();
+    setState(storeData.game.state);
+
+    return next(action);
+};
+
+function loop() {
+    if (gameState !== 'GAME') {
+        return;
+    }
+    requestAnimationFrame(loop);
 }
