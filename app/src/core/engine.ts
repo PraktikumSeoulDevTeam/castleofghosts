@@ -21,6 +21,11 @@ const levels: GameLevel[] = [
     }
 ];
 
+const LEVEL_SIZE = {
+    x: 31,
+    y: 23
+};
+
 const charMove: GameCharacterMove = {
     posx: 0,
     posy: 0,
@@ -138,14 +143,57 @@ function loop() {
     if (gameState !== 'GAME') {
         return;
     }
+    characterMove();
+    interactionCheck();
+    endLevelCheck();
+    requestAnimationFrame(loop);
+}
 
+function characterMove(): void {
     if (charMove.needRender && checkLimit()) {
         charMove.needRender = false;
         movef(charMove.posx, charMove.posy);
     }
-    requestAnimationFrame(loop);
 }
 
+/**
+ * Проверка: персонаж не вышел за пределы экрана
+ */
 function checkLimit(): boolean {
+    if (charMove.posx < 0) {
+        charMove.posx = 0;
+
+        return false;
+    }
+    if (charMove.posx > LEVEL_SIZE.x) {
+        charMove.posx = LEVEL_SIZE.x;
+
+        return false;
+    }
+    if (charMove.posy < 0) {
+        charMove.posy = 0;
+
+        return false;
+    }
+    if (charMove.posy > LEVEL_SIZE.y) {
+        charMove.posy = LEVEL_SIZE.y;
+
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Проверка: персонаж не столкнулся с другими объектами
+ */
+function interactionCheck(): boolean {
+    return true;
+}
+
+/**
+ * Проверка: персонаж не добрался до конца уровня
+ */
+function endLevelCheck(): boolean {
     return true;
 }
