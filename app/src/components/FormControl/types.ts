@@ -1,12 +1,13 @@
-import {FieldInputProps, useFormik} from 'formik';
+import {FieldInputProps, FormikHelpers} from 'formik';
 import Yup from 'yup';
 
-type DefaultStringObject = {[key: string]: string};
+export type FormFields = Record<string, string>;
 
 export type FormControlFieldType = 'text' | 'password' | 'email' | 'file';
 
-export type FormControlFields = {
-    [key: string]: {
+export type FormControlFields = Record<
+    string,
+    {
         type: FormControlFieldType;
         placeholder: string;
         title: string;
@@ -21,17 +22,16 @@ export type FormControlFields = {
             | 'email'
             | 'off';
         initialValue?: string;
-    };
-};
-export type FormControlInputFields = DefaultStringObject;
+    }
+>;
 
 export interface FormControlProps extends JSX.ElementChildrenAttribute {
     fields: FormControlFields;
-    schema?: Yup.Schema<DefaultStringObject>;
-    onSubmit?: (values: DefaultStringObject) => void;
+    schema: Yup.ObjectSchema;
+    onSubmit: (values: FormFields, formikHelpers: FormikHelpers<FormFields>) => void;
 }
 
 export interface FormFieldComponentProps {
-    form: typeof useFormik;
+    formikHelpers: FormikHelpers<FormFields>;
     field: FieldInputProps<File>;
 }

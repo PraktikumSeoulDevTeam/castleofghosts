@@ -1,5 +1,5 @@
 import {call, ForkEffect, put, takeEvery} from 'redux-saga/effects';
-import {createGame, exitGame, loadLevel, pauseGame, play} from '../../core/engine';
+import {createGame, exitGame, loadLevel, pauseGame, play} from '~/core/engine';
 import {GameSetStateAction, GAME_ACTION_TYPES} from './types';
 
 export function* gameWatcher(): Generator<ForkEffect<never>> {

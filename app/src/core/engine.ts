@@ -1,5 +1,5 @@
 import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '../store/Game/actions';
-import type {ArrowPressCallback, EmptyCallback, GameLevel} from './types';
+import type {ArrowPressCallback, CanvasContext, EmptyCallback, GameLevel} from './types';
 import type {GameActions} from '../store/Game/types';
 
 // TODO mock
@@ -7,14 +7,6 @@ const levels: GameLevel[] = [
     {
         name: 'First',
         number: 1
-    },
-    {
-        name: 'Second',
-        number: 2
-    },
-    {
-        name: 'Third',
-        number: 3
     }
 ];
 
@@ -26,7 +18,7 @@ export function createGame(): GameActions {
 }
 
 export function loadLevel(): GameActions {
-    const level: GameLevel = levels.shift();
+    const level: GameLevel = levels[0];
     // eslint-disable-next-line no-console
     console.log('[loadLevel]', level.name);
 
@@ -48,6 +40,23 @@ export function exitGame(): GameActions {
     console.log('[exitGame]');
 
     return gameRemoveAction();
+}
+
+export function setCanvas(canvasElement: HTMLCanvasElement | null): CanvasContext | never {
+    if (!canvasElement) {
+        throw new Error('No canvas found');
+    }
+    const ctx = canvasElement.getContext('2d');
+    if (!ctx) {
+        throw new Error('No canvas context found');
+    }
+    ctx.imageSmoothingEnabled = false;
+
+    return {
+        ctx,
+        width: canvasElement.width,
+        height: canvasElement.height
+    };
 }
 
 export function createPauseListener(cb: EmptyCallback): EmptyCallback {

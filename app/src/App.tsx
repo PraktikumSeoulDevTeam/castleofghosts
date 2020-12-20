@@ -5,12 +5,10 @@ import {Spinner} from './components/Spinner/Spinner';
 import {AppRouter} from './router/AppRouter/AppRouter';
 import {store} from './store';
 
-export const App = (): JSX.Element => {
-    return (
-        <Provider store={store}>
-            <Toaster />
-            <Spinner />
-            <AppRouter />
-        </Provider>
-    );
-};
+export const App = (): JSX.Element => (
+    <Provider store={store}>
+        <Toaster />
+        <Spinner />
+        <AppRouter />
+    </Provider>
+);

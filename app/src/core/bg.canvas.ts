@@ -1,18 +1,13 @@
 import {wallSprites} from './sprites/wall';
 import {floorSprites} from './sprites/floor';
 import {GRID} from './sprites/utils';
+import {setCanvas} from './engine';
 import type {Sprite} from './types';
 
-let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 
-export function setBgCanvas(canvasElement: HTMLCanvasElement): void {
-    if (!canvasElement) {
-        return;
-    }
-    canvas = canvasElement;
-    ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = false;
+export function setBgCanvas(canvasElement: HTMLCanvasElement | null): void {
+    ({ctx} = setCanvas(canvasElement));
 
     // TODO mock
     Promise.all([wallSprites, floorSprites]).then(([WALL, FLOOR]) => {
@@ -41,15 +36,17 @@ export function setBgCanvas(canvasElement: HTMLCanvasElement): void {
 }
 
 function drawImage(x: number, y: number, sprite: Sprite) {
-    ctx.drawImage(
-        sprite.image,
-        sprite.posx,
-        sprite.posy,
-        sprite.width,
-        sprite.height,
-        GRID * x,
-        GRID * y,
-        sprite.width,
-        sprite.height
-    );
+    if (sprite.image) {
+        ctx.drawImage(
+            sprite.image,
+            sprite.posx,
+            sprite.posy,
+            sprite.width,
+            sprite.height,
+            GRID * x,
+            GRID * y,
+            sprite.width,
+            sprite.height
+        );
+    }
 }

@@ -1,12 +1,11 @@
 export type EmptyCallback = () => void;
 export type ArrowPressCallback = (x: number, y: number) => void;
 
-export interface AssetVariant {
-    x: number;
-    y: number;
+export interface CanvasContext {
+    ctx: CanvasRenderingContext2D;
+    width: number;
+    height: number;
 }
-
-export type AssetVariants = {[key: string]: AssetVariant};
 
 export interface Sprite {
     image?: HTMLImageElement;
@@ -15,6 +14,15 @@ export interface Sprite {
     width: number;
     height: number;
 }
+
+export type AssetMap = Record<string, Sprite>;
+
+export interface AssetVariant {
+    x: number;
+    y: number;
+}
+
+export type AssetVariants = Record<string, AssetVariant>;
 
 /**
  * Информация о персонаже

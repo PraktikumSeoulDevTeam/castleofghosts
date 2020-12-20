@@ -9,11 +9,14 @@ const mapPropsToState = (state: AppStoreState) => ({
 
 const connector = connect(mapPropsToState);
 
-const SpinnerComponent = ({isLoading}: ConnectedProps<typeof connector>): JSX.Element =>
-    isLoading && (
-        <div className="spinner-block">
-            <div className="loader" />
-        </div>
-    );
-
-export const Spinner = connector(SpinnerComponent);
+export const Spinner = connector(
+    ({isLoading}: ConnectedProps<typeof connector>): JSX.Element => (
+        <>
+            {isLoading && (
+                <div className="spinner-block">
+                    <div className="loader" />
+                </div>
+            )}
+        </>
+    )
+);

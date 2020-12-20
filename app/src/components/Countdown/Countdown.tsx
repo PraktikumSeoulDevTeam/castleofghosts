@@ -1,11 +1,9 @@
 import React, {memo} from 'react';
+import type {CountdownProps} from './types';
 import './Countdown.scss';
-import {CountdownProps} from './types';
 
-function Component(props: CountdownProps): JSX.Element {
-    const {onFinish} = props;
-
-    return (
+export const Countdown = memo(
+    ({onFinish}: CountdownProps): JSX.Element => (
         <div className="countdown" onAnimationEnd={onFinish}>
             <div className="countdown__inner">
                 <div className="countdown__item">5</div>
@@ -15,7 +13,5 @@ function Component(props: CountdownProps): JSX.Element {
                 <div className="countdown__item">1</div>
             </div>
         </div>
-    );
-}
-
-export const Countdown = memo(Component);
+    )
+);

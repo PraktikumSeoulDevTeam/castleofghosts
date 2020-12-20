@@ -4,7 +4,6 @@ import {
     GameCharSetNameAction,
     GameCharSetPointsAction,
     GameRemoveAction,
-    GameStartAction,
     GameSetLevelAction,
     GameSetStateAction
 } from './types';
@@ -20,12 +19,6 @@ export function gameCharSetPointsAction(characterPoints: number): GameCharSetPoi
     return {
         type: GAME_ACTION_TYPES.CHAR_SET_POINTS,
         payload: characterPoints
-    };
-}
-
-export function gameStartAction(): GameStartAction {
-    return {
-        type: GAME_ACTION_TYPES.START
     };
 }
 

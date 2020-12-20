@@ -28,7 +28,7 @@ function* addToLeaderboardWorker(action: LbUploadAction) {
 function* getLeaderboardWorker(action: LbDownloadAction) {
     try {
         const leaderboardInfo: ApiGetLeaderboardResponse = yield call(getLeaderboard, action.payload);
-        if (leaderboardInfo || leaderboardInfo.length) {
+        if (leaderboardInfo.length) {
             yield put(lbAddAction(leaderboardInfo));
         }
     } catch (error) {
