@@ -5,12 +5,6 @@ import type {Sprite} from './types';
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 
-let width: number;
-let height: number;
-
-let cx: number;
-let cy: number;
-
 let fleft: number;
 let ftop: number;
 
@@ -23,13 +17,9 @@ export function setMainCanvas(canvasElement: HTMLCanvasElement): void {
     canvas = canvasElement;
     ctx = canvas.getContext('2d');
     ctx.imageSmoothingEnabled = false;
-    width = canvas.width / GRID;
-    height = canvas.height / GRID;
-    cx = width / 2;
-    cy = height / 2;
 
-    fleft = cx;
-    ftop = cy;
+    fleft = 0;
+    ftop = 0;
 
     Promise.all([characterSprites]).then(([CHAR]) => {
         character = CHAR.PALADIN;
@@ -53,7 +43,7 @@ function drawImage(x: number, y: number, sprite: Sprite) {
 
 export function movef(x: number, y: number): void {
     ctx.clearRect(fleft * GRID, ftop * GRID, character.width, character.height);
-    fleft = (fleft + x + width) % width;
-    ftop = (ftop + y + height) % height;
+    fleft = x;
+    ftop = y;
     drawImage(fleft, ftop, character);
 }

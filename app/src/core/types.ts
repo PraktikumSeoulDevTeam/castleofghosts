@@ -25,6 +25,15 @@ export interface GameCharacterInfo {
     points: number;
 }
 
+/**
+ * Информация о движении персонажа
+ */
+export interface GameCharacterMove {
+    posx: number;
+    posy: number;
+    needRender: boolean;
+}
+
 // TODO необходимо добавить карту и условия
 export interface GameLevel {
     name: string;

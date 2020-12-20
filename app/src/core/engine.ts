@@ -2,7 +2,8 @@ import {Middleware} from 'redux';
 import {AppStoreState} from '~/store/types';
 import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '../store/Game/actions';
 import type {GameActions} from '../store/Game/types';
-import type {ArrowPressCallback, EmptyCallback, GameLevel, GameStatePoint} from './types';
+import {movef} from './main.canvas';
+import type {ArrowPressCallback, EmptyCallback, GameLevel, GameStatePoint, GameCharacterMove} from './types';
 
 // TODO mock
 const levels: GameLevel[] = [
@@ -20,9 +21,10 @@ const levels: GameLevel[] = [
     }
 ];
 
-let charPosition = {
-    x: 0,
-    y: 0
+const charMove: GameCharacterMove = {
+    posx: 0,
+    posy: 0,
+    needRender: false
 };
 
 export function createGame(): GameActions {
@@ -111,10 +113,9 @@ function createArrowsHandler(cb: ArrowPressCallback) {
 }
 
 export function move(x: number, y: number): void {
-    charPosition = {
-        x: x + xV,
-        y: y + yV
-    };
+    charMove.posx += x;
+    charMove.posy += y;
+    charMove.needRender = true;
 }
 
 let gameState: GameStatePoint = 'OFF';
@@ -134,13 +135,17 @@ export const gameEngineMiddleware: Middleware = (store) => {
 };
 
 function loop() {
-    checkLimit();
     if (gameState !== 'GAME') {
         return;
+    }
+
+    if (charMove.needRender && checkLimit()) {
+        charMove.needRender = false;
+        movef(charMove.posx, charMove.posy);
     }
     requestAnimationFrame(loop);
 }
 
-function checkLimit() {
-    return charPosition;
+function checkLimit(): boolean {
+    return true;
 }
