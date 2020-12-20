@@ -1,12 +1,15 @@
-import {ApiChangePasswordRequest} from 'api/types';
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Dispatch} from 'redux';
 import * as Yup from 'yup';
+
 import {userUpdatePasswordAction} from '~/store/User/actions';
+
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
+
 import type {FormControlFields, FormFields} from '../FormControl/types';
+import type {ApiChangePasswordRequest} from '~/api/types';
 
 const UserPasswordSchema = Yup.object().shape({
     passwordCurrent: Yup.string()

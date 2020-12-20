@@ -1,4 +1,5 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
+
 import type {
     ApiAddToLeaderboardRequest,
     ApiBadRequestError,

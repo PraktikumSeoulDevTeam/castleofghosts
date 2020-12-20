@@ -2,9 +2,11 @@ import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {toasterRemoveAction} from '~/store/Toaster/actions';
-import {AppStoreState} from '~/store/types';
+
 import {Button} from '../Button/Button';
+
 import type {toasterProps} from './types';
+import type {AppStoreState} from '~/store/types';
 import './Toaster.scss';
 
 const mapStateToProps = (state: AppStoreState) => ({

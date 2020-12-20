@@ -1,5 +1,7 @@
 import {ForkEffect, put, takeLeading, delay} from 'redux-saga/effects';
+
 import {toasterRemoveAction} from './actions';
+
 import {ToasterAddAction, TOASTER_ACTION_TYPES} from './types';
 
 const DEFAULT_TOAST_ACTIVE_TIME = 3000;

@@ -1,10 +1,13 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {Button} from '../Button/Button';
+
 import {signOutAction} from '~/store/User/actions';
-import type {AppStoreState} from '~/store/types';
+
+import {Button} from '../Button/Button';
+
 import type {MenuProps} from './types';
+import type {AppStoreState} from '~/store/types';
 import './Menu.scss';
 
 const mapState = (state: AppStoreState) => ({

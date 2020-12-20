@@ -1,12 +1,15 @@
 import React from 'react';
-import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
-import {AppStoreState} from 'store/types';
+import {Dispatch} from 'redux';
 import * as Yup from 'yup';
+
 import {userUpdateAvatarAction} from '~/store/User/actions';
+
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
+
 import type {FormControlFields, FormFields} from '../FormControl/types';
+import type {AppStoreState} from '~/store/types';
 
 const fileConditions = {
     MAX_FILE_SIZE: 1000000,

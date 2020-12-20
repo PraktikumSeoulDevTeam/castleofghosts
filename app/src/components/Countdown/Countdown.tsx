@@ -1,4 +1,5 @@
 import React, {memo} from 'react';
+
 import type {CountdownProps} from './types';
 import './Countdown.scss';
 
