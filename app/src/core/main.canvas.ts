@@ -1,4 +1,4 @@
-import {characterSprites} from './sprites/character';
+import {characterSprites} from './sprites/character/character';
 import {GRID} from './sprites/utils';
 import type {Sprite} from './types';
 

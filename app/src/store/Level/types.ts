@@ -4,11 +4,9 @@ import {GeneratorConfiguration} from '../../services/LevelGenerator/types';
  */
 export type Point = [x: number, y: number];
 
-export const enum BackgroundType {
-    ROAD = 0,
-    WALL = 1,
-    CLOSE_GATE = 2,
-    OPEN_GATE = 3
+export interface BackgroundType {
+    asset: {type: string; part: string};
+    canWalk: boolean;
 }
 
 export const enum InterestType {

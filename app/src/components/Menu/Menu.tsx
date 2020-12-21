@@ -6,6 +6,7 @@ import {signOutAction} from '../../store/User/actions';
 import type {AppStoreState} from '../../store/types';
 import type {MenuProps} from './types';
 import './Menu.scss';
+import {levelGenerateAction} from '../../store/Level/actions';
 
 const mapState = (state: AppStoreState) => {
     return {
@@ -14,18 +15,34 @@ const mapState = (state: AppStoreState) => {
 };
 
 const mapDispatch = {
-    signOut: signOutAction
+    signOut: signOutAction,
+    generateLevel: levelGenerateAction
 };
 
 const connector = connect(mapState, mapDispatch);
 
 export const Menu = connector(
-    ({isAuthenticated, signOut, className = ''}: MenuProps & ConnectedProps<typeof connector>): JSX.Element => {
+    ({
+        isAuthenticated,
+        signOut,
+        className = '',
+        generateLevel
+    }: MenuProps & ConnectedProps<typeof connector>): JSX.Element => {
         return (
             <div className={`menu ${className}`}>
                 {isAuthenticated ? (
                     <>
-                        <Link to="/game" className="t-center mt-5">
+                        <Link
+                            to="/game"
+                            onClick={() =>
+                                generateLevel({
+                                    count: 1,
+                                    difficult: 1,
+                                    shapes: [[1, 1]]
+                                })
+                            }
+                            className="t-center mt-5"
+                        >
                             <Button>New game</Button>
                         </Link>
                         <Link to="/leaderboard" className="t-center mt-5">

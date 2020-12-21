@@ -1,4 +1,4 @@
-import type {AssetVariant, Sprite} from '../types';
+import type {AssetVariant, Sprite} from './types';
 
 /**
  * Эквивалени единицы размера в игре.

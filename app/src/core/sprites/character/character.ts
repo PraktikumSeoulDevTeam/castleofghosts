@@ -1,4 +1,4 @@
-import {createLoadPromise, createSprite} from './utils';
+import {createLoadPromise, createSprite} from '../utils';
 
 const assetMap: HTMLImageElement = new Image();
 assetMap.src = './assets/char.png';
