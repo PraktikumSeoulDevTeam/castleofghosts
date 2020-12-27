@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import {AppStoreState} from '~/store/types';
+
+import type {AppStoreState} from '~/store/types';
 import './Spinner.scss';
 
 const mapPropsToState = (state: AppStoreState) => ({

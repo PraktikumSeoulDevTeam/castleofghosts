@@ -1,4 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
+
 import {GAME_ACTION_TYPES, GameState, GameActions} from './types';
 
 const gameState: GameState = {

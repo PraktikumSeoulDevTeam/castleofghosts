@@ -1,5 +1,6 @@
 import React from 'react';
-import {LeaderboardRecordProps} from './types';
+
+import type {LeaderboardRecordProps} from './types';
 import './LeaderboardRecord.scss';
 
 export const LeaderboardRecord = ({position, character}: LeaderboardRecordProps): JSX.Element => (

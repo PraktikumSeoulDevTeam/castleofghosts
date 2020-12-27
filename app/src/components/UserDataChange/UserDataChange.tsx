@@ -1,13 +1,16 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import {AppStoreState} from 'store/types';
 import * as Yup from 'yup';
-import {ApiUserInfo} from 'api/types';
+
 import {userUpdateAction} from '~/store/User/actions';
 import {FORMAT} from '~/utils';
+
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
+
 import type {FormControlFields, FormFields} from '../FormControl/types';
+import type {ApiUserInfo} from '~/api/types';
+import type {AppStoreState} from '~/store/types';
 
 const UserEditSchema = Yup.object().shape({
     login: Yup.string().required('field is required').max(22, 'max length 22 symbols'),

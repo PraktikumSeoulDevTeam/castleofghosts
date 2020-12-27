@@ -2,11 +2,13 @@ import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import * as Yup from 'yup';
-import {AppStoreState} from 'store/types';
-import type {FormControlFields} from '~/components/FormControl/types';
+
 import {Button, Countdown, FormControl} from '~/components';
-import {gameCharSetNameAction, gameSetStateAction} from '~/store/Game/actions';
 import {UiLayout} from '~/layouts';
+import {gameCharSetNameAction, gameSetStateAction} from '~/store/Game/actions';
+
+import type {FormControlFields} from '~/components/FormControl/types';
+import type {AppStoreState} from '~/store/types';
 
 const formSchema = Yup.object().shape({
     characterName: Yup.string().required('field is required')

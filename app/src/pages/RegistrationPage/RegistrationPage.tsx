@@ -1,14 +1,16 @@
 import React from 'react';
-import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {Dispatch} from 'redux';
 import * as Yup from 'yup';
-import {signUpAction} from '~/store/User/actions';
-import {UiLayout} from '~/layouts';
+
 import {Button, FormControl} from '~/components';
+import {UiLayout} from '~/layouts';
+import {signUpAction} from '~/store/User/actions';
 import {FORMAT} from '~/utils';
-import type {FormControlFields, FormFields} from '~/components/FormControl/types';
+
 import type {ApiSignUpRequest} from '~/api/types';
+import type {FormControlFields, FormFields} from '~/components/FormControl/types';
 
 const RegistrationSchema = Yup.object().shape({
     login: Yup.string().required('field is required').max(22, 'max length 22 symbols'),

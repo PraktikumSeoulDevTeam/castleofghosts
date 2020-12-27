@@ -1,4 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
+
 import {UtilityState, UtilityActions, UTILITY_ACTION_TYPES} from './types';
 
 const utilityState: UtilityState = {

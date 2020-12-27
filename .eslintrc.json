@@ -44,6 +44,29 @@
         "png": "always"
       }
     ],
+    "import/order": [
+      "warn",
+      {
+        "groups": ["builtin", "external", "internal", ["parent", "sibling"], "index"],
+        "pathGroups": [
+          {
+            "pattern": "types",
+            "patternOptions": {"matchBase": true},
+            "group": "index",
+            "position": "after"
+          },
+          {
+            "pattern": "~/**",
+            "group": "internal"
+          }
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
     "import/prefer-default-export": "off",
     "react/jsx-filename-extension": ["warn", {"extensions": [".tsx", ".jsx"]}],
     "react/jsx-uses-react": "warn",

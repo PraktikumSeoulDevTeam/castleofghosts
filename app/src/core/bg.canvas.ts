@@ -1,7 +1,8 @@
-import {wallSprites} from './sprites/wall';
+import {setCanvas} from './engine';
 import {floorSprites} from './sprites/floor';
 import {GRID} from './sprites/utils';
-import {setCanvas} from './engine';
+import {wallSprites} from './sprites/wall';
+
 import type {Sprite} from './types';
 
 let ctx: CanvasRenderingContext2D;

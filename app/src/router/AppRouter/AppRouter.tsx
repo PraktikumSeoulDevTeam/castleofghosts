@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import {PrivateRoute} from '../PrivateRoute/PrivateRoute';
+
 import {
     ErrorPage,
     StartPage,
@@ -11,6 +11,8 @@ import {
     EditPage,
     WelcomePage
 } from '~/pages';
+
+import {PrivateRoute} from '../PrivateRoute/PrivateRoute';
 
 /**
  * Роутер

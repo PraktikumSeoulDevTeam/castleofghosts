@@ -1,5 +1,6 @@
-import React from 'react';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
+import React from 'react';
+
 import type {FormControlProps, FormControlFields, FormFieldComponentProps, FormFields} from './types';
 import './FormControl.scss';
 

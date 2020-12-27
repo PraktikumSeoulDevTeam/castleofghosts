@@ -1,4 +1,3 @@
-import type {GameLevel, GameStatePoint} from '~/core/types';
 import {
     GAME_ACTION_TYPES,
     GameCharSetNameAction,
@@ -7,6 +6,7 @@ import {
     GameSetLevelAction,
     GameSetStateAction
 } from './types';
+import type {GameLevel, GameStatePoint} from '~/core/types';
 
 export function gameCharSetNameAction(characterName: string): GameCharSetNameAction {
     return {

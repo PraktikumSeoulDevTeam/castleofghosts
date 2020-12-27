@@ -1,4 +1,5 @@
 import {createLoadPromise, createSprite, variantFactory} from './utils';
+
 import type {AssetVariants} from '../types';
 
 const assetMap: HTMLImageElement = new Image();
