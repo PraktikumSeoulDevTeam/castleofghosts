@@ -63,7 +63,6 @@ const prepareFromMap = (inputLevel: number[][]): number[][] => {
             }
         }
     }
-    console.log(level);
     return level;
 };
 
@@ -106,7 +105,14 @@ function mapWall(inputLevel: number[][]): number[][] {
                     existAndEqual(inputLevel, i, j - 1, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i + 1, j, BaseType.WALL) &&
                     existAndEqual(inputLevel, i, j + 1, BaseType.WALL);
-                if (cl_1) {
+                const cl_2 =
+                    existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
+                    existAndEqual(inputLevel, i, j + 1, BaseType.WALL) &&
+                    existAndEqual(inputLevel, i + 1, j, BaseType.WALL) &&
+                    existAndEqual(inputLevel, i, j - 1, BaseType.FLOOR) &&
+                    (existAndEqual(inputLevel, i + 1, j + 1, BaseType.FLOOR) ||
+                        existAndEqual(inputLevel, i - 1, j + 1, BaseType.FLOOR));
+                if (cl_1 || cl_2) {
                     level[i][j] = MapPartials.CORRIDOR_WALL_CROSSROAD_LEFT;
                     continue;
                 }
@@ -115,7 +121,9 @@ function mapWall(inputLevel: number[][]): number[][] {
                     existAndEqual(inputLevel, i + 1, j, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
                     existAndEqual(inputLevel, i, j + 1, BaseType.WALL) &&
-                    existAndEqual(inputLevel, i, j - 1, BaseType.WALL);
+                    existAndEqual(inputLevel, i, j - 1, BaseType.WALL) &&
+                    (existAndEqual(inputLevel, i - 1, j + 1, BaseType.FLOOR) ||
+                        existAndEqual(inputLevel, i - 1, j - 1, BaseType.FLOOR));
                 if (cb_1) {
                     level[i][j] = MapPartials.CORRIDOR_WALL_CROSSROAD_BOTTOM;
                     continue;
@@ -126,9 +134,28 @@ function mapWall(inputLevel: number[][]): number[][] {
                     existAndEqual(inputLevel, i - 1, j, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i + 1, j, BaseType.WALL) &&
                     existAndEqual(inputLevel, i, j + 1, BaseType.WALL) &&
-                    existAndEqual(inputLevel, i, j - 1, BaseType.WALL);
+                    existAndEqual(inputLevel, i, j - 1, BaseType.WALL) &&
+                    (existAndEqual(inputLevel, i + 1, j - 1, BaseType.FLOOR) ||
+                        existAndEqual(inputLevel, i + 1, j + 1, BaseType.FLOOR));
                 if (ct_1) {
                     level[i][j] = MapPartials.CORRIDOR_WALL_CROSSROAD_TOP;
+                    continue;
+                }
+
+                /**
+                 * Column
+                 */
+                const column_1 =
+                    existAndEqual(inputLevel, i + 1, j, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i + 1, j + 1, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i + 1, j - 1, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i, j - 1, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i, j + 1, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i - 1, j, BaseType.WALL);
+                const column_2 = sumFloor === 8;
+                if (column_1 || column_2) {
+                    level[i][j] = MapPartials.CORRIDOR_WALL_COLUMN;
+                    continue;
                 }
 
                 /**
@@ -145,14 +172,8 @@ function mapWall(inputLevel: number[][]): number[][] {
                     existAndEqual(inputLevel, i + 1, j, BaseType.WALL) &&
                     existAndEqual(inputLevel, i, j + 1, BaseType.WALL);
 
-                const tl_2 =
-                    existAndEqual(inputLevel, i, j - 1, BaseType.FLOOR) &&
-                    existAndEqual(inputLevel, i + 1, j, BaseType.FLOOR) &&
-                    existAndEqual(inputLevel, i - 1, j, BaseType.FLOOR) &&
-                    existAndEqual(inputLevel, i, j + 1, BaseType.WALL) &&
-                    sumFloor >= 5;
 
-                if (tl_1 || tl_2) {
+                if (tl_1) {
                     level[i][j] = MapPartials.CORRIDOR_WALL_DEADBLOCK_TL;
                     continue;
                 }
@@ -177,7 +198,12 @@ function mapWall(inputLevel: number[][]): number[][] {
                     existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
                     existAndEqual(inputLevel, i, j + 1, BaseType.WALL) &&
                     sumFloor >= 4;
-                if (bl_1 || bl_2) {
+                const bl_3 =
+                    existAndEqual(inputLevel, i, j - 1, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i - 1, j, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i + 1, j, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i, j + 1, BaseType.WALL);
+                if (bl_1 || bl_2 || bl_3) {
                     level[i][j] = MapPartials.CORRIDOR_WALL_DEADBLOCK_BL;
                     continue;
                 }
@@ -191,7 +217,12 @@ function mapWall(inputLevel: number[][]): number[][] {
                     existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
                     existAndEqual(inputLevel, i, j - 1, BaseType.WALL) &&
                     sumFloor >= 4;
-                if (br_1 || br_2) {
+                const br_3 =
+                    existAndEqual(inputLevel, i + 1, j, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i - 1, j, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i, j + 1, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i, j - 1, BaseType.WALL);
+                if (br_1 || br_2 || br_3) {
                     level[i][j] = MapPartials.CORRIDOR_WALL_DEADBLOCK_BR;
                     continue;
                 }
@@ -200,11 +231,22 @@ function mapWall(inputLevel: number[][]): number[][] {
                     Just Wall
                 */
                 // Side
-                if (
+                const side_1 =
                     ((sumFloor <= 3 && sumFloor >= 1) || sumFloor === 5 || sumFloor === 6) &&
                     existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
-                    existAndEqual(inputLevel, i + 1, j, BaseType.WALL)
-                ) {
+                    existAndEqual(inputLevel, i + 1, j, BaseType.WALL);
+                const side_2 =
+                    existAndEqual(inputLevel, i - 1, j, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i, j + 1, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i, j - 1, BaseType.FLOOR) &&
+                    existAndEqual(inputLevel, i + 1, j, BaseType.WALL);
+
+                const side_3 =
+                    existAndEqual(inputLevel, i + 1, j, BaseType.WALL) &&
+                    existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
+                    (existAndEqual(inputLevel, i, j - 1, BaseType.FLOOR) ||
+                        existAndEqual(inputLevel, i, j + 1, BaseType.FLOOR));
+                if (side_1 || side_2 || side_3) {
                     level[i][j] = MapPartials.CORRIDOR_WALL_SIDE;
                     continue;
                 }
@@ -298,6 +340,11 @@ const switcher = (el: MapPartials) => {
                 part: 'WALL',
                 type: 'CROSS_TOP'
             };
+        case MapPartials.CORRIDOR_WALL_COLUMN:
+            return {
+                part: 'WALL',
+                type: 'LEDGE'
+            };
         default: {
             return {
                 part: 'WALL',
@@ -334,10 +381,10 @@ export class LevelGenerator {
         const result: Level[] = [];
 
         // for (let i = 0; i < count; i += 1) {
-        const map = mapToGameFormat(mapWall(Levels[0].map));
+        const map = mapToGameFormat(mapWall(Levels[1].map));
 
         result.push({
-            ...Levels[0],
+            ...Levels[1],
             map,
             interests: []
         });

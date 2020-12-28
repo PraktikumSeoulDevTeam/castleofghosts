@@ -30,13 +30,12 @@ export function drawMap(level: BackgroundType[][]): void {
                         drawImage(j, i, WALL[type]);
                     } else {
                         drawImage(j, i, FLOOR[type]);
-                    }
+                    } 
                 }
             }
         }
 
-        // drawImage(8, 7, WALL.CROSS_TOP);
-        // drawImage(10, 10, WALL.LEDGE);
+        // drawImage(16, 18, WALL.CORNER_BR);
         // drawImage(10, 10, WALL.CORNER_BL);
         // drawImage(10, 15, WALL.CORNER_BL);
 
