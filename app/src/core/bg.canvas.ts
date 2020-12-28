@@ -34,6 +34,29 @@ export function drawMap(level: BackgroundType[][]): void {
                 }
             }
         }
+
+        // drawImage(8, 7, WALL.CROSS_TOP);
+        // drawImage(10, 10, WALL.LEDGE);
+        // drawImage(10, 10, WALL.CORNER_BL);
+        // drawImage(10, 15, WALL.CORNER_BL);
+
+        // drawImage(10, 10, WALL.CORNER_BR);
+        //
+        // drawImage(2, 11, WALL.CORNER_BL);
+        // drawImage(3, 11, WALL.TOP);
+
+        // drawImage(10, 10, WALL.CORNER_TL);
+        // drawImage(10, 10, WALL.CORNER_TR);
+        // drawImage(10, 10, WALL.CROSS);
+        // drawImage(10, 10, WALL.CROSS_BOTTOM);
+        // drawImage(10, 10, WALL.CROSS_LEFT);
+        // drawImage(10, 10, WALL.CROSS_RIGHT);
+        // drawImage(10, 10, WALL.CROSS_TOP);
+        //
+        // drawImage(10, 10, WALL.FILL);
+        // drawImage(10, 10, WALL.SIDE);
+        // drawImage(10, 10, WALL.TOP);
+        // drawImage(10, 10, WALL.FILL);
     });
 }
 
