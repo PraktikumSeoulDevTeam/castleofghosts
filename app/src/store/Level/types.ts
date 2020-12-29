@@ -1,13 +1,18 @@
 import {GeneratorConfiguration} from '../../services/LevelGenerator/types';
+import {Floor, Wall} from '../../core/sprites/map';
+
 /**
  * Level Model's section
  */
 export type Point = [x: number, y: number];
 
-export interface BackgroundType {
-    asset: {type: string; part: string};
+export type BackgroundAsset = {part: 'FLOOR' | 'WALL'; type: keyof Floor | keyof Wall};
+export interface BackgroundPart {
+    asset: BackgroundAsset;
     canWalk: boolean;
 }
+
+export type BackgroundMap = BackgroundPart[][];
 
 export const enum InterestType {
     KEY = 0,
@@ -22,7 +27,7 @@ export interface Interest {
 export interface Level {
     startPoint: Point;
     endPoint: Point;
-    map: BackgroundType[][];
+    map: BackgroundMap;
     interests: Interest[];
 }
 

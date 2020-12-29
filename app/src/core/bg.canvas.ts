@@ -2,12 +2,12 @@ import {wallSprites} from './sprites/map/wall';
 import {floorSprites} from './sprites/map/floor';
 import {GRID} from './sprites/utils';
 import type {Sprite} from './sprites/types';
-import {BackgroundType} from '../store/Level/types';
+import {BackgroundMap} from '../store/Level/types';
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 
-export function setBgCanvas(canvasElement: HTMLCanvasElement, level: BackgroundType[][]): void {
+export function setBgCanvas(canvasElement: HTMLCanvasElement, level: BackgroundMap): void {
     if (!canvasElement) {
         return;
     }
@@ -20,7 +20,7 @@ export function setBgCanvas(canvasElement: HTMLCanvasElement, level: BackgroundT
     drawMap(level);
 }
 
-export function drawMap(level: BackgroundType[][]): void {
+export function drawMap(level: BackgroundMap): void {
     Promise.all([wallSprites, floorSprites]).then(([WALL, FLOOR]) => {
         for (let i = 0; i < level.length; i += 1) {
             for (let j = 0; j < level[i].length; j += 1) {
@@ -30,32 +30,10 @@ export function drawMap(level: BackgroundType[][]): void {
                         drawImage(j, i, WALL[type]);
                     } else {
                         drawImage(j, i, FLOOR[type]);
-                    } 
+                    }
                 }
             }
         }
-
-        // drawImage(16, 18, WALL.CORNER_BR);
-        // drawImage(10, 10, WALL.CORNER_BL);
-        // drawImage(10, 15, WALL.CORNER_BL);
-
-        // drawImage(10, 10, WALL.CORNER_BR);
-        //
-        // drawImage(2, 11, WALL.CORNER_BL);
-        // drawImage(3, 11, WALL.TOP);
-
-        // drawImage(10, 10, WALL.CORNER_TL);
-        // drawImage(10, 10, WALL.CORNER_TR);
-        // drawImage(10, 10, WALL.CROSS);
-        // drawImage(10, 10, WALL.CROSS_BOTTOM);
-        // drawImage(10, 10, WALL.CROSS_LEFT);
-        // drawImage(10, 10, WALL.CROSS_RIGHT);
-        // drawImage(10, 10, WALL.CROSS_TOP);
-        //
-        // drawImage(10, 10, WALL.FILL);
-        // drawImage(10, 10, WALL.SIDE);
-        // drawImage(10, 10, WALL.TOP);
-        // drawImage(10, 10, WALL.FILL);
     });
 }
 

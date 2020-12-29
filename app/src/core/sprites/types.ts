@@ -1,4 +1,3 @@
-
 export interface AssetVariant {
     x: number;
     y: number;

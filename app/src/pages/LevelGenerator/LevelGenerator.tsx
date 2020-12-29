@@ -10,7 +10,6 @@ export const LevelGenerator = (): JSX.Element => {
             .map(() => Array(32).fill(0))
     );
 
-
     const changeState = (i, j, v) => {
         setMap((oldState) => {
             const newState = [...oldState];

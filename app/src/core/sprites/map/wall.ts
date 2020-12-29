@@ -43,8 +43,24 @@ const VARIANTS: AssetVariants = {
     BRICK_4: {
         x: 0,
         y: 12
+    },
+    BRICK_5: {
+        x: 0,
+        y: 15
+    },
+    BRICK_6: {
+        x: 0,
+        y: 18
+    },
+    BRICK_7: {
+        x: 0,
+        y: 21
+    },
+    BRICK_8: {
+        x: 0,
+        y: 24
     }
 };
 
 // TODO на данный момент жестко зашит вариант. Возможна реализация с изменением в рантайме
-export const wallSprites: Promise<Wall> = createLoadPromise(assetMap, variantFactory(SPRITES, VARIANTS.BRICK_3));
+export const wallSprites: Promise<Wall> = createLoadPromise(assetMap, variantFactory(SPRITES, VARIANTS.BRICK_8));
