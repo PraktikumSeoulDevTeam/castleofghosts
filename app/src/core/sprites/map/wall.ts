@@ -63,4 +63,4 @@ const VARIANTS: AssetVariants = {
 };
 
 // TODO на данный момент жестко зашит вариант. Возможна реализация с изменением в рантайме
-export const wallSprites: Promise<Wall> = createLoadPromise(assetMap, variantFactory(SPRITES, VARIANTS.BRICK_8));
+export const wallSprites: Promise<Wall> = createLoadPromise(assetMap, variantFactory(SPRITES, VARIANTS.BRICK_3));

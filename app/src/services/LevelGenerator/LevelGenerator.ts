@@ -192,16 +192,19 @@ function mapWall(inputLevel: number[][]): number[][] {
                     existAndEqual(inputLevel, i - 1, j + 1, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
                     existAndEqual(inputLevel, i, j + 1, BaseType.WALL);
+
                 const deadblockBottomLeft2 =
                     existAndEqual(inputLevel, i + 1, j - 1, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
                     existAndEqual(inputLevel, i, j + 1, BaseType.WALL) &&
                     sumFloor >= 4;
+
                 const deadblockBottomLeft3 =
                     existAndEqual(inputLevel, i, j - 1, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i - 1, j, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i + 1, j, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i, j + 1, BaseType.WALL);
+
                 if (deadblockBottomLeft1 || deadblockBottomLeft2 || deadblockBottomLeft3) {
                     level[i][j] = MapPartials.CORRIDOR_WALL_DEADBLOCK_BL;
                     continue;
@@ -211,6 +214,7 @@ function mapWall(inputLevel: number[][]): number[][] {
                     existAndEqual(inputLevel, i - 1, j - 1, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
                     existAndEqual(inputLevel, i, j - 1, BaseType.WALL);
+
                 const deadblockBottomRight2 =
                     existAndEqual(inputLevel, i + 1, j + 1, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i + 1, j, BaseType.FLOOR) &&
@@ -218,11 +222,13 @@ function mapWall(inputLevel: number[][]): number[][] {
                     existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
                     existAndEqual(inputLevel, i, j - 1, BaseType.WALL) &&
                     sumFloor >= 3;
+
                 const deadblockBottomRight3 =
                     existAndEqual(inputLevel, i + 1, j, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i - 1, j, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i, j + 1, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i, j - 1, BaseType.WALL);
+
                 if (deadblockBottomRight1 || deadblockBottomRight2 || deadblockBottomRight3) {
                     level[i][j] = MapPartials.CORRIDOR_WALL_DEADBLOCK_BR;
                     continue;
@@ -232,11 +238,11 @@ function mapWall(inputLevel: number[][]): number[][] {
                     Just Wall
                 */
                 // Side
-                const sideWall1 = [
+                const sideWall1 =
                     ((sumFloor <= 3 && sumFloor >= 1) || sumFloor === 5 || sumFloor === 6) &&
-                        existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
-                        existAndEqual(inputLevel, i + 1, j, BaseType.WALL)
-                ];
+                    existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
+                    existAndEqual(inputLevel, i + 1, j, BaseType.WALL);
+
                 const sideWall2 =
                     existAndEqual(inputLevel, i - 1, j, BaseType.FLOOR) &&
                     existAndEqual(inputLevel, i, j + 1, BaseType.FLOOR) &&
@@ -248,6 +254,7 @@ function mapWall(inputLevel: number[][]): number[][] {
                     existAndEqual(inputLevel, i - 1, j, BaseType.WALL) &&
                     (existAndEqual(inputLevel, i, j - 1, BaseType.FLOOR) ||
                         existAndEqual(inputLevel, i, j + 1, BaseType.FLOOR));
+
                 if (sideWall1 || sideWall2 || sideWall3) {
                     level[i][j] = MapPartials.CORRIDOR_WALL_SIDE;
                     continue;
