@@ -3,7 +3,8 @@ export interface AssetVariant {
     y: number;
 }
 
-export type AssetVariants = {[key: string]: AssetVariant};
+export type AssetMap = Record<string, Sprite>;
+export type AssetVariants = Record<string, AssetVariant>;
 
 export interface Sprite {
     image?: HTMLImageElement;

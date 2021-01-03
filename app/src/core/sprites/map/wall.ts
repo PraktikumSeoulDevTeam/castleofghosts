@@ -1,6 +1,6 @@
 import {createLoadPromise, createSprite, variantFactory} from '../utils';
-import type {AssetVariants} from '../types';
-import {Wall} from './types';
+
+import type {AssetMap, AssetVariants} from '../types';
 
 const assetMap: HTMLImageElement = new Image();
 assetMap.src = './assets/wall.png';
@@ -10,7 +10,7 @@ assetMap.src = './assets/wall.png';
  * Формат:
  * <image, сдвиг в карте по X, сдвиг в карте по Y, ширина, высота>
  */
-const SPRITES = {
+const SPRITES: AssetMap = {
     CORNER_TL: createSprite(assetMap, 0, 0),
     CORNER_TR: createSprite(assetMap, 2, 0),
     CORNER_BL: createSprite(assetMap, 0, 2),
@@ -63,4 +63,4 @@ const VARIANTS: AssetVariants = {
 };
 
 // TODO на данный момент жестко зашит вариант. Возможна реализация с изменением в рантайме
-export const wallSprites: Promise<Wall> = createLoadPromise(assetMap, variantFactory(SPRITES, VARIANTS.BRICK_3));
+export const wallSprites = createLoadPromise(assetMap, variantFactory(SPRITES, VARIANTS.BRICK_3));

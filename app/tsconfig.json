@@ -1,9 +1,12 @@
 {
   "extends": "../tsconfig.common.json",
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "src",
     "outDir": "../dist/app",
     "jsx": "react",
-    "importHelpers": true
+    "importHelpers": true,
+    "paths": {
+      "~/*": ["./*"]
+    }
   }
 }

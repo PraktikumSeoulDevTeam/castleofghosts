@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {UiLayout} from '../../layouts';
+
 import {Button} from '../../components';
+import {UiLayout} from '../../layouts';
 import './LevelGenerator.scss';
 
 export const LevelGenerator = (): JSX.Element => {
@@ -10,7 +11,7 @@ export const LevelGenerator = (): JSX.Element => {
             .map(() => Array(32).fill(0))
     );
 
-    const changeState = (i, j, v) => {
+    const changeState = (i: number, j: number, v) => {
         setMap((oldState) => {
             const newState = [...oldState];
             newState[i][j] = v;
@@ -24,23 +25,21 @@ export const LevelGenerator = (): JSX.Element => {
             <h1 className="t-title mt-5">Map Creator for DEV</h1>
 
             <div className="generator-grid mt-5">
-                {map.map((row, i) => {
-                    return row.map((cell, j) => {
-                        return (
-                            <input
-                                className="generator-grid__cell"
-                                key={`${cell}_${Date.now()}_${Math.round(
-                                    Math.random() * 99999
-                                )}_${Date.now()}_${Math.round(Math.random() * 10000000)}`}
-                                value={cell}
-                                onChange={((i1, j1) => (ev) => {
-                                    const val = ev.target.value;
-                                    changeState(i1, j1, val);
-                                })(i, j)}
-                            />
-                        );
-                    });
-                })}
+                {map.map((row, i) =>
+                    row.map((cell, j) => (
+                        <input
+                            className="generator-grid__cell"
+                            key={`${cell}_${Date.now()}_${Math.round(Math.random() * 99999)}_${Date.now()}_${Math.round(
+                                Math.random() * 10000000
+                            )}`}
+                            value={cell}
+                            onChange={((i1, j1) => (ev) => {
+                                const val = ev.target.value;
+                                changeState(i1, j1, val);
+                            })(i, j)}
+                        />
+                    ))
+                )}
             </div>
 
             <div className="mt-5">

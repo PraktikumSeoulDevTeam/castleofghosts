@@ -1,12 +1,15 @@
 import React from 'react';
-import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
-import {AppStoreState} from 'store/types';
+import {Dispatch} from 'redux';
 import * as Yup from 'yup';
-import {userUpdateAvatarAction} from '../../store/User/actions';
+
+import {userUpdateAvatarAction} from '~/store/User/actions';
+
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
-import type {FormControlFields} from '../FormControl/types';
+
+import type {FormControlFields, FormFields} from '../FormControl/types';
+import type {AppStoreState} from '~/store/types';
 
 const fileConditions = {
     MAX_FILE_SIZE: 1000000,
@@ -32,29 +35,23 @@ const UserAvatarFields: FormControlFields = {
     }
 };
 
-const mapState = (state: AppStoreState) => {
-    return {
-        avatar: state.user.info.avatar,
-        firstName: state.user.info.first_name
-    };
-};
+const mapState = (state: AppStoreState) => ({
+    avatar: state.user.info.avatar,
+    firstName: state.user.info.first_name
+});
 
-const mapDispatch = (dispatch: Dispatch) => {
-    return {
-        onUpdate: (formData: {[key: string]: File}) => {
-            const data = new FormData();
-            data.append('avatar', formData.avatar);
-            dispatch(userUpdateAvatarAction(data));
-        }
-    };
-};
+const mapDispatch = (dispatch: Dispatch) => ({
+    onUpdate: (formData: FormFields) => {
+        const data = new FormData();
+        data.append('avatar', formData.avatar);
+        dispatch(userUpdateAvatarAction(data));
+    }
+});
 
 const connector = connect(mapState, mapDispatch);
 
-function component(props: ConnectedProps<typeof connector>): JSX.Element {
-    const {avatar, firstName, onUpdate} = props;
-
-    return (
+export const UserAvatarChange = connector(
+    ({avatar, firstName, onUpdate}: ConnectedProps<typeof connector>): JSX.Element => (
         <div>
             {avatar && <img src={avatar} alt={firstName} className="my-2" />}
 
@@ -64,7 +61,5 @@ function component(props: ConnectedProps<typeof connector>): JSX.Element {
                 </footer>
             </FormControl>
         </div>
-    );
-}
-
-export const UserAvatarChange = connector(component);
+    )
+);

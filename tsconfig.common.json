@@ -8,8 +8,6 @@
     "noEmitOnError": true,
 
     "strict": true,
-    "noImplicitAny": false,
-    "strictNullChecks": false,
 
     "noUnusedLocals": true,
     "noUnusedParameters": true,

@@ -1,4 +1,5 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
+
 import type {
     ApiAddToLeaderboardRequest,
     ApiBadRequestError,
@@ -154,22 +155,29 @@ function responseHandler<T>(response: AxiosResponse<T>): AxiosResponse<T> {
 function responseErrorHandler(responseError: AxiosError<unknown>): Promise<ApiBadRequestError> {
     let badRequestError: ApiBadRequestError;
 
-    if (responseError.request.responseType === 'text' && typeof responseError.response.data === 'string') {
-        try {
-            badRequestError = JSON.parse(responseError.response.data);
-        } catch (error) {
-            // Несмотря на описание Api, формат ошибок иногда не такой как должен быть
-            badRequestError = {
-                reason: responseError.response.data
-            };
+    if (responseError.response) {
+        if (responseError.request.responseType === 'text' && typeof responseError.response.data === 'string') {
+            try {
+                badRequestError = JSON.parse(responseError.response.data);
+            } catch (error) {
+                // Несмотря на описание Api, формат ошибок иногда не такой как должен быть
+                badRequestError = {
+                    reason: responseError.response.data
+                };
+            }
+        } else {
+            badRequestError = responseError.response.data as ApiBadRequestError;
+        }
+
+        if (badRequestError) {
+            badRequestError.status = responseError.response.status;
         }
     } else {
-        badRequestError = responseError.response.data as ApiBadRequestError;
+        badRequestError = {
+            reason: 'API Error'
+        };
     }
 
-    if (badRequestError) {
-        badRequestError.status = responseError.response.status;
-    }
     // eslint-disable-next-line no-console
     console.error('[API error]', badRequestError, responseError.response);
 

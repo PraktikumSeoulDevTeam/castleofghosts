@@ -1,23 +1,16 @@
-import {wallSprites} from './sprites/map/wall';
-import {floorSprites} from './sprites/map/floor';
-import {GRID} from './sprites/utils';
-import type {Sprite} from './sprites/types';
-import {BackgroundMap} from '../store/Level/types';
+import {floorSprites} from '~/core/sprites/map';
 
-let canvas: HTMLCanvasElement;
+import {setCanvas} from './engine';
+import {wallSprites} from './sprites/map/wall';
+import {GRID} from './sprites/utils';
+
+import type {Sprite} from './sprites/types';
+import {BackgroundMap} from '~/store/Level/types';
+
 let ctx: CanvasRenderingContext2D;
 
-export function setBgCanvas(canvasElement: HTMLCanvasElement, level: BackgroundMap): void {
-    if (!canvasElement) {
-        return;
-    }
-
-    canvas = canvasElement;
-    ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = false;
-
-    // TODO
-    drawMap(level);
+export function setBgCanvas(canvasElement: HTMLCanvasElement | null): void {
+    ({ctx} = setCanvas(canvasElement));
 }
 
 export function drawMap(level: BackgroundMap): void {
@@ -25,7 +18,13 @@ export function drawMap(level: BackgroundMap): void {
         for (let i = 0; i < level.length; i += 1) {
             for (let j = 0; j < level[i].length; j += 1) {
                 if (level[i][j] !== null) {
-                    const {part, type} = level[i][j].asset;
+                    const part = level[i][j].asset?.part;
+                    const type = level[i][j].asset?.type;
+
+                    if (!type || !part) {
+                        continue;
+                    }
+
                     if (part === 'WALL') {
                         drawImage(j, i, WALL[type]);
                     } else {
@@ -38,15 +37,17 @@ export function drawMap(level: BackgroundMap): void {
 }
 
 function drawImage(x: number, y: number, sprite: Sprite) {
-    ctx.drawImage(
-        sprite.image,
-        sprite.posx,
-        sprite.posy,
-        sprite.width,
-        sprite.height,
-        GRID * x,
-        GRID * y,
-        sprite.width,
-        sprite.height
-    );
+    if (sprite.image) {
+        ctx.drawImage(
+            sprite.image,
+            sprite.posx,
+            sprite.posy,
+            sprite.width,
+            sprite.height,
+            GRID * x,
+            GRID * y,
+            sprite.width,
+            sprite.height
+        );
+    }
 }

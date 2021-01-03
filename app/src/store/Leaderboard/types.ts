@@ -1,4 +1,5 @@
-import type {ApiCharacterInfo, ApiGetLeaderboardRequest} from '../../api/types';
+import type {ApiGetLeaderboardRequest} from '~/api/types';
+import type {GameCharacterInfo} from '~/core/types';
 
 export const enum LB_ACTION_TYPES {
     ADD = 'cog/lb/add',
@@ -8,17 +9,17 @@ export const enum LB_ACTION_TYPES {
 }
 
 export interface LeadeboardState {
-    list: ApiCharacterInfo[];
+    list: GameCharacterInfo[];
 }
 
 export interface LbAddAction {
     type: LB_ACTION_TYPES.ADD;
-    payload: ApiCharacterInfo[];
+    payload: GameCharacterInfo[];
 }
 
 export interface LbUploadAction {
     type: LB_ACTION_TYPES.UPLOAD;
-    payload: ApiCharacterInfo;
+    payload: GameCharacterInfo;
 }
 
 export interface LbDownloadAction {

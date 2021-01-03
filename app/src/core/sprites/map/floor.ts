@@ -1,6 +1,6 @@
 import {createLoadPromise, createSprite, variantFactory} from '../utils';
+
 import type {AssetVariants} from '../types';
-import {Floor} from './types';
 
 const assetMap: HTMLImageElement = new Image();
 assetMap.src = './assets/floor.png';
@@ -38,4 +38,4 @@ const VARIANTS: AssetVariants = {
 };
 
 // TODO на данный момент жестко зашит вариант. Возможна реализация с изменением в рантайме
-export const floorSprites: Promise<Floor> = createLoadPromise(assetMap, variantFactory(SPRITES, VARIANTS.BRICK_2));
+export const floorSprites = createLoadPromise(assetMap, variantFactory(SPRITES, VARIANTS.BRICK_2));

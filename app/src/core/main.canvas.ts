@@ -1,8 +1,9 @@
+import {setCanvas} from './engine';
 import {characterSprites} from './sprites/character/character';
 import {GRID} from './sprites/utils';
+
 import type {Sprite} from './types';
 
-let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 
 let width: number;
@@ -16,15 +17,10 @@ let ftop: number;
 
 let character: Sprite;
 
-export function setMainCanvas(canvasElement: HTMLCanvasElement): void {
-    if (!canvasElement) {
-        return;
-    }
-    canvas = canvasElement;
-    ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = false;
-    width = canvas.width / GRID;
-    height = canvas.height / GRID;
+export function setMainCanvas(canvasElement: HTMLCanvasElement | null): void {
+    ({ctx, width, height} = setCanvas(canvasElement));
+    width /= GRID;
+    height /= GRID;
     cx = width / 2;
     cy = height / 2;
 
@@ -57,17 +53,19 @@ export function setMainCanvas(canvasElement: HTMLCanvasElement): void {
 }
 
 function drawImage(x: number, y: number, sprite: Sprite) {
-    ctx.drawImage(
-        sprite.image,
-        sprite.posx,
-        sprite.posy,
-        sprite.width,
-        sprite.height,
-        GRID * x,
-        GRID * y,
-        sprite.width,
-        sprite.height
-    );
+    if (sprite.image) {
+        ctx.drawImage(
+            sprite.image,
+            sprite.posx,
+            sprite.posy,
+            sprite.width,
+            sprite.height,
+            GRID * x,
+            GRID * y,
+            sprite.width,
+            sprite.height
+        );
+    }
 }
 
 function movef(x: number, y: number) {

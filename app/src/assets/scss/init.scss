@@ -23,6 +23,10 @@ input {
     @include t-title;
 }
 
+.t-title_2 {
+    @include t-title_2;
+}
+
 .t-center {
     display: block;
     text-align: center;

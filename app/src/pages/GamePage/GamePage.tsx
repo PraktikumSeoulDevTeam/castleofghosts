@@ -1,48 +1,48 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
+import {useHistory} from 'react-router-dom';
+
+import {setBgCanvas} from '~/core/bg.canvas';
+import {setMainCanvas} from '~/core/main.canvas';
+import {UiLayout} from '~/layouts';
+import {gameRemoveAction} from '~/store/Game/actions';
+
 import {GameUi} from './GameUi/GameUi';
-import {setBgCanvas} from '../../core/bg.canvas';
-import {setMainCanvas} from '../../core/main.canvas';
-import {UiLayout} from '../../layouts';
-import {Level} from '../../store/Level/types';
 import './GamePage.scss';
-import {AppStoreState} from '../../store/types';
 
 const width = 1024;
 const height = 768;
 
-/**
- * Selector
- * @param state
- */
-const currentLevel = (state: AppStoreState): Level => state.level.levels[state.game.currentLevel];
-
-const mapStateToProps = (state: AppStoreState) => {
-    return {
-        level: currentLevel(state)
-    };
+const mapDispatch = {
+    gameRemove: gameRemoveAction
 };
 
-const connector = connect(mapStateToProps);
+const connector = connect(null, mapDispatch);
 
-const GamePageComponent = ({level}: ConnectedProps<typeof connector>): JSX.Element => {
-    const bgCanvas = useRef<HTMLCanvasElement>();
-    const mainCanvas = useRef<HTMLCanvasElement>();
+export const GamePage = connector(
+    ({gameRemove}: ConnectedProps<typeof connector>): JSX.Element => {
+        const bgCanvas = useRef<HTMLCanvasElement>(null);
+        const mainCanvas = useRef<HTMLCanvasElement>(null);
+        const history = useHistory();
 
-    React.useEffect(() => {
-        setBgCanvas(bgCanvas.current, level.map);
-        setMainCanvas(mainCanvas.current);
-    }, []);
+        useEffect(() => {
+            setBgCanvas(bgCanvas.current);
+            setMainCanvas(mainCanvas.current);
+            const unblock = history.block(() => {
+                gameRemove();
+            });
 
-    return (
-        <UiLayout className="game-page">
-            <div className="game-page__container" style={{width: width + 4, height: height + 50}}>
-                <canvas ref={bgCanvas} width={width} height={height} className="game-page__bg" />
-                <canvas ref={mainCanvas} width={width} height={height} className="game-page__main" />
-                <GameUi className="game-page__ui" />
-            </div>
-        </UiLayout>
-    );
-};
+            return () => unblock();
+        }, []);
 
-export const GamePage = connector(GamePageComponent);
+        return (
+            <UiLayout className="game-page">
+                <div className="game-page__container" style={{width: width + 4, height: height + 50}}>
+                    <canvas ref={bgCanvas} width={width} height={height} className="game-page__bg" />
+                    <canvas ref={mainCanvas} width={width} height={height} className="game-page__main" />
+                    <GameUi className="game-page__ui" />
+                </div>
+            </UiLayout>
+        );
+    }
+);

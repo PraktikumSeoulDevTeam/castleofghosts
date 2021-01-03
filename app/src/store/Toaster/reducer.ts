@@ -1,4 +1,5 @@
 import {cloneDeep} from 'lodash';
+
 import {ToasterState, ToasterAction, TOASTER_ACTION_TYPES} from './types';
 
 const initialState: ToasterState = {

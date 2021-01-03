@@ -1,8 +1,9 @@
 import cloneDepp from 'lodash/cloneDeep';
+
 import {Levels} from './__levels';
-import {BaseType, GeneratorConfiguration, MapPartials} from './types';
 
 import {BackgroundMap, BackgroundPart, BackgroundAsset, Level} from '../../store/Level/types';
+import {BaseType, GeneratorConfiguration, MapPartials} from './types';
 
 const MAX_SUM = 9;
 
@@ -21,7 +22,9 @@ const cellNeighborhoods = (i: number, j: number): number[][] => [
     [i + 1, j + 1]
 ];
 
-const existAndEqual = (arr: number[][], i: number, j: number, val): boolean => exist(arr, i, j) && arr[i][j] === val;
+const existAndEqual = (arr: number[][], i: number, j: number, val: number): boolean =>
+    exist(arr, i, j) && arr[i][j] === val;
+
 const sumOf = (arr: number[][], i: number, j: number, val: number) => {
     const data = cellNeighborhoods(i, j);
 
@@ -36,7 +39,7 @@ const sumOf = (arr: number[][], i: number, j: number, val: number) => {
     return sum;
 };
 
-const allOneType = (arr: number[][], i: number, j: number, val): boolean => {
+const allOneType = (arr: number[][], i: number, j: number, val: number): boolean => {
     const data = cellNeighborhoods(i, j);
 
     for (let k = 0; k < data.length; k += 1) {
@@ -383,7 +386,10 @@ const mapToGameFormat = (level: number[][]): BackgroundMap => {
         res.push([]);
         for (let j = 0; j < level[i].length; j += 1) {
             if (level[i][j] === -1) {
-                res[i][j] = null;
+                res[i][j] = {
+                    asset: null,
+                    canWalk: false
+                };
             } else {
                 const mapElement: BackgroundPart = {
                     canWalk: level[i][j] === 1,
@@ -398,16 +404,36 @@ const mapToGameFormat = (level: number[][]): BackgroundMap => {
     return res;
 };
 
+const randSort = (array: number[][]): number[][] => {
+    const arr = array;
+    for (let i = 0; i < arr.length - 1; i += 1) {
+        const rand = Math.floor(Math.random() * i);
+
+        const tmp = arr[i];
+        arr[i] = arr[rand];
+        arr[rand] = tmp;
+    }
+
+    return arr;
+};
+
 export class LevelGenerator {
     static generate(config: GeneratorConfiguration): Level[] {
         const {count} = config;
         const result: Level[] = [];
 
-        for (let i = 0; i < count; i += 1) {
-            const map = mapToGameFormat(mapWall(Levels[1].map));
+        const randNum = Array(Levels.length);
+
+        for (let i = 0; i < randNum.length; i += 1) {
+            randNum[i] = i;
+        }
+        randSort(randNum);
+
+        for (let i = 0; i < Math.min(count, randNum.length); i += 1) {
+            const map = mapToGameFormat(mapWall(Levels[randNum[i]].map));
 
             result.push({
-                ...Levels[1],
+                ...Levels[randNum[i]],
                 map,
                 interests: []
             });

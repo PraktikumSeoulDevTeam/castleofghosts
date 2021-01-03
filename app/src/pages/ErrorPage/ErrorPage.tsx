@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {UiLayout} from '../../layouts';
+
+import {UiLayout} from '~/layouts';
+
 import type {ErrorPageProps} from './types';
 import './ErrorPage.scss';
 

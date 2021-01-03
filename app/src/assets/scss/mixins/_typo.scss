@@ -44,6 +44,14 @@ $fontFamily: 'ps2p', sans-serif;
     text-align: center;
 }
 
+@mixin t-title_2() {
+    font-family: $fontFamily;
+    font-size: $fontSize * 1.6;
+    font-weight: normal;
+    line-height: 1.25;
+    text-align: center;
+}
+
 @mixin t-biggest() {
     font-family: $fontFamily;
     font-size: $fontSize * 6;
