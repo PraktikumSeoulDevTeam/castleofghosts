@@ -5,7 +5,10 @@ import {
     SignUpAction,
     SignInAction,
     SignOutAction,
-    USER_ACTION_TYPES
+    UserGeolocationGetAction,
+    UserGeolocationSetAction,
+    USER_ACTION_TYPES,
+    UserGeolocationCitySetAction
 } from './types';
 import type {ApiUserInfo, ApiSignUpRequest, ApiSignInRequest} from '../../api/types';
 
@@ -45,5 +48,25 @@ export function signInAction(signInData: ApiSignInRequest): SignInAction {
 export function signOutAction(): SignOutAction {
     return {
         type: USER_ACTION_TYPES.SIGN_OUT
+    };
+}
+
+export function userGeolocationGetAction(): UserGeolocationGetAction {
+    return {
+        type: USER_ACTION_TYPES.GEOLOCATION_GET
+    };
+}
+
+export function userGeolocationSetAction(payload: GeolocationPosition): UserGeolocationSetAction {
+    return {
+        type: USER_ACTION_TYPES.GEOLOCATION_SET,
+        payload
+    };
+}
+
+export function userGeolocationCitySetAction(payload: string): UserGeolocationCitySetAction {
+    return {
+        type: USER_ACTION_TYPES.GEOLOCATION_CITY_SET,
+        payload
     };
 }

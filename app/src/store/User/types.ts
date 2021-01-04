@@ -6,11 +6,20 @@ export const enum USER_ACTION_TYPES {
     REMOVE = 'cog/user/remove',
     SIGN_UP = 'cog/user/signup',
     SIGN_IN = 'cog/user/signin',
-    SIGN_OUT = 'cog/user/signout'
+    SIGN_OUT = 'cog/user/signout',
+    GEOLOCATION_GET = 'cog/user/geolocation/get',
+    GEOLOCATION_SET = 'cog/user/geolocation/set',
+    GEOLOCATION_CITY_SET = 'cog/user/geolocation/city/set'
 }
 
 export interface UserState {
     info: Partial<ApiUserInfo>;
+    geolocation: UserStateGeolocation;
+}
+
+export interface UserStateGeolocation {
+    position: GeolocationPosition;
+    city: string;
 }
 
 export interface UserGetAction {
@@ -40,10 +49,27 @@ export interface SignOutAction {
     type: USER_ACTION_TYPES.SIGN_OUT;
 }
 
+export interface UserGeolocationGetAction {
+    type: USER_ACTION_TYPES.GEOLOCATION_GET;
+}
+
+export interface UserGeolocationSetAction {
+    type: USER_ACTION_TYPES.GEOLOCATION_SET;
+    payload: GeolocationPosition;
+}
+
+export interface UserGeolocationCitySetAction {
+    type: USER_ACTION_TYPES.GEOLOCATION_CITY_SET;
+    payload: string;
+}
+
 export type UserActions =
     | UserGetAction
     | UserUpdateAction
     | UserRemoveAction
     | SignUpAction
     | SignInAction
-    | SignOutAction;
+    | SignOutAction
+    | UserGeolocationGetAction
+    | UserGeolocationSetAction
+    | UserGeolocationCitySetAction;
