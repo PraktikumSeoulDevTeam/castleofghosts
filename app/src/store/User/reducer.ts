@@ -3,7 +3,11 @@ import cloneDeep from 'lodash/cloneDeep';
 import {UserActions, UserState, USER_ACTION_TYPES} from './types';
 
 const userState: UserState = {
-    info: {}
+    info: {},
+    geolocation: {
+        position: null,
+        city: null
+    }
 };
 
 export const userReducer = (state = userState, action: UserActions): UserState => {
@@ -17,6 +21,19 @@ export const userReducer = (state = userState, action: UserActions): UserState =
         case USER_ACTION_TYPES.REMOVE: {
             const newState = cloneDeep(state);
             newState.info = {};
+
+            return newState;
+        }
+        case USER_ACTION_TYPES.GEOLOCATION_SET: {
+            const newState = cloneDeep(state);
+            newState.geolocation.position = action.payload;
+
+            return newState;
+        }
+
+        case USER_ACTION_TYPES.GEOLOCATION_CITY_SET: {
+            const newState = cloneDeep(state);
+            newState.geolocation.city = action.payload;
 
             return newState;
         }
