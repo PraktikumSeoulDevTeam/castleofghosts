@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import {Button, Countdown, FormControl} from '~/components';
 import {UiLayout} from '~/layouts';
 import {gameCharSetNameAction, gameSetStateAction} from '~/store/Game/actions';
+import {FullScreenApi} from '~/webApi/fullScreen';
 
 import type {FormControlFields} from '~/components/FormControl/types';
 import type {AppStoreState} from '~/store/types';
@@ -57,7 +58,14 @@ export const StartPage = connector(
                         <Button type="submit">Run Game</Button>
                     </footer>
                 </FormControl>
-                {characterName && <Countdown onFinish={() => gameSetState('START')} />}
+                {characterName && (
+                    <Countdown
+                        onFinish={() => {
+                            FullScreenApi.enableFullScreen();
+                            gameSetState('START');
+                        }}
+                    />
+                )}
             </UiLayout>
         );
     }
