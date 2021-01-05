@@ -17,7 +17,7 @@ function* levelGeneratorWorker(action: LevelGenerateAction) {
 
     if (!payload) {
         payload = {
-            count: Math.floor(Math.random() * 3) + 1,
+            count: Math.floor(Math.random() * 6) + 2,
             difficult: 0,
             shapes: []
         };

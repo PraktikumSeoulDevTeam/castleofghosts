@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import {Button, Countdown, FormControl} from '~/components';
 import {UiLayout} from '~/layouts';
 import {gameCharSetNameAction, gameSetStateAction} from '~/store/Game/actions';
-import {levelRandomGenerateAction} from '~/store/Level/actions';
 
 import type {FormControlFields} from '~/components/FormControl/types';
 import type {AppStoreState} from '~/store/types';
@@ -31,15 +30,14 @@ const mapState = (state: AppStoreState) => ({
 
 const mapDispatch = {
     charSetName: gameCharSetNameAction,
-    gameSetState: gameSetStateAction,
-    generateMap: levelRandomGenerateAction
+    gameSetState: gameSetStateAction
 };
 
 const connector = connect(mapState, mapDispatch);
 
 export const StartPage = connector(
     (props: ConnectedProps<typeof connector>): JSX.Element => {
-        const {characterName, userName, state, charSetName, gameSetState, generateMap} = props;
+        const {characterName, userName, state, charSetName, gameSetState} = props;
         formFields.characterName.initialValue = characterName || userName;
 
         return state !== 'OFF' ? (
@@ -52,7 +50,6 @@ export const StartPage = connector(
                     schema={formSchema}
                     fields={formFields}
                     onSubmit={(formData) => {
-                        generateMap();
                         charSetName(formData.characterName);
                     }}
                 >

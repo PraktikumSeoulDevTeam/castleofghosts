@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 
 import {signOutAction} from '~/store/User/actions';
 
-import {levelGenerateAction} from '../../store/Level/actions';
 import {Button} from '../Button/Button';
 
 import type {MenuProps} from './types';
@@ -17,8 +16,7 @@ const mapState = (state: AppStoreState) => ({
 });
 
 const mapDispatch = {
-    signOut: signOutAction,
-    generateLevel: levelGenerateAction
+    signOut: signOutAction
 };
 
 const connector = connect(mapState, mapDispatch);

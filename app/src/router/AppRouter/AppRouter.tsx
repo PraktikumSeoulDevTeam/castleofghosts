@@ -9,8 +9,7 @@ import {
     AuthorizationPage,
     RegistrationPage,
     EditPage,
-    WelcomePage,
-    LevelGenerator
+    WelcomePage
 } from '~/pages';
 
 import {PrivateRoute} from '../PrivateRoute/PrivateRoute';
@@ -20,9 +19,6 @@ export const AppRouter = (): JSX.Element => (
         <Switch>
             <Route exact path="/">
                 <WelcomePage />
-            </Route>
-            <Route path="/generator">
-                <LevelGenerator />
             </Route>
             <PrivateRoute publicExclusive path="/registration">
                 <RegistrationPage />
