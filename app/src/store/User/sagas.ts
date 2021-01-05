@@ -1,7 +1,7 @@
 import {call, ForkEffect, put, takeLeading} from 'redux-saga/effects';
 import {getUserInfo, signUp, signIn, signOut} from '../../api';
-import {userGeolocationCitySetAction, userGeolocationSetAction, userRemoveAction, userUpdateAction} from './actions';
-import {SignInAction, SignUpAction, USER_ACTION_TYPES} from './types';
+import {userGeolocationSetAction, userRemoveAction, userUpdateAction} from './actions';
+import {SignInAction, SignUpAction, UserStateGeolocation, USER_ACTION_TYPES} from './types';
 import type {ApiUserInfo} from '../../api/types';
 import {GeolocationApiGet, GeolocationApiGetCity} from '../../services/geolocation/geolocation';
 
@@ -65,11 +65,12 @@ function* userGeolocationGetWorker() {
     try {
         const res: GeolocationPosition = yield call(GeolocationApiGet);
         if (res) {
-            yield put(userGeolocationSetAction(res));
-            const city: string = yield call(GeolocationApiGetCity, res);
-            if (city) {
-                yield put(userGeolocationCitySetAction(city));
-            }
+            const data: UserStateGeolocation = {
+                latitude: res.coords.latitude,
+                longitude: res.coords.longitude,
+                city: yield call(GeolocationApiGetCity, res)
+            };
+            yield put(userGeolocationSetAction(data));
         }
     } catch (error) {
         // eslint-disable-next-line no-console
