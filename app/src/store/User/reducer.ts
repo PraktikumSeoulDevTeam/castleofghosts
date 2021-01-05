@@ -33,6 +33,7 @@ export const userReducer = (state = userState, action: UserActions): UserState =
 
         case USER_ACTION_TYPES.GEOLOCATION_CITY_SET: {
             const newState = cloneDeep(state);
+
             newState.geolocation.city = action.payload;
 
             return newState;
