@@ -5,7 +5,7 @@ import {toasterAddAction} from '~/store/Toaster/actions';
 import {utilitySetLoading} from '~/store/Utility/actions';
 
 import {GeolocationApiGet, GeolocationApiGetCity} from '../../services/geolocation/geolocation';
-import {userSetAction, userRemoveAction} from './actions';
+import {userSetAction, userRemoveAction, userGeolocationSetAction, userGeolocationCitySetAction} from './actions';
 
 import {
     SignInAction,
