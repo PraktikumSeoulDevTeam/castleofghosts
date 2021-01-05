@@ -5,11 +5,12 @@ import {toasterAddAction} from '~/store/Toaster/actions';
 import {utilitySetLoading} from '~/store/Utility/actions';
 
 import {GeolocationApiGet, GeolocationApiGetCity} from '../../services/geolocation/geolocation';
-import {userSetAction, userRemoveAction, userGeolocationSetAction, userGeolocationCitySetAction} from './actions';
+import {userSetAction, userRemoveAction, userGeolocationSetAction} from './actions';
 
 import {
     SignInAction,
     SignUpAction,
+    UserStateGeolocation,
     UserUpdateAction,
     UserUpdateAvatarAction,
     UserUpdatePasswordAction,
@@ -131,11 +132,12 @@ function* userGeolocationGetWorker() {
     try {
         const res: GeolocationPosition = yield call(GeolocationApiGet);
         if (res) {
-            yield put(userGeolocationSetAction(res));
-            const city: string = yield call(GeolocationApiGetCity, res);
-            if (city) {
-                yield put(userGeolocationCitySetAction(city));
-            }
+            const data: UserStateGeolocation = {
+                latitude: res.coords.latitude,
+                longitude: res.coords.longitude,
+                city: yield call(GeolocationApiGetCity, res)
+            };
+            yield put(userGeolocationSetAction(data));
         }
     } catch (error) {
         // eslint-disable-next-line no-console

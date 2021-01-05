@@ -11,7 +11,7 @@ import {
     UserGeolocationGetAction,
     UserGeolocationSetAction,
     USER_ACTION_TYPES,
-    UserGeolocationCitySetAction
+    UserStateGeolocation
 } from './types';
 import type {ApiUserInfo, ApiChangePasswordRequest, ApiSignUpRequest, ApiSignInRequest} from '~/api/types';
 
@@ -81,16 +81,9 @@ export function userGeolocationGetAction(): UserGeolocationGetAction {
     };
 }
 
-export function userGeolocationSetAction(payload: GeolocationPosition): UserGeolocationSetAction {
+export function userGeolocationSetAction(payload: UserStateGeolocation): UserGeolocationSetAction {
     return {
         type: USER_ACTION_TYPES.GEOLOCATION_SET,
-        payload
-    };
-}
-
-export function userGeolocationCitySetAction(payload: string): UserGeolocationCitySetAction {
-    return {
-        type: USER_ACTION_TYPES.GEOLOCATION_CITY_SET,
         payload
     };
 }

@@ -11,8 +11,7 @@ export const enum USER_ACTION_TYPES {
     SIGN_IN = 'cog/user/signin',
     SIGN_OUT = 'cog/user/signout',
     GEOLOCATION_GET = 'cog/user/geolocation/get',
-    GEOLOCATION_SET = 'cog/user/geolocation/set',
-    GEOLOCATION_CITY_SET = 'cog/user/geolocation/city/set'
+    GEOLOCATION_SET = 'cog/user/geolocation/set'
 }
 
 export interface UserState {
@@ -21,7 +20,8 @@ export interface UserState {
 }
 
 export interface UserStateGeolocation {
-    position: GeolocationPosition;
+    latitude: number;
+    longitude: number;
     city: string;
 }
 
@@ -73,12 +73,7 @@ export interface UserGeolocationGetAction {
 
 export interface UserGeolocationSetAction {
     type: USER_ACTION_TYPES.GEOLOCATION_SET;
-    payload: GeolocationPosition;
-}
-
-export interface UserGeolocationCitySetAction {
-    type: USER_ACTION_TYPES.GEOLOCATION_CITY_SET;
-    payload: string;
+    payload: UserStateGeolocation;
 }
 
 export type UserActions =
@@ -92,5 +87,4 @@ export type UserActions =
     | SignInAction
     | SignOutAction
     | UserGeolocationGetAction
-    | UserGeolocationSetAction
-    | UserGeolocationCitySetAction;
+    | UserGeolocationSetAction;
