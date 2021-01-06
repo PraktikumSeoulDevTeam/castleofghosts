@@ -1,6 +1,6 @@
 import {createLoadPromise, createSprite, variantFactory} from '../utils';
 
-import type {AssetMap, AssetVariants} from '../types';
+import type {AssetVariants} from '../types';
 
 const assetMap: HTMLImageElement = new Image();
 assetMap.src = './assets/wall.png';
@@ -10,7 +10,7 @@ assetMap.src = './assets/wall.png';
  * Формат:
  * <image, сдвиг в карте по X, сдвиг в карте по Y, ширина, высота>
  */
-const SPRITES: AssetMap = {
+const SPRITES = {
     CORNER_TL: createSprite(assetMap, 0, 0),
     CORNER_TR: createSprite(assetMap, 2, 0),
     CORNER_BL: createSprite(assetMap, 0, 2),
@@ -43,22 +43,6 @@ const VARIANTS: AssetVariants = {
     BRICK_4: {
         x: 0,
         y: 12
-    },
-    BRICK_5: {
-        x: 0,
-        y: 15
-    },
-    BRICK_6: {
-        x: 0,
-        y: 18
-    },
-    BRICK_7: {
-        x: 0,
-        y: 21
-    },
-    BRICK_8: {
-        x: 0,
-        y: 24
     }
 };
 

@@ -1,6 +1,7 @@
 import {ForkEffect, put, takeLeading} from 'redux-saga/effects';
 
-import {LevelGenerator} from '../../services/LevelGenerator/LevelGenerator';
+import {LevelGenerator} from '~/services/LevelGenerator/LevelGenerator';
+
 import {levelSaveAction} from './actions';
 
 import {LevelGenerateAction, LEVEL_ACTION_TYPES} from './types';

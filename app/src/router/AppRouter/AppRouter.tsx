@@ -14,6 +14,9 @@ import {
 
 import {PrivateRoute} from '../PrivateRoute/PrivateRoute';
 
+/**
+ * Роутер
+ */
 export const AppRouter = (): JSX.Element => (
     <Router>
         <Switch>

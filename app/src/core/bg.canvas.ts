@@ -5,7 +5,7 @@ import {wallSprites} from './sprites/map/wall';
 import {GRID} from './sprites/utils';
 
 import type {Sprite} from './sprites/types';
-import {BackgroundMap} from '~/store/Level/types';
+import type {BackgroundMap} from '~/store/Level/types';
 
 let ctx: CanvasRenderingContext2D;
 

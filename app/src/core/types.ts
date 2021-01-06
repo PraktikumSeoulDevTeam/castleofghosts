@@ -7,14 +7,6 @@ export interface CanvasContext {
     height: number;
 }
 
-export interface Sprite {
-    image?: HTMLImageElement;
-    posx: number;
-    posy: number;
-    width: number;
-    height: number;
-}
-
 /**
  * Информация о персонаже
  */

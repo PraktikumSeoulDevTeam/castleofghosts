@@ -2,7 +2,6 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import {GAME_ACTION_TYPES, GameState, GameActions} from './types';
 
-// TODO mock
 const gameState: GameState = {
     character: {},
     level: {},

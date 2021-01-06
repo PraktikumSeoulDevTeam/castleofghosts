@@ -1,5 +1,5 @@
-import {
-    GAME_ACTION_TYPES,
+import {GAME_ACTION_TYPES} from './types';
+import type {
     GameCharSetNameAction,
     GameCharSetPointsAction,
     GameRemoveAction,

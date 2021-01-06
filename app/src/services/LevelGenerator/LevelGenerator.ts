@@ -344,7 +344,6 @@ const mapToGameFormat = (level: number[][]): BackgroundMap => {
         for (let j = 0; j < level[i].length; j += 1) {
             if (level[i][j] === -1) {
                 res[i][j] = {
-                    asset: null,
                     canWalk: false
                 };
             } else {

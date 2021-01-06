@@ -2,7 +2,7 @@ import {ForkEffect, put, call, takeEvery, select} from 'redux-saga/effects';
 
 import {drawMap} from '~/core/bg.canvas';
 import {createGame, exitGame, loadLevel, pauseGame, play} from '~/core/engine';
-import {levelRandomGenerateAction} from '~/store/Level/actions';
+import {levelGenerateAction} from '~/store/Level/actions';
 
 import {GameSetStateAction, GAME_ACTION_TYPES} from './types';
 import {AppStoreState} from '~/store/types';
@@ -20,7 +20,7 @@ function* gameSetStateWorker(action: GameSetStateAction) {
         }
         case 'INTERLUDE': {
             const nextAction = yield call(loadLevel);
-            yield put(levelRandomGenerateAction());
+            yield put(levelGenerateAction());
             yield put(nextAction);
             break;
         }

@@ -43,7 +43,7 @@ export const allOneType = (arr: number[][], i: number, j: number, val: number): 
     return true;
 };
 
-export const randSort = (array: number[][]): number[][] => {
+export const randSort = (array: number[]): number[] => {
     const arr = array;
     for (let i = 0; i < arr.length; i += 1) {
         const rand = Math.floor(Math.random() * i);

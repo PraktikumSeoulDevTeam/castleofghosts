@@ -1,4 +1,4 @@
-import {BackgroundMap} from '../../store/Level/types';
+import type {BackgroundMap} from '~/store/Level/types';
 
 export interface DefaultLevel {
     startPoint: [number, number];

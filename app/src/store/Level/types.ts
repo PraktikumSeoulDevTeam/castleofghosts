@@ -1,6 +1,6 @@
-import {Floor, Wall} from '../../core/sprites/map';
+import {Floor, Wall} from '~/core/sprites/map';
 
-import {GeneratorConfiguration} from '../../services/LevelGenerator/types';
+import {GeneratorConfiguration} from '~/services/LevelGenerator/types';
 
 /**
  * Level Model's section
@@ -9,7 +9,7 @@ export type Point = [x: number, y: number];
 
 export type BackgroundAsset = {part: 'FLOOR' | 'WALL'; type: keyof Floor | keyof Wall};
 export interface BackgroundPart {
-    asset: BackgroundAsset | null;
+    asset?: BackgroundAsset;
     canWalk: boolean;
 }
 
