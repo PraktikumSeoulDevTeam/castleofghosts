@@ -1,9 +1,8 @@
-import type {AssetVariant, AssetMap, Sprite} from './types';
+import {entries} from '~/utils';
 
-/**
- * Эквивалени единицы размера в игре.
- */
-export const GRID = 32;
+import {GRID} from '../params';
+
+import type {AssetMap, AssetVariant, Sprite} from './types';
 
 /**
  * Значения указываются в условных единицах {@link GRID}
@@ -41,12 +40,12 @@ export function spriteVariant(sprite: Sprite, variant: AssetVariant): Sprite {
  * @param sprites Набор спрайтов
  * @param variant Вариант набора спрайтов
  */
-export function variantFactory(sprites: AssetMap, variant: AssetVariant): AssetMap {
-    return Object.entries(sprites).reduce<AssetMap>((acc, [key, value]) => {
+export function variantFactory<K extends string>(sprites: AssetMap<K>, variant: AssetVariant): AssetMap<K> {
+    return entries(sprites).reduce((acc, [key, value]) => {
         acc[key] = spriteVariant(value, variant);
 
         return acc;
-    }, {});
+    }, {} as AssetMap<K>);
 }
 
 /**
