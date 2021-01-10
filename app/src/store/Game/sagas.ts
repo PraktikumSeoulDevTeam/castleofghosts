@@ -28,7 +28,7 @@ function* gameSetStateWorker(action: GameSetStateAction) {
             const state: AppStoreState = yield select();
             const {map} = state.level.levels[state.game.level.number ?? 0];
 
-            yield call(drawMap.bind(null, map));
+            yield call(drawMap, map);
             yield call(play);
             break;
         }
