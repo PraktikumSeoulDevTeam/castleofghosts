@@ -1,8 +1,8 @@
 import {floorSprites} from '~/core/sprites/map';
 
 import {setCanvas} from './engine';
+import {GRID} from './params';
 import {wallSprites} from './sprites/map/wall';
-import {GRID} from './sprites/utils';
 
 import type {Sprite} from './sprites/types';
 import type {BackgroundMap} from '~/store/Level/types';

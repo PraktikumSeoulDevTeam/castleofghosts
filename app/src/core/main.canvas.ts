@@ -1,8 +1,8 @@
 import {setCanvas} from './engine';
-import {characterSprites} from './sprites/character/character';
-import {GRID} from './sprites/utils';
+import {GRID} from './params';
+import {charSprites} from './sprites/character/character';
 
-import type {Sprite} from './types';
+import type {Sprite} from './sprites/types';
 
 let ctx: CanvasRenderingContext2D;
 
@@ -27,7 +27,7 @@ export function setMainCanvas(canvasElement: HTMLCanvasElement | null): void {
     fleft = cx;
     ftop = cy;
 
-    Promise.all([characterSprites]).then(([CHAR]) => {
+    Promise.all([charSprites]).then(([CHAR]) => {
         character = CHAR.PALADIN;
         drawImage(fleft, ftop, character);
     });
