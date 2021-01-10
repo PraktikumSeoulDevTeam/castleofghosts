@@ -17,18 +17,12 @@ export function drawMap(level: BackgroundMap): void {
     Promise.all([wallSprites, floorSprites]).then(([WALL, FLOOR]) => {
         for (let i = 0; i < level.length; i += 1) {
             for (let j = 0; j < level[i].length; j += 1) {
-                if (level[i][j] !== null) {
-                    const part = level[i][j].asset?.part;
-                    const type = level[i][j].asset?.type;
-
-                    if (!type || !part) {
-                        continue;
-                    }
-
-                    if (part === 'WALL') {
-                        drawImage(j, i, WALL[type]);
+                const {asset} = level[i][j];
+                if (asset) {
+                    if (asset.type === 'WALL') {
+                        drawImage(j, i, WALL[asset.part]);
                     } else {
-                        drawImage(j, i, FLOOR[type]);
+                        drawImage(j, i, FLOOR[asset.part]);
                     }
                 }
             }
@@ -37,7 +31,7 @@ export function drawMap(level: BackgroundMap): void {
 }
 
 function drawImage(x: number, y: number, sprite: Sprite) {
-    if (sprite.image) {
+    if (sprite && sprite.image) {
         ctx.drawImage(
             sprite.image,
             sprite.posx,

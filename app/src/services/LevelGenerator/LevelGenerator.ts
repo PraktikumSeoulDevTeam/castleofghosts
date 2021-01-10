@@ -250,88 +250,88 @@ const switcher = (el: MapPartials): BackgroundAsset => {
     switch (el) {
         case MapPartials.CORRIDOR_ROAD:
             return {
-                part: 'FLOOR',
-                type: 'SINGLE'
+                type: 'FLOOR',
+                part: 'SINGLE'
             };
         case MapPartials.CORRIDOR_ROAD_3_3:
             return {
-                part: 'FLOOR',
-                type: 'ROOM'
+                type: 'FLOOR',
+                part: 'ROOM'
             };
         case MapPartials.CORRIDOR_ROAD_1_3:
             return {
-                part: 'FLOOR',
-                type: 'HORIZONTAL'
+                type: 'FLOOR',
+                part: 'HORIZONTAL'
             };
         case MapPartials.CORRIDOR_ROAD_3_1:
             return {
-                part: 'FLOOR',
-                type: 'VERTICAL'
+                type: 'FLOOR',
+                part: 'VERTICAL'
             };
         case MapPartials.CORRIDOR_WALL_SIDE:
             return {
-                part: 'WALL',
-                type: 'SIDE'
+                type: 'WALL',
+                part: 'SIDE'
             };
         case MapPartials.CORRIDOR_WALL_TOP_BOTTOM:
             return {
-                part: 'WALL',
-                type: 'TOP'
+                type: 'WALL',
+                part: 'TOP'
             };
         case MapPartials.CORRIDOR_WALL_DEADBLOCK_TL:
             return {
-                part: 'WALL',
-                type: 'CORNER_TL'
+                type: 'WALL',
+                part: 'CORNER_TL'
             };
         case MapPartials.CORRIDOR_WALL_DEADBLOCK_TR:
             return {
-                part: 'WALL',
-                type: 'CORNER_TR'
+                type: 'WALL',
+                part: 'CORNER_TR'
             };
         case MapPartials.CORRIDOR_WALL_DEADBLOCK_BL:
             return {
-                part: 'WALL',
-                type: 'CORNER_BL'
+                type: 'WALL',
+                part: 'CORNER_BL'
             };
         case MapPartials.CORRIDOR_WALL_DEADBLOCK_BR:
             return {
-                part: 'WALL',
-                type: 'CORNER_BR'
+                type: 'WALL',
+                part: 'CORNER_BR'
             };
         case MapPartials.CORRIDOR_WALL_CROSSROAD_RIGHT:
             return {
-                part: 'WALL',
-                type: 'CROSS_RIGHT'
+                type: 'WALL',
+                part: 'CROSS_RIGHT'
             };
         case MapPartials.CORRIDOR_WALL_CROSSROAD_LEFT:
             return {
-                part: 'WALL',
-                type: 'CROSS_LEFT'
+                type: 'WALL',
+                part: 'CROSS_LEFT'
             };
         case MapPartials.CORRIDOR_WALL_CROSSROAD_BOTTOM:
             return {
-                part: 'WALL',
-                type: 'CROSS_BOTTOM'
+                type: 'WALL',
+                part: 'CROSS_BOTTOM'
             };
         case MapPartials.CORRIDOR_WALL_CROSSROAD_TOP:
             return {
-                part: 'WALL',
-                type: 'CROSS_TOP'
+                type: 'WALL',
+                part: 'CROSS_TOP'
             };
         case MapPartials.CORRIDOR_WALL_CROSSROAD_CENTER:
             return {
-                part: 'WALL',
-                type: 'CROSS'
+                type: 'WALL',
+                part: 'CROSS'
             };
         case MapPartials.CORRIDOR_WALL_COLUMN:
             return {
-                part: 'WALL',
-                type: 'LEDGE'
+                type: 'WALL',
+                part: 'LEDGE'
             };
         default: {
             return {
-                part: 'WALL',
-                type: 'FILL'
+                type: 'WALL',
+                part: 'FILL'
             };
         }
     }
