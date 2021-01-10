@@ -1,0 +1,67 @@
+@import '../variables';
+
+@font-face {
+    font-display: swap;
+    font-family: 'ps2p';
+    font-style: normal;
+    font-weight: normal;
+    src: url('~/assets/fonts/ps2p.woff2') format('woff2');
+}
+
+$fontFamily: 'ps2p', sans-serif;
+
+@mixin t-small() {
+    font-family: $fontFamily;
+    font-size: $fontSize;
+    font-weight: normal;
+    line-height: 1.25;
+    @media all and (min-width: 768px) {
+        font-size: $fontSize * 0.95;
+    }
+    @media all and (min-width: 1024px) {
+        font-size: $fontSize * 1.15;
+    }
+}
+
+@mixin t-main() {
+    font-family: $fontFamily;
+    font-size: $fontSize;
+    font-weight: normal;
+    line-height: 1.25;
+    @media all and (min-width: 768px) {
+        font-size: $fontSize * 1.25;
+    }
+    @media all and (min-width: 1024px) {
+        font-size: $fontSize * 1.5;
+    }
+}
+
+@mixin t-title() {
+    font-family: $fontFamily;
+    font-size: $fontSize * 2.5;
+    font-weight: normal;
+    line-height: 1.25;
+    text-align: center;
+}
+
+@mixin t-title_2() {
+    font-family: $fontFamily;
+    font-size: $fontSize * 1.6;
+    font-weight: normal;
+    line-height: 1.25;
+    text-align: center;
+}
+
+@mixin t-biggest() {
+    font-family: $fontFamily;
+    font-size: $fontSize * 6;
+    font-weight: normal;
+    line-height: 1.25;
+    text-align: center;
+    @media all and (min-width: 768px) {
+        font-size: $fontSize * 8;
+    }
+    @media all and (min-width: 1024px) {
+        font-size: $fontSize * 10;
+    }
+}

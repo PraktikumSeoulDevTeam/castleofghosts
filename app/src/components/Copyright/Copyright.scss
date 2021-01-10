@@ -1,0 +1,47 @@
+@import '~/assets/scss/variables';
+
+.copyright {
+    text-align: center;
+    &__names {
+        display: flex;
+        width: 100%;
+    }
+    &__name {
+        position: relative;
+        &:after {
+            position: absolute;
+            top: 4px;
+            right: -2px;
+            display: block;
+            width: 4px;
+            height: 20px;
+            content: '';
+        }
+        &:last-child:after {
+            display: none;
+        }
+    }
+    &__icon {
+        display: block;
+        width: $iconSize;
+        height: $iconSize;
+        margin-right: auto;
+        margin-left: auto;
+        background-image: $charMapUrl;
+        background-repeat: no-repeat;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+        &_tema {
+            background-position: $charSprite1;
+        }
+        &_nikita {
+            background-position: $charSprite2;
+        }
+        &_dima {
+            background-position: $charSprite3;
+        }
+        &_jenya {
+            background-position: $charSprite4;
+        }
+    }
+}

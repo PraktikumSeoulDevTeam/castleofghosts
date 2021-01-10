@@ -1,0 +1,23 @@
+@import '~/assets/scss/mixins/typo';
+
+.error-page {
+    &__header {
+        position: relative;
+        align-self: center;
+    }
+    &__header-front {
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        @include t-biggest;
+    }
+    &__header-back {
+        position: absolute;
+        z-index: 0;
+        top: 15px;
+        left: 15px;
+        display: inline-block;
+        @include t-biggest;
+        color: var(--color-bg-dark);
+    }
+}

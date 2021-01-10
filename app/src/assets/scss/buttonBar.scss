@@ -1,0 +1,12 @@
+.button-bar {
+    display: flex;
+    justify-content: space-between;
+
+    & > *:not(:first-child) {
+        margin-left: 1em;
+    }
+
+    &_center {
+        justify-content: center;
+    }
+}

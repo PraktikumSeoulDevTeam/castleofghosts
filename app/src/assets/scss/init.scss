@@ -1,0 +1,33 @@
+body {
+    background: var(--color-bg);
+    color: var(--color-main);
+    @include t-main;
+}
+
+input {
+    @include t-main;
+}
+
+/*
+* Typo
+*/
+.t-small {
+    @include t-small
+}
+
+.t-main {
+    @include t-main;
+}
+
+.t-title {
+    @include t-title;
+}
+
+.t-title_2 {
+    @include t-title_2;
+}
+
+.t-center {
+    display: block;
+    text-align: center;
+}

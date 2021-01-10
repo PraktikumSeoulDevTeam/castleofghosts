@@ -1,0 +1,26 @@
+$baseline: 8px;
+$iconSize: 32px;
+
+$z-index: (
+    'dialog': 2100,
+    'overlay': 2000,
+    'game-ui': 1200,
+    'game-main': 1100,
+    'game-bg': 1000,
+    'base': 0
+);
+
+$colorMain: white;
+$colorAccent: #d34549;
+$colorSecond: #6daa2c;
+$colorDim: #a9a5ae;
+$colorBg: #291e34;
+$colorBgDark: #140c1c;
+
+$fontSize: 1rem;
+
+$charMapUrl: url('~/assets/img/char.png');
+$charSprite1: 0 0;
+$charSprite2: -1 * $iconSize 0;
+$charSprite3: -2 * $iconSize 0;
+$charSprite4: -3 * $iconSize 0;
