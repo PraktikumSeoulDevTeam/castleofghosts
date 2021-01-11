@@ -50,15 +50,12 @@ export function loadLevel(): GameActions {
 export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
-    gameSetStateAction('GAME');
     loop();
 }
 
-export function pauseGame(): GameActions {
+export function pauseGame(): void {
     // eslint-disable-next-line no-console
     console.log('[pauseGame]');
-
-    return gameSetStateAction('PAUSE');
 }
 
 export function exitGame(): GameActions {
