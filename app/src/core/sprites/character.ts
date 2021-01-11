@@ -10,6 +10,7 @@ assetMap.src = './assets/char.png';
  */
 const SPRITES = {
     PALADIN: createSprite(assetMap, 0, 0),
+    PALADIN_2: createSprite(assetMap, 0, 1),
     WARRIOR: createSprite(assetMap, 1, 0),
     MAGE: createSprite(assetMap, 2, 0),
     PRIEST: createSprite(assetMap, 3, 0)
