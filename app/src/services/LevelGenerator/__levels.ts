@@ -1,12 +1,7 @@
-import type {BackgroundMap, CharsMap, ObjectsMap} from '~/store/Level/types';
-
 export interface DefaultLevel {
     startPoint: [number, number];
     endPoint: [number, number];
     map: number[][];
-    completeMap?: BackgroundMap;
-    completeObjects?: ObjectsMap;
-    completeChars?: CharsMap;
 }
 
 // 24x32

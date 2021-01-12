@@ -1,14 +1,14 @@
-import {Level} from '../Level/types';
-import {GAME_ACTION_TYPES} from './types';
-import type {
+import {
+    GAME_ACTION_TYPES,
     GameCharSetNameAction,
     GameCharSetPointsAction,
     GameRemoveAction,
+    GameSetLevelsOrderAction,
     GameSetLevelAction,
-    GameSetMapAction,
-    GameSetStateAction
+    GameSetStateAction,
+    GameSetLevelNumberAction
 } from './types';
-import type {GameLevel, GameStatePoint} from '~/core/types';
+import type {Level, GameStatePoint} from '~/core/types';
 
 export function gameCharSetNameAction(characterName: string): GameCharSetNameAction {
     return {
@@ -24,17 +24,24 @@ export function gameCharSetPointsAction(characterPoints: number): GameCharSetPoi
     };
 }
 
-export function gameSetLevelAction(level: GameLevel): GameSetLevelAction {
+export function gameSetLevelsOrderAction(levelsOrder: number[]): GameSetLevelsOrderAction {
+    return {
+        type: GAME_ACTION_TYPES.SET_LEVELS_ORDER,
+        payload: levelsOrder
+    };
+}
+
+export function gameSetLevelAction(level: Level): GameSetLevelAction {
     return {
         type: GAME_ACTION_TYPES.SET_LEVEL,
         payload: level
     };
 }
 
-export function gameSetMapAction(level: Level): GameSetMapAction {
+export function gameSetLevelNumberAction(levelNumber?: number): GameSetLevelNumberAction {
     return {
-        type: GAME_ACTION_TYPES.SET_MAP,
-        payload: level
+        type: GAME_ACTION_TYPES.SET_LEVEL_NUMBER,
+        payload: levelNumber
     };
 }
 

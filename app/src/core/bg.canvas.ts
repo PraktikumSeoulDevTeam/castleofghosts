@@ -8,7 +8,7 @@ import {WallParts, wallSprites} from './sprites/map/wall';
 import {ObjectParts, objectSprites} from './sprites/object';
 
 import type {AssetMap, Sprite} from './sprites/types';
-import type {BackgroundMap, CharsMap, Level, ObjectsMap} from '~/store/Level/types';
+import type {BackgroundMap, CharsMap, Level, ObjectsMap} from '~/core/types';
 
 let ctx: CanvasRenderingContext2D;
 

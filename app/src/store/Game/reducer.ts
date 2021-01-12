@@ -1,11 +1,15 @@
 import cloneDeep from 'lodash/cloneDeep';
 
+import {STATE} from '~/core/params';
+
 import {GAME_ACTION_TYPES, GameState, GameActions} from './types';
 
 const gameState: GameState = {
     character: {},
     level: {},
-    state: 'OFF'
+    levelNumber: 0,
+    levelsOrder: [],
+    state: STATE.OFF
 };
 
 export const gameReducer = (state = gameState, action: GameActions): GameState => {
@@ -24,13 +28,23 @@ export const gameReducer = (state = gameState, action: GameActions): GameState =
         }
         case GAME_ACTION_TYPES.SET_LEVEL: {
             const newState = cloneDeep(state);
-            newState.level = action.payload;
+            newState.level = cloneDeep(action.payload);
 
             return newState;
         }
-        case GAME_ACTION_TYPES.SET_MAP: {
+        case GAME_ACTION_TYPES.SET_LEVEL_NUMBER: {
             const newState = cloneDeep(state);
-            newState.level.map = action.payload;
+            if (action.payload) {
+                newState.levelNumber = action.payload;
+            } else {
+                newState.levelNumber += 1;
+            }
+
+            return newState;
+        }
+        case GAME_ACTION_TYPES.SET_LEVELS_ORDER: {
+            const newState = cloneDeep(state);
+            newState.levelsOrder = action.payload;
 
             return newState;
         }
@@ -43,7 +57,10 @@ export const gameReducer = (state = gameState, action: GameActions): GameState =
         case GAME_ACTION_TYPES.REMOVE: {
             const newState = cloneDeep(state);
             newState.character = {};
-            newState.state = 'OFF';
+            newState.levelsOrder = [];
+            newState.levelNumber = 0;
+            newState.level = {};
+            newState.state = STATE.OFF;
 
             return newState;
         }

@@ -1,15 +1,13 @@
-import {LevelActions, LevelState, LEVEL_ACTION_TYPES} from './types';
+import {LevelsActions, LevelsState, LEVELS_ACTION_TYPES} from './types';
 
-const initialState: LevelState = {
+const initialState: LevelsState = {
     levels: []
 };
 
-export const levelReducer = (state = initialState, action: LevelActions): LevelState => {
+export const levelsReducer = (state = initialState, action: LevelsActions): LevelsState => {
     switch (action.type) {
-        case LEVEL_ACTION_TYPES.SAVE_LEVELS: {
-            return {
-                levels: action.payload
-            };
+        case LEVELS_ACTION_TYPES.ADD: {
+            return {levels: [...state.levels, ...action.payload]};
         }
         default:
             return state;

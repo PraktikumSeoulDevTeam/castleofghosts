@@ -1,18 +1,20 @@
-import {Level} from '../Level/types';
-import type {GameCharacterInfo, GameLevel, GameStatePoint} from '~/core/types';
+import type {GameCharacterInfo, Level, GameStatePoint} from '~/core/types';
 
 export const enum GAME_ACTION_TYPES {
     CHAR_SET_NAME = 'cog/game/char-set-name',
     CHAR_SET_POINTS = 'cog/game/char-set-points',
     SET_LEVEL = 'cog/game/set-level',
-    SET_MAP = 'cog/game/set-map',
+    SET_LEVEL_NUMBER = 'cog/game/set-level-number',
+    SET_LEVELS_ORDER = 'cog/game/set-levels-order',
     SET_STATE = 'cog/game/set-state',
     REMOVE = 'cog/game/remove'
 }
 
 export interface GameState {
     character: Partial<GameCharacterInfo>;
-    level: Partial<GameLevel>;
+    level: Partial<Level>;
+    levelNumber: number;
+    levelsOrder: number[];
     state: GameStatePoint;
 }
 
@@ -28,12 +30,17 @@ export interface GameCharSetPointsAction {
 
 export interface GameSetLevelAction {
     type: GAME_ACTION_TYPES.SET_LEVEL;
-    payload: GameLevel;
+    payload: Level;
 }
 
-export interface GameSetMapAction {
-    type: GAME_ACTION_TYPES.SET_MAP;
-    payload: Level;
+export interface GameSetLevelNumberAction {
+    type: GAME_ACTION_TYPES.SET_LEVEL_NUMBER;
+    payload?: number;
+}
+
+export interface GameSetLevelsOrderAction {
+    type: GAME_ACTION_TYPES.SET_LEVELS_ORDER;
+    payload: number[];
 }
 
 export interface GameSetStateAction {
@@ -49,6 +56,7 @@ export type GameActions =
     | GameCharSetNameAction
     | GameCharSetPointsAction
     | GameSetLevelAction
-    | GameSetMapAction
+    | GameSetLevelNumberAction
+    | GameSetLevelsOrderAction
     | GameSetStateAction
     | GameRemoveAction;

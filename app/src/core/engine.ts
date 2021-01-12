@@ -1,28 +1,11 @@
 import {Middleware} from 'redux';
 
-import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '~/store/Game/actions';
-
 import {movef} from './main.canvas';
+import {STATE} from './params';
 import {moves} from './spirit.canvas';
 
-import type {
-    ArrowPressCallback,
-    EmptyCallback,
-    GameLevel,
-    GameStatePoint,
-    GameCharacterMove,
-    CanvasContext
-} from './types';
-import type {GameActions} from '~/store/Game/types';
-import {AppStoreState} from '~/store/types';
-
-// TODO mock
-const levels: GameLevel[] = [
-    {
-        name: 'First',
-        number: 1
-    }
-];
+import type {ArrowPressCallback, EmptyCallback, GameCharacterMove, CanvasContext, GameStatePoint, Level} from './types';
+import type {AppStoreState} from '~/store/types';
 
 const LEVEL_SIZE = {
     x: 31,
@@ -55,19 +38,14 @@ const spirMove: GameCharacterMove[] = [
 
 let spiritInterval: number;
 
-export function createGame(): GameActions {
+export function createGame(): void {
     // eslint-disable-next-line no-console
     console.log('[createGame]');
-
-    return gameSetStateAction('INTERLUDE');
 }
 
-export function loadLevel(): GameActions {
-    const level: GameLevel = levels[0];
+export function loadLevel(): void {
     // eslint-disable-next-line no-console
-    console.log('[loadLevel]', level.name);
-
-    return gameSetLevelAction(level);
+    console.log('[loadLevel]');
 }
 
 export function play(): void {
@@ -79,7 +57,7 @@ export function play(): void {
 }
 
 const setCharStartPosition = (): void => {
-    [charMove.posx, charMove.posy] = gameCurrentLevel.map?.startPoint || [0, 0];
+    [charMove.posx, charMove.posy] = gameCurrentLevel.startPoint || [0, 0];
     charMove.needRender = true;
     characterMove();
 };
@@ -89,11 +67,9 @@ export function pauseGame(): void {
     console.log('[pauseGame]');
 }
 
-export function exitGame(): GameActions {
+export function exitGame(): void {
     // eslint-disable-next-line no-console
     console.log('[exitGame]');
-
-    return gameRemoveAction();
 }
 
 export function setCanvas(canvasElement: HTMLCanvasElement | null): CanvasContext | never {
@@ -174,14 +150,14 @@ export function move(x: number, y: number): void {
     }
 }
 
-let gameState: GameStatePoint = 'OFF';
+let gameState: GameStatePoint = STATE.OFF;
 
 function setState(newGameState: GameStatePoint): void {
     gameState = newGameState;
 }
 
-let gameCurrentLevel: Partial<GameLevel>;
-function setLevel(nv: Partial<GameLevel>) {
+let gameCurrentLevel: Partial<Level>;
+function setLevel(nv: Partial<Level>) {
     gameCurrentLevel = nv;
 }
 
@@ -197,14 +173,14 @@ export const gameEngineMiddleware: Middleware = (store) => (next) => (action) =>
 };
 
 function loop(): void {
-    if (gameState !== 'GAME') {
+    if (gameState !== STATE.GAME) {
         return;
     }
     spiritMove();
     characterMove();
 
     if (endLevelCheck() || spiritCheck()) {
-        gameSetStateAction('END');
+        // TODO нужно куда-то отправлять состояние =)
 
         return;
     }
@@ -288,7 +264,7 @@ function checkLimit(): boolean {
  * Проверка: персонаж не наскочил на стену
  */
 function checkWalls(newX: number, newY: number): boolean {
-    return gameCurrentLevel?.map?.map[newY][newX]?.canWalk || false;
+    return gameCurrentLevel?.map?.[newY][newX]?.canWalk || false;
 }
 
 /**
@@ -303,5 +279,5 @@ function spiritCheck(): boolean {
  * Проверка: персонаж не добрался до конца уровня
  */
 function endLevelCheck(): boolean {
-    return gameCurrentLevel?.map?.endPoint[0] === charMove.posx && gameCurrentLevel.map.endPoint[1] === charMove.posy;
+    return gameCurrentLevel?.endPoint?.[0] === charMove.posx && gameCurrentLevel.endPoint[1] === charMove.posy;
 }
