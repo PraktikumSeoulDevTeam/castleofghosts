@@ -1,14 +1,13 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Redirect, Route} from 'react-router-dom';
-import type {AppStoreState} from '~/store/types';
-import {PrivateRouteProps} from './types';
 
-const mapState = (state: AppStoreState) => {
-    return {
-        isAuthenticated: !!state.user.info.id
-    };
-};
+import type {PrivateRouteProps} from './types';
+import type {AppStoreState} from '~/store/types';
+
+const mapState = (state: AppStoreState) => ({
+    isAuthenticated: !!state.user.info.id
+});
 
 const connector = connect(mapState);
 

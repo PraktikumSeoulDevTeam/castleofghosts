@@ -1,4 +1,5 @@
 import path from 'path';
+
 import express, {Request, Response} from 'express';
 
 const PORT = process.argv[2] || process.env.PORT || 3000;

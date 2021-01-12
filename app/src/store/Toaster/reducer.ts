@@ -1,11 +1,12 @@
 import {cloneDeep} from 'lodash';
+
 import {ToasterState, ToasterAction, TOASTER_ACTION_TYPES} from './types';
 
-const inititalState: ToasterState = {
+const initialState: ToasterState = {
     toastes: []
 };
 
-export const toasterReducer = (state = inititalState, action: ToasterAction): ToasterState => {
+export const toasterReducer = (state = initialState, action: ToasterAction): ToasterState => {
     switch (action.type) {
         case TOASTER_ACTION_TYPES.ADD_TOASTER: {
             const newState = cloneDeep(state);

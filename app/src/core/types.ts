@@ -1,17 +1,8 @@
 export type EmptyCallback = () => void;
 export type ArrowPressCallback = (x: number, y: number) => void;
 
-export interface AssetVariant {
-    x: number;
-    y: number;
-}
-
-export type AssetVariants = {[key: string]: AssetVariant};
-
-export interface Sprite {
-    image?: HTMLImageElement;
-    posx: number;
-    posy: number;
+export interface CanvasContext {
+    ctx: CanvasRenderingContext2D;
     width: number;
     height: number;
 }

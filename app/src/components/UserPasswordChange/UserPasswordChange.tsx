@@ -1,12 +1,15 @@
-import {ApiChangePasswordRequest} from 'api/types';
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Dispatch} from 'redux';
 import * as Yup from 'yup';
+
 import {userUpdatePasswordAction} from '~/store/User/actions';
+
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
-import type {FormControlFields} from '../FormControl/types';
+
+import type {FormControlFields, FormFields} from '../FormControl/types';
+import type {ApiChangePasswordRequest} from '~/api/types';
 
 const UserPasswordSchema = Yup.object().shape({
     passwordCurrent: Yup.string()
@@ -45,30 +48,24 @@ const UserPasswordFields: FormControlFields = {
     }
 };
 
-const mapDispatch = (dispatch: Dispatch) => {
-    return {
-        onUpdate: (formData: {[key: string]: string}) => {
-            const data: ApiChangePasswordRequest = {
-                oldPassword: formData.passwordCurrent,
-                newPassword: formData.passwordNew
-            };
-            dispatch(userUpdatePasswordAction(data));
-        }
-    };
-};
+const mapDispatch = (dispatch: Dispatch) => ({
+    onUpdate: (formData: FormFields) => {
+        const data: ApiChangePasswordRequest = {
+            oldPassword: formData.passwordCurrent,
+            newPassword: formData.passwordNew
+        };
+        dispatch(userUpdatePasswordAction(data));
+    }
+});
 
 const connector = connect(null, mapDispatch);
 
-function component(props: ConnectedProps<typeof connector>): JSX.Element {
-    const {onUpdate} = props;
-
-    return (
+export const UserPasswordChange = connector(
+    ({onUpdate}: ConnectedProps<typeof connector>): JSX.Element => (
         <FormControl schema={UserPasswordSchema} fields={UserPasswordFields} onSubmit={onUpdate}>
             <footer className="button-bar mt-5">
                 <Button type="submit">Change</Button>
             </footer>
         </FormControl>
-    );
-}
-
-export const UserPasswordChange = connector(component);
+    )
+);

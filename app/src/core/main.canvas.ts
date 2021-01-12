@@ -1,8 +1,10 @@
-import {characterSprites} from './sprites/character';
-import {GRID} from './sprites/utils';
-import type {Sprite} from './types';
+import {GRID} from './params';
+import {charSprites} from './sprites/character/character';
+
+import type {Sprite} from './sprites/types';
 
 let canvas: HTMLCanvasElement;
+
 let ctx: CanvasRenderingContext2D;
 
 let fleft: number;
@@ -21,24 +23,26 @@ export function setMainCanvas(canvasElement: HTMLCanvasElement): void {
     fleft = 0;
     ftop = 0;
 
-    Promise.all([characterSprites]).then(([CHAR]) => {
+    Promise.all([charSprites]).then(([CHAR]) => {
         character = [CHAR.PALADIN, CHAR.PALADIN_2];
         drawImage(fleft, ftop, character[0]);
     });
 }
 
 function drawImage(x: number, y: number, sprite: Sprite) {
-    ctx.drawImage(
-        sprite.image,
-        sprite.posx,
-        sprite.posy,
-        sprite.width,
-        sprite.height,
-        GRID * x,
-        GRID * y,
-        sprite.width,
-        sprite.height
-    );
+    if (sprite.image) {
+        ctx.drawImage(
+            sprite.image,
+            sprite.posx,
+            sprite.posy,
+            sprite.width,
+            sprite.height,
+            GRID * x,
+            GRID * y,
+            sprite.width,
+            sprite.height
+        );
+    }
 }
 
 let stepIndex = 0;

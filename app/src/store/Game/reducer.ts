@@ -1,8 +1,8 @@
 import cloneDeep from 'lodash/cloneDeep';
+
 import {GAME_ACTION_TYPES, GameState, GameActions} from './types';
 
 const gameState: GameState = {
-    inProgress: false,
     character: {},
     level: {},
     state: 'OFF'
@@ -19,12 +19,6 @@ export const gameReducer = (state = gameState, action: GameActions): GameState =
         case GAME_ACTION_TYPES.CHAR_SET_POINTS: {
             const newState = cloneDeep(state);
             newState.character.points = action.payload;
-
-            return newState;
-        }
-        case GAME_ACTION_TYPES.START: {
-            const newState = cloneDeep(state);
-            newState.inProgress = true;
 
             return newState;
         }

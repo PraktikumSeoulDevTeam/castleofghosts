@@ -1,5 +1,6 @@
-import {createLoadPromise, createSprite, variantFactory} from './utils';
-import type {AssetVariants} from '../types';
+import {createLoadPromise, createSprite, variantFactory} from '../utils';
+
+import type {AssetVariants, Sprite} from '../types';
 
 const assetMap: HTMLImageElement = new Image();
 assetMap.src = './assets/wall.png';
@@ -45,5 +46,23 @@ const VARIANTS: AssetVariants = {
     }
 };
 
+export type WallParts = keyof typeof SPRITES;
+
+export interface WallAsset {
+    type: 'WALL';
+    part: WallParts;
+}
+
 // TODO на данный момент жестко зашит вариант. Возможна реализация с изменением в рантайме
 export const wallSprites = createLoadPromise(assetMap, variantFactory(SPRITES, VARIANTS.BRICK_3));
+
+export const wallAssetToSprite = async (asset: WallAsset): Promise<Sprite> => {
+    const sprites = await wallSprites;
+
+    return sprites[asset.part];
+};
+
+export const wallSpriteToAsset = (part: WallParts): WallAsset => ({
+    type: 'WALL',
+    part
+});

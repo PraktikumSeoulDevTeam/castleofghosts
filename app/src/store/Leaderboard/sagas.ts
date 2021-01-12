@@ -1,6 +1,9 @@
 import {call, ForkEffect, put, takeLeading} from 'redux-saga/effects';
+
 import {addToLeaderboard, getLeaderboard} from '~/api';
+
 import {lbAddAction} from './actions';
+
 import {LB_ACTION_TYPES, LbUploadAction, LbDownloadAction} from './types';
 import type {ApiAddToLeaderboardRequest, ApiGetLeaderboardResponse} from '~/api/types';
 
@@ -28,7 +31,7 @@ function* addToLeaderboardWorker(action: LbUploadAction) {
 function* getLeaderboardWorker(action: LbDownloadAction) {
     try {
         const leaderboardInfo: ApiGetLeaderboardResponse = yield call(getLeaderboard, action.payload);
-        if (leaderboardInfo || leaderboardInfo.length) {
+        if (leaderboardInfo.length) {
             yield put(lbAddAction(leaderboardInfo));
         }
     } catch (error) {

@@ -4,6 +4,7 @@ export * from './FormControl/FormControl';
 export * from './UserDataChange/UserDataChange';
 export * from './UserPasswordChange/UserPasswordChange';
 export * from './UserAvatarChange/UserAvatarChange';
+export * from './Spinner/Spinner';
 export * from './Toaster/Toaster';
 export * from './Menu/Menu';
 export * from './Countdown/Countdown';

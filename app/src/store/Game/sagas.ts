@@ -1,6 +1,11 @@
-import {call, ForkEffect, put, takeEvery} from 'redux-saga/effects';
-import {createGame, exitGame, loadLevel, pauseGame, play} from '../../core/engine';
+import {ForkEffect, put, call, takeEvery, select} from 'redux-saga/effects';
+
+import {drawMap} from '~/core/bg.canvas';
+import {createGame, exitGame, loadLevel, pauseGame, play} from '~/core/engine';
+import {levelGenerateAction} from '~/store/Level/actions';
+
 import {GameSetStateAction, GAME_ACTION_TYPES} from './types';
+import {AppStoreState} from '~/store/types';
 
 export function* gameWatcher(): Generator<ForkEffect<never>> {
     yield takeEvery(GAME_ACTION_TYPES.SET_STATE, gameSetStateWorker);
@@ -15,10 +20,15 @@ function* gameSetStateWorker(action: GameSetStateAction) {
         }
         case 'INTERLUDE': {
             const nextAction = yield call(loadLevel);
+            yield put(levelGenerateAction());
             yield put(nextAction);
             break;
         }
         case 'GAME': {
+            const state: AppStoreState = yield select();
+            const level = state.level.levels[(state.game.level.number ?? 1) - 1];
+
+            yield call(drawMap, level);
             yield call(play);
             break;
         }

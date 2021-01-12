@@ -1,4 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
+
 import {LB_ACTION_TYPES, LeadeboardState, LbActions} from './types';
 
 // TODO mock

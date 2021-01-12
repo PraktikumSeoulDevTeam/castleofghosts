@@ -1,23 +1,25 @@
 import {Middleware} from 'redux';
-import {AppStoreState} from '~/store/types';
-import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '../store/Game/actions';
-import type {GameActions} from '../store/Game/types';
+
+import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '~/store/Game/actions';
+
 import {movef} from './main.canvas';
-import type {ArrowPressCallback, EmptyCallback, GameLevel, GameStatePoint, GameCharacterMove} from './types';
+
+import type {
+    ArrowPressCallback,
+    EmptyCallback,
+    GameLevel,
+    GameStatePoint,
+    GameCharacterMove,
+    CanvasContext
+} from './types';
+import type {GameActions} from '~/store/Game/types';
+import {AppStoreState} from '~/store/types';
 
 // TODO mock
 const levels: GameLevel[] = [
     {
         name: 'First',
         number: 1
-    },
-    {
-        name: 'Second',
-        number: 2
-    },
-    {
-        name: 'Third',
-        number: 3
     }
 ];
 
@@ -40,7 +42,7 @@ export function createGame(): GameActions {
 }
 
 export function loadLevel(): GameActions {
-    const level: GameLevel = levels.shift();
+    const level: GameLevel = levels[0];
     // eslint-disable-next-line no-console
     console.log('[loadLevel]', level.name);
 
@@ -63,6 +65,23 @@ export function exitGame(): GameActions {
     console.log('[exitGame]');
 
     return gameRemoveAction();
+}
+
+export function setCanvas(canvasElement: HTMLCanvasElement | null): CanvasContext | never {
+    if (!canvasElement) {
+        throw new Error('No canvas found');
+    }
+    const ctx = canvasElement.getContext('2d');
+    if (!ctx) {
+        throw new Error('No canvas context found');
+    }
+    ctx.imageSmoothingEnabled = false;
+
+    return {
+        ctx,
+        width: canvasElement.width,
+        height: canvasElement.height
+    };
 }
 
 export function createPauseListener(cb: EmptyCallback): EmptyCallback {
@@ -126,14 +145,12 @@ function setState(newGameState: GameStatePoint): void {
     gameState = newGameState;
 }
 
-export const gameEngineMiddleware: Middleware = (store) => {
-    return (next) => (action) => {
-        const returnValue = next(action);
-        const afterActionState: AppStoreState = store.getState();
-        setState(afterActionState.game.state);
+export const gameEngineMiddleware: Middleware = (store) => (next) => (action) => {
+    const returnValue = next(action);
+    const afterActionState: AppStoreState = store.getState();
+    setState(afterActionState.game.state);
 
-        return returnValue;
-    };
+    return returnValue;
 };
 
 function loop() {

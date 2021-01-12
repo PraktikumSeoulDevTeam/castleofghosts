@@ -1,14 +1,16 @@
 import React from 'react';
-import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {Dispatch} from 'redux';
 import * as Yup from 'yup';
-import {signUpAction} from '~/store/User/actions';
-import {UiLayout} from '~/layouts';
+
 import {Button, FormControl} from '~/components';
+import {UiLayout} from '~/layouts';
+import {signUpAction} from '~/store/User/actions';
 import {FORMAT} from '~/utils';
-import type {FormControlFields} from '~/components/FormControl/types';
+
 import type {ApiSignUpRequest} from '~/api/types';
+import type {FormControlFields, FormFields} from '~/components/FormControl/types';
 
 const RegistrationSchema = Yup.object().shape({
     login: Yup.string().required('field is required').max(22, 'max length 22 symbols'),
@@ -64,27 +66,25 @@ const registrationFields: FormControlFields = {
     }
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        onRegistration: (formData: {[key: string]: string}): void => {
-            const userData: ApiSignUpRequest = {
-                first_name: formData.firstName,
-                second_name: formData.secondName,
-                email: formData.email,
-                login: formData.login,
-                password: formData.password,
-                phone: formData.phoneNumber
-            };
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    onRegistration: (formData: FormFields): void => {
+        const userData: ApiSignUpRequest = {
+            first_name: formData.firstName,
+            second_name: formData.secondName,
+            email: formData.email,
+            login: formData.login,
+            password: formData.password,
+            phone: formData.phoneNumber
+        };
 
-            dispatch(signUpAction(userData));
-        }
-    };
-};
+        dispatch(signUpAction(userData));
+    }
+});
 
 const connecter = connect(null, mapDispatchToProps);
 
-function RegistrationComponent({onRegistration}: ConnectedProps<typeof connecter>): JSX.Element {
-    return (
+export const RegistrationPage = connecter(
+    ({onRegistration}: ConnectedProps<typeof connecter>): JSX.Element => (
         <UiLayout isBlock>
             <h1 className="t-title">Registration</h1>
             <FormControl schema={RegistrationSchema} fields={registrationFields} onSubmit={onRegistration}>
@@ -96,7 +96,5 @@ function RegistrationComponent({onRegistration}: ConnectedProps<typeof connecter
                 </footer>
             </FormControl>
         </UiLayout>
-    );
-}
-
-export const RegistrationPage = connecter(RegistrationComponent);
+    )
+);

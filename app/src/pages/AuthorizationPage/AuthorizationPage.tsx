@@ -1,14 +1,15 @@
 import React from 'react';
-import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {Dispatch} from 'redux';
 import * as Yup from 'yup';
 
-import {signInAction} from '~/store/User/actions';
-import {UiLayout} from '~/layouts';
 import {Button, FormControl} from '~/components';
-import type {FormControlFields} from '~/components/FormControl/types';
+import {UiLayout} from '~/layouts';
+import {signInAction} from '~/store/User/actions';
+
 import type {ApiSignInRequest} from '~/api/types';
+import type {FormControlFields, FormFields} from '~/components/FormControl/types';
 
 const AuthorizationSchema = Yup.object().shape({
     login: Yup.string().required('field is required').max(12, 'max length 12 symbols'),
@@ -30,23 +31,21 @@ const authorizationField: FormControlFields = {
     }
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        onAuth: (formData: {[key: string]: string}) => {
-            const userData: ApiSignInRequest = {
-                login: formData.login,
-                password: formData.password
-            };
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    onAuth: (formData: FormFields) => {
+        const userData: ApiSignInRequest = {
+            login: formData.login,
+            password: formData.password
+        };
 
-            dispatch(signInAction(userData));
-        }
-    };
-};
+        dispatch(signInAction(userData));
+    }
+});
 
 const connecter = connect(null, mapDispatchToProps);
 
-function AuthorizationComponent({onAuth}: ConnectedProps<typeof connecter>): JSX.Element {
-    return (
+export const AuthorizationPage = connecter(
+    ({onAuth}: ConnectedProps<typeof connecter>): JSX.Element => (
         <UiLayout isBlock>
             <h1 className="t-title">Authorization</h1>
             <FormControl schema={AuthorizationSchema} fields={authorizationField} onSubmit={onAuth}>
@@ -58,7 +57,5 @@ function AuthorizationComponent({onAuth}: ConnectedProps<typeof connecter>): JSX
                 </footer>
             </FormControl>
         </UiLayout>
-    );
-}
-
-export const AuthorizationPage = connecter(AuthorizationComponent);
+    )
+);

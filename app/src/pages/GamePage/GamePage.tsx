@@ -1,11 +1,13 @@
 import React, {useEffect, useRef} from 'react';
-import {useHistory} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
-import {gameRemoveAction} from '../../store/Game/actions';
-import {GameUi} from './GameUi/GameUi';
+import {useHistory} from 'react-router-dom';
+
 import {setBgCanvas} from '~/core/bg.canvas';
 import {setMainCanvas} from '~/core/main.canvas';
 import {UiLayout} from '~/layouts';
+import {gameRemoveAction} from '~/store/Game/actions';
+
+import {GameUi} from './GameUi/GameUi';
 import './GamePage.scss';
 
 const width = 1024;
@@ -19,8 +21,8 @@ const connector = connect(null, mapDispatch);
 
 export const GamePage = connector(
     ({gameRemove}: ConnectedProps<typeof connector>): JSX.Element => {
-        const bgCanvas = useRef<HTMLCanvasElement>();
-        const mainCanvas = useRef<HTMLCanvasElement>();
+        const bgCanvas = useRef<HTMLCanvasElement>(null);
+        const mainCanvas = useRef<HTMLCanvasElement>(null);
         const history = useHistory();
 
         useEffect(() => {
