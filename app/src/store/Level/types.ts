@@ -1,5 +1,8 @@
+import {ROLE} from '~/core/params';
+import {CharAsset} from '~/core/sprites/character/character';
 import type {FloorAsset} from '~/core/sprites/map/floor';
 import type {WallAsset} from '~/core/sprites/map/wall';
+import {ObjectAsset} from '~/core/sprites/object';
 
 import {GeneratorConfiguration} from '~/services/LevelGenerator/types';
 
@@ -9,28 +12,40 @@ import {GeneratorConfiguration} from '~/services/LevelGenerator/types';
 export type Point = [x: number, y: number];
 
 export type BackgroundAsset = WallAsset | FloorAsset;
+
 export interface BackgroundPart {
     asset?: BackgroundAsset;
-    canWalk: boolean;
+    width?: number;
+    height?: number;
+    canWalk?: boolean;
+}
+
+/**
+ * Общий параметр у слоев Object и Chars
+ */
+interface BasePartConfig {
+    canWalk?: boolean;
+    role?: ROLE;
+}
+
+export interface ObjectPart extends BasePartConfig {
+    asset?: ObjectAsset;
+}
+
+export interface CharPart extends BasePartConfig {
+    asset?: CharAsset;
 }
 
 export type BackgroundMap = BackgroundPart[][];
-
-export const enum InterestType {
-    KEY = 0,
-    CHEST = 1
-}
-
-export interface Interest {
-    position: Point;
-    type: InterestType;
-}
+export type ObjectsMap = ObjectPart[][];
+export type CharsMap = CharPart[][];
 
 export interface Level {
     startPoint: Point;
     endPoint: Point;
     map: BackgroundMap;
-    interests: Interest[];
+    objects: ObjectsMap;
+    chars: CharsMap;
 }
 
 /**

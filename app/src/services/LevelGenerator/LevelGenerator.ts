@@ -373,12 +373,15 @@ export class LevelGenerator {
         randSort(randNum);
 
         for (let i = 0; i < Math.min(count, randNum.length); i += 1) {
-            const map = mapToGameFormat(mapWall(Levels[randNum[i]].map));
+            const stubLevel = Levels[randNum[i]];
+            const map = mapToGameFormat(mapWall(stubLevel.map));
 
             result.push({
-                ...Levels[randNum[i]],
-                map,
-                interests: []
+                map: stubLevel.completeMap ?? map,
+                objects: stubLevel.completeObjects ?? [],
+                chars: stubLevel.completeChars ?? [],
+                startPoint: stubLevel.startPoint,
+                endPoint: stubLevel.endPoint
             });
         }
 
