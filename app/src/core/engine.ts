@@ -169,13 +169,17 @@ export const gameEngineMiddleware: Middleware = (store) => (next) => (action) =>
     return returnValue;
 };
 
-function loop() {
+function loop(): void {
     if (gameState !== 'GAME') {
         return;
     }
     characterMove();
     interactionCheck();
-    endLevelCheck();
+    if (endLevelCheck()) {
+        gameSetStateAction('END');
+
+        return;
+    }
     requestAnimationFrame(loop);
 }
 
@@ -225,5 +229,5 @@ function interactionCheck(): boolean {
  * Проверка: персонаж не добрался до конца уровня
  */
 function endLevelCheck(): boolean {
-    return true;
+    return gameCurrentLevel.endPoint[0] === charMove.posx && gameCurrentLevel.endPoint[1] === charMove.posy;
 }
