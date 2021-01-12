@@ -5,7 +5,7 @@ import {gameEngineMiddleware} from '~/core/engine';
 
 import {rootReducer} from './rootReducer';
 import {rootSaga} from './rootSaga';
-import {userGetAction} from './User/actions';
+import {userGeolocationGetAction, userGetAction} from './User/actions';
 
 const saga = createSagaMiddleware();
 
@@ -18,3 +18,4 @@ export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(s
 saga.run(rootSaga);
 
 store.dispatch(userGetAction());
+store.dispatch(userGeolocationGetAction());
