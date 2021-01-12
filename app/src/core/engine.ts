@@ -13,7 +13,6 @@ import type {
     CanvasContext
 } from './types';
 import type {GameActions} from '~/store/Game/types';
-import {Level} from '~/store/Level/types';
 import {AppStoreState} from '~/store/types';
 
 // TODO mock
@@ -53,11 +52,15 @@ export function loadLevel(): GameActions {
 export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
-    [charMove.posx, charMove.posy] = gameCurrentLevel.startPoint;
-    charMove.needRender = true;
-    characterMove();
+    setStartPosition();
     loop();
 }
+
+const setStartPosition = (): void => {
+    [charMove.posx, charMove.posy] = gameCurrentLevel.map?.startPoint || [0, 0];
+    charMove.needRender = true;
+    characterMove();
+};
 
 export function pauseGame(): void {
     // eslint-disable-next-line no-console
@@ -138,9 +141,11 @@ function createArrowsHandler(cb: ArrowPressCallback) {
 }
 
 export function move(x: number, y: number): void {
-    charMove.posx += x;
-    charMove.posy += y;
-    charMove.needRender = true;
+    if (checkWalls(charMove.posx + x, charMove.posy + y)) {
+        charMove.posx += x;
+        charMove.posy += y;
+        charMove.needRender = true;
+    }
 }
 
 let gameState: GameStatePoint = 'OFF';
@@ -149,22 +154,18 @@ function setState(newGameState: GameStatePoint): void {
     gameState = newGameState;
 }
 
-let gameLevels: Level[] = [];
-function setLevels(newLevels: Level[]) {
-    gameLevels = newLevels;
-}
-
-let gameCurrentLevel: Level;
-function setLevel(index: number) {
-    gameCurrentLevel = gameLevels[index];
+let gameCurrentLevel: Partial<GameLevel>;
+function setLevel(nv: Partial<GameLevel>) {
+    gameCurrentLevel = nv;
 }
 
 export const gameEngineMiddleware: Middleware = (store) => (next) => (action) => {
     const returnValue = next(action);
     const afterActionState: AppStoreState = store.getState();
     setState(afterActionState.game.state);
-    setLevels(afterActionState.level.levels);
-    setLevel(afterActionState.game.level.number || 1);
+    if (afterActionState.game.level) {
+        setLevel(afterActionState.game.level);
+    }
 
     return returnValue;
 };
@@ -219,6 +220,13 @@ function checkLimit(): boolean {
 }
 
 /**
+ * Проверка: персонаж не наскочил на стену
+ */
+function checkWalls(newX: number, newY: number): boolean {
+    return gameCurrentLevel?.map?.map[newY][newX]?.canWalk || false;
+}
+
+/**
  * Проверка: персонаж не столкнулся с другими объектами
  */
 function interactionCheck(): boolean {
@@ -229,5 +237,5 @@ function interactionCheck(): boolean {
  * Проверка: персонаж не добрался до конца уровня
  */
 function endLevelCheck(): boolean {
-    return gameCurrentLevel.endPoint[0] === charMove.posx && gameCurrentLevel.endPoint[1] === charMove.posy;
+    return gameCurrentLevel?.map?.endPoint[0] === charMove.posx && gameCurrentLevel.map.endPoint[1] === charMove.posy;
 }
