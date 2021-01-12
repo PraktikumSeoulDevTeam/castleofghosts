@@ -1,9 +1,9 @@
-import {createLoadPromise, createSprite, variantFactory} from './utils';
+import {createLoadPromise, createSprite, variantFactory} from '../utils';
 
-import type {AssetVariants} from '../types';
+import type {AssetVariants, Sprite} from '../types';
 
 const assetMap: HTMLImageElement = new Image();
-assetMap.src = './assets/wall.png';
+assetMap.src = './assets/floor.png';
 
 /**
  * Создание карты спрайтов из изображения. В качестве значений, шаги размером {@link GRID}
@@ -11,19 +11,10 @@ assetMap.src = './assets/wall.png';
  * <image, сдвиг в карте по X, сдвиг в карте по Y, ширина, высота>
  */
 const SPRITES = {
-    CORNER_TL: createSprite(assetMap, 0, 0),
-    CORNER_TR: createSprite(assetMap, 2, 0),
-    CORNER_BL: createSprite(assetMap, 0, 2),
-    CORNER_BR: createSprite(assetMap, 2, 2),
-    TOP: createSprite(assetMap, 1, 0),
-    SIDE: createSprite(assetMap, 0, 1),
-    LEDGE: createSprite(assetMap, 1, 1),
-    CROSS_TOP: createSprite(assetMap, 4, 0),
-    CROSS_BOTTOM: createSprite(assetMap, 4, 2),
-    CROSS_LEFT: createSprite(assetMap, 3, 1),
-    CROSS_RIGHT: createSprite(assetMap, 5, 1),
-    CROSS: createSprite(assetMap, 4, 1),
-    FILL: createSprite(assetMap, 3, 0)
+    ROOM: createSprite(assetMap, 0, 0, 3, 3),
+    SINGLE: createSprite(assetMap, 5, 0),
+    VERTICAL: createSprite(assetMap, 3, 0, 1, 3),
+    HORIZONTAL: createSprite(assetMap, 4, 1, 3, 1)
 };
 
 // TODO можно дополнить остальными вариантами, если понадобится
@@ -46,5 +37,23 @@ const VARIANTS: AssetVariants = {
     }
 };
 
+export type FloorParts = keyof typeof SPRITES;
+
+export interface FloorAsset {
+    type: 'FLOOR';
+    part: FloorParts;
+}
+
 // TODO на данный момент жестко зашит вариант. Возможна реализация с изменением в рантайме
-export const wallSprites = createLoadPromise(assetMap, variantFactory(SPRITES, VARIANTS.BRICK_3));
+export const floorSprites = createLoadPromise(assetMap, variantFactory(SPRITES, VARIANTS.BRICK_2));
+
+export const floorAssetToSprite = async (asset: FloorAsset): Promise<Sprite> => {
+    const sprites = await floorSprites;
+
+    return sprites[asset.part];
+};
+
+export const floorSpriteToAsset = (part: FloorParts): FloorAsset => ({
+    type: 'FLOOR',
+    part
+});

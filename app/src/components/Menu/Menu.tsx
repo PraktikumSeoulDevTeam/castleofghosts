@@ -8,6 +8,7 @@ import {Button} from '../Button/Button';
 
 import type {MenuProps} from './types';
 import type {AppStoreState} from '~/store/types';
+
 import './Menu.scss';
 
 const mapState = (state: AppStoreState) => ({

@@ -7,23 +7,6 @@ export interface CanvasContext {
     height: number;
 }
 
-export interface Sprite {
-    image?: HTMLImageElement;
-    posx: number;
-    posy: number;
-    width: number;
-    height: number;
-}
-
-export type AssetMap = Record<string, Sprite>;
-
-export interface AssetVariant {
-    x: number;
-    y: number;
-}
-
-export type AssetVariants = Record<string, AssetVariant>;
-
 /**
  * Информация о персонаже
  */

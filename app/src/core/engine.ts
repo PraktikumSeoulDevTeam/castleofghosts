@@ -1,7 +1,7 @@
-import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '../store/Game/actions';
+import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '~/store/Game/actions';
 
-import type {GameActions} from '../store/Game/types';
 import type {ArrowPressCallback, CanvasContext, EmptyCallback, GameLevel} from './types';
+import type {GameActions} from '~/store/Game/types';
 
 // TODO mock
 const levels: GameLevel[] = [
