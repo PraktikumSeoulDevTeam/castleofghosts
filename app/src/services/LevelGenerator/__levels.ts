@@ -11,7 +11,7 @@ export interface DefaultLevel {
 
 // 24x32
 const FirstLevel: DefaultLevel = {
-    startPoint: [1, 0],
+    startPoint: [1, 3],
     endPoint: [22, 30],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -74,7 +74,7 @@ const SecondLevel: DefaultLevel = {
 
 // by Artyom
 const ThirdLevel: DefaultLevel = {
-    startPoint: [0, 0],
+    startPoint: [1, 1],
     endPoint: [1, 1],
     map: [],
     completeMap: [

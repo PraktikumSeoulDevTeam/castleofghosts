@@ -13,6 +13,7 @@ import type {
     CanvasContext
 } from './types';
 import type {GameActions} from '~/store/Game/types';
+import {Level} from '~/store/Level/types';
 import {AppStoreState} from '~/store/types';
 
 // TODO mock
@@ -52,6 +53,9 @@ export function loadLevel(): GameActions {
 export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
+    [charMove.posx, charMove.posy] = gameCurrentLevel.startPoint;
+    charMove.needRender = true;
+    characterMove();
     loop();
 }
 
@@ -145,10 +149,22 @@ function setState(newGameState: GameStatePoint): void {
     gameState = newGameState;
 }
 
+let gameLevels: Level[] = [];
+function setLevels(newLevels: Level[]) {
+    gameLevels = newLevels;
+}
+
+let gameCurrentLevel: Level;
+function setLevel(index: number) {
+    gameCurrentLevel = gameLevels[index];
+}
+
 export const gameEngineMiddleware: Middleware = (store) => (next) => (action) => {
     const returnValue = next(action);
     const afterActionState: AppStoreState = store.getState();
     setState(afterActionState.game.state);
+    setLevels(afterActionState.level.levels);
+    setLevel(afterActionState.game.level.number || 1);
 
     return returnValue;
 };
