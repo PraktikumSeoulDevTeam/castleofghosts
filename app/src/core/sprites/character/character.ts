@@ -16,7 +16,8 @@ const SPRITES = {
     WARRIOR: createSprite(assetMap, 1, 0),
     MAGE: createSprite(assetMap, 2, 0),
     PRIEST: createSprite(assetMap, 3, 0),
-    SPIRIT: createSprite(assetMap, 7, 0)
+    SPIRIT: createSprite(assetMap, 4, 0),
+    SPIRIT_2: createSprite(assetMap, 4, 1)
 };
 
 const VARIANTS: AssetVariants = {

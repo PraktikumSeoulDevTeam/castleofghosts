@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom';
 
 import {setBgCanvas} from '~/core/bg.canvas';
 import {setMainCanvas} from '~/core/main.canvas';
+import {setSpiritCanvas} from '~/core/spirit.canvas';
 import {UiLayout} from '~/layouts';
 import {gameRemoveAction} from '~/store/Game/actions';
 
@@ -23,11 +24,13 @@ export const GamePage = connector(
     ({gameRemove}: ConnectedProps<typeof connector>): JSX.Element => {
         const bgCanvas = useRef<HTMLCanvasElement>(null);
         const mainCanvas = useRef<HTMLCanvasElement>(null);
+        const spiritCanvas = useRef<HTMLCanvasElement>(null);
         const history = useHistory();
 
         useEffect(() => {
             setBgCanvas(bgCanvas.current);
             setMainCanvas(mainCanvas.current);
+            setSpiritCanvas(spiritCanvas.current);
             const unblock = history.block(() => {
                 gameRemove();
             });
@@ -40,6 +43,7 @@ export const GamePage = connector(
                 <div className="game-page__container" style={{width: width + 4, height: height + 50}}>
                     <canvas ref={bgCanvas} width={width} height={height} className="game-page__bg" />
                     <canvas ref={mainCanvas} width={width} height={height} className="game-page__main" />
+                    <canvas ref={spiritCanvas} width={width} height={height} className="game-page__spirit" />
                     <GameUi className="game-page__ui" />
                 </div>
             </UiLayout>

@@ -3,6 +3,7 @@ import {Middleware} from 'redux';
 import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '~/store/Game/actions';
 
 import {movef} from './main.canvas';
+import {moves} from './spirit.canvas';
 
 import type {
     ArrowPressCallback,
@@ -29,6 +30,12 @@ const LEVEL_SIZE = {
 };
 
 const charMove: GameCharacterMove = {
+    posx: 0,
+    posy: 0,
+    needRender: false
+};
+
+const spirMove: GameCharacterMove = {
     posx: 0,
     posy: 0,
     needRender: false
@@ -174,6 +181,7 @@ function loop(): void {
     if (gameState !== 'GAME') {
         return;
     }
+    spiritMove();
     characterMove();
     interactionCheck();
     if (endLevelCheck()) {
@@ -184,10 +192,23 @@ function loop(): void {
     requestAnimationFrame(loop);
 }
 
+/*
+ * Main character move
+ */
 function characterMove(): void {
     if (charMove.needRender && checkLimit()) {
         charMove.needRender = false;
         movef(charMove.posx, charMove.posy);
+    }
+}
+
+/*
+ * Spirit move
+ */
+function spiritMove(): void {
+    if (spirMove.needRender) {
+        spirMove.needRender = false;
+        moves(spirMove.posx, spirMove.posy);
     }
 }
 
