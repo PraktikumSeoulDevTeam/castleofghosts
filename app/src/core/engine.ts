@@ -41,6 +41,8 @@ const spirMove: GameCharacterMove = {
     needRender: false
 };
 
+let spiritInterval: number;
+
 export function createGame(): GameActions {
     // eslint-disable-next-line no-console
     console.log('[createGame]');
@@ -59,11 +61,12 @@ export function loadLevel(): GameActions {
 export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
-    setStartPosition();
+    setCharStartPosition();
+
     loop();
 }
 
-const setStartPosition = (): void => {
+const setCharStartPosition = (): void => {
     [charMove.posx, charMove.posy] = gameCurrentLevel.map?.startPoint || [0, 0];
     charMove.needRender = true;
     characterMove();
@@ -101,9 +104,11 @@ export function setCanvas(canvasElement: HTMLCanvasElement | null): CanvasContex
 export function createPauseListener(cb: EmptyCallback): EmptyCallback {
     const handler = createEscapeHandler(cb);
     window.addEventListener('keydown', handler);
+    spiritInterval = window.setInterval(spiritEnabled, 1000);
 
     return () => {
         window.removeEventListener('keydown', handler);
+        window.clearInterval(spiritInterval);
     };
 }
 
@@ -112,10 +117,12 @@ export function createGameListener(cbEscape: EmptyCallback): EmptyCallback {
     const arrowHandler = createArrowsHandler(move);
     window.addEventListener('keydown', escapeHandler);
     window.addEventListener('keydown', arrowHandler);
+    spiritInterval = window.setInterval(spiritEnabled, 150);
 
     return () => {
         window.removeEventListener('keydown', escapeHandler);
         window.removeEventListener('keydown', arrowHandler);
+        window.clearInterval(spiritInterval);
     };
 }
 
@@ -181,6 +188,7 @@ function loop(): void {
     if (gameState !== 'GAME') {
         return;
     }
+
     spiritMove();
     characterMove();
     interactionCheck();
@@ -202,13 +210,32 @@ function characterMove(): void {
     }
 }
 
+function spiritEnabled(): void {
+    spirMove.needRender = true;
+}
 /*
- * Spirit move
+ * Spirit move by Canvas
  */
 function spiritMove(): void {
     if (spirMove.needRender) {
+        spiritChangePosition();
         spirMove.needRender = false;
         moves(spirMove.posx, spirMove.posy);
+    }
+}
+
+/*
+ *
+ */
+const spirDiff = [1, 1];
+function spiritChangePosition(): void {
+    spirMove.posx += spirDiff[0];
+    spirMove.posy += spirDiff[1];
+    if (spirMove.posx === LEVEL_SIZE.x || spirMove.posx === 0) {
+        spirDiff[0] = spirDiff[0] === -1 ? 1 : -1;
+    }
+    if (spirMove.posy === LEVEL_SIZE.y || spirMove.posy === 0) {
+        spirDiff[1] = spirDiff[1] === -1 ? 1 : -1;
     }
 }
 
