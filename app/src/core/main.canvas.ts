@@ -1,35 +1,31 @@
-import {setCanvas} from './engine';
 import {GRID} from './params';
 import {charSprites} from './sprites/character/character';
 
 import type {Sprite} from './sprites/types';
 
+let canvas: HTMLCanvasElement;
+
 let ctx: CanvasRenderingContext2D;
-
-let width: number;
-let height: number;
-
-let cx: number;
-let cy: number;
 
 let fleft: number;
 let ftop: number;
 
-let character: Sprite;
+let character: Sprite[];
 
-export function setMainCanvas(canvasElement: HTMLCanvasElement | null): void {
-    ({ctx, width, height} = setCanvas(canvasElement));
-    width /= GRID;
-    height /= GRID;
-    cx = width / 2;
-    cy = height / 2;
+export function setMainCanvas(canvasElement: HTMLCanvasElement): void {
+    if (!canvasElement) {
+        return;
+    }
+    canvas = canvasElement;
+    ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
 
-    fleft = cx;
-    ftop = cy;
+    fleft = 0;
+    ftop = 0;
 
     Promise.all([charSprites]).then(([CHAR]) => {
-        character = CHAR.PALADIN;
-        drawImage(fleft, ftop, character);
+        character = [CHAR.PALADIN, CHAR.PALADIN_2];
+        drawImage(fleft, ftop, character[0]);
     });
 }
 
@@ -49,9 +45,12 @@ function drawImage(x: number, y: number, sprite: Sprite) {
     }
 }
 
+let stepIndex = 0;
+
 export function movef(x: number, y: number): void {
-    ctx.clearRect(fleft * GRID, ftop * GRID, character.width, character.height);
-    fleft = (fleft + x + width) % width;
-    ftop = (ftop + y + height) % height;
-    drawImage(fleft, ftop, character);
+    stepIndex = stepIndex ? 0 : 1;
+    ctx.clearRect(fleft * GRID, ftop * GRID, character[stepIndex].width, character[stepIndex].height);
+    fleft = x;
+    ftop = y;
+    drawImage(fleft, ftop, character[stepIndex]);
 }

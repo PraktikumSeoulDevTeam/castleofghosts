@@ -4,7 +4,6 @@ import {Redirect} from 'react-router-dom';
 
 import {Button} from '~/components';
 import {createPauseListener, createGameListener} from '~/core/engine';
-import {movef} from '~/core/main.canvas';
 import {gameSetStateAction} from '~/store/Game/actions';
 
 import {AppStoreState} from '~/store/types';
@@ -33,7 +32,7 @@ export const GameUi = connector(
 
         useEffect(() => {
             if (state === 'GAME') {
-                return createGameListener(pause, movef);
+                return createGameListener(pause);
             }
             if (state === 'PAUSE') {
                 return createPauseListener(play);

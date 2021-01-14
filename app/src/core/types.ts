@@ -1,3 +1,5 @@
+import {Level} from '~/store/Level/types';
+
 export type EmptyCallback = () => void;
 export type ArrowPressCallback = (x: number, y: number) => void;
 
@@ -16,10 +18,20 @@ export interface GameCharacterInfo {
     points: number;
 }
 
-// TODO необходимо добавить карту и условия
+/**
+ * Информация о движении персонажа
+ */
+export interface GameCharacterMove {
+    posx: number;
+    posy: number;
+    needRender: boolean;
+}
+
+// TODO необходимо добавить условия
 export interface GameLevel {
     name: string;
     number: number;
+    map?: Level;
 }
 
 export type GameStatePoint = 'OFF' | 'START' | 'INTERLUDE' | 'GAME' | 'PAUSE' | 'END';

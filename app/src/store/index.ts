@@ -1,6 +1,8 @@
 import {createStore, compose, applyMiddleware} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
+import {gameEngineMiddleware} from '~/core/engine';
+
 import {rootReducer} from './rootReducer';
 import {rootSaga} from './rootSaga';
 import {userGeolocationGetAction, userGetAction} from './User/actions';
@@ -11,7 +13,7 @@ const saga = createSagaMiddleware();
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(saga)));
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(saga, gameEngineMiddleware)));
 
 saga.run(rootSaga);
 

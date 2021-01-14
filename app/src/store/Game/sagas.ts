@@ -4,6 +4,8 @@ import {drawMap} from '~/core/bg.canvas';
 import {createGame, exitGame, loadLevel, pauseGame, play} from '~/core/engine';
 import {levelGenerateAction} from '~/store/Level/actions';
 
+import {gameSetMapAction} from './actions';
+
 import {GameSetStateAction, GAME_ACTION_TYPES} from './types';
 import {AppStoreState} from '~/store/types';
 
@@ -27,6 +29,7 @@ function* gameSetStateWorker(action: GameSetStateAction) {
         case 'GAME': {
             const state: AppStoreState = yield select();
             const level = state.level.levels[(state.game.level.number ?? 1) - 1];
+            yield put(gameSetMapAction(level));
 
             yield call(drawMap, level);
             yield call(play);

@@ -1,7 +1,19 @@
+import {Middleware} from 'redux';
+
 import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '~/store/Game/actions';
 
-import type {ArrowPressCallback, CanvasContext, EmptyCallback, GameLevel} from './types';
+import {movef} from './main.canvas';
+
+import type {
+    ArrowPressCallback,
+    EmptyCallback,
+    GameLevel,
+    GameStatePoint,
+    GameCharacterMove,
+    CanvasContext
+} from './types';
 import type {GameActions} from '~/store/Game/types';
+import {AppStoreState} from '~/store/types';
 
 // TODO mock
 const levels: GameLevel[] = [
@@ -10,6 +22,17 @@ const levels: GameLevel[] = [
         number: 1
     }
 ];
+
+const LEVEL_SIZE = {
+    x: 31,
+    y: 23
+};
+
+const charMove: GameCharacterMove = {
+    posx: 0,
+    posy: 0,
+    needRender: false
+};
 
 export function createGame(): GameActions {
     // eslint-disable-next-line no-console
@@ -29,7 +52,15 @@ export function loadLevel(): GameActions {
 export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
+    setStartPosition();
+    loop();
 }
+
+const setStartPosition = (): void => {
+    [charMove.posx, charMove.posy] = gameCurrentLevel.map?.startPoint || [0, 0];
+    charMove.needRender = true;
+    characterMove();
+};
 
 export function pauseGame(): void {
     // eslint-disable-next-line no-console
@@ -69,9 +100,9 @@ export function createPauseListener(cb: EmptyCallback): EmptyCallback {
     };
 }
 
-export function createGameListener(cbEscape: EmptyCallback, cbArrow: ArrowPressCallback): EmptyCallback {
+export function createGameListener(cbEscape: EmptyCallback): EmptyCallback {
     const escapeHandler = createEscapeHandler(cbEscape);
-    const arrowHandler = createArrowsHandler(cbArrow);
+    const arrowHandler = createArrowsHandler(move);
     window.addEventListener('keydown', escapeHandler);
     window.addEventListener('keydown', arrowHandler);
 
@@ -107,4 +138,104 @@ function createArrowsHandler(cb: ArrowPressCallback) {
             default:
         }
     };
+}
+
+export function move(x: number, y: number): void {
+    if (checkWalls(charMove.posx + x, charMove.posy + y)) {
+        charMove.posx += x;
+        charMove.posy += y;
+        charMove.needRender = true;
+    }
+}
+
+let gameState: GameStatePoint = 'OFF';
+
+function setState(newGameState: GameStatePoint): void {
+    gameState = newGameState;
+}
+
+let gameCurrentLevel: Partial<GameLevel>;
+function setLevel(nv: Partial<GameLevel>) {
+    gameCurrentLevel = nv;
+}
+
+export const gameEngineMiddleware: Middleware = (store) => (next) => (action) => {
+    const returnValue = next(action);
+    const afterActionState: AppStoreState = store.getState();
+    setState(afterActionState.game.state);
+    if (afterActionState.game.level) {
+        setLevel(afterActionState.game.level);
+    }
+
+    return returnValue;
+};
+
+function loop(): void {
+    if (gameState !== 'GAME') {
+        return;
+    }
+    characterMove();
+    interactionCheck();
+    if (endLevelCheck()) {
+        gameSetStateAction('END');
+
+        return;
+    }
+    requestAnimationFrame(loop);
+}
+
+function characterMove(): void {
+    if (charMove.needRender && checkLimit()) {
+        charMove.needRender = false;
+        movef(charMove.posx, charMove.posy);
+    }
+}
+
+/**
+ * Проверка: персонаж не вышел за пределы экрана
+ */
+function checkLimit(): boolean {
+    if (charMove.posx < 0) {
+        charMove.posx = 0;
+
+        return false;
+    }
+    if (charMove.posx > LEVEL_SIZE.x) {
+        charMove.posx = LEVEL_SIZE.x;
+
+        return false;
+    }
+    if (charMove.posy < 0) {
+        charMove.posy = 0;
+
+        return false;
+    }
+    if (charMove.posy > LEVEL_SIZE.y) {
+        charMove.posy = LEVEL_SIZE.y;
+
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Проверка: персонаж не наскочил на стену
+ */
+function checkWalls(newX: number, newY: number): boolean {
+    return gameCurrentLevel?.map?.map[newY][newX]?.canWalk || false;
+}
+
+/**
+ * Проверка: персонаж не столкнулся с другими объектами
+ */
+function interactionCheck(): boolean {
+    return true;
+}
+
+/**
+ * Проверка: персонаж не добрался до конца уровня
+ */
+function endLevelCheck(): boolean {
+    return gameCurrentLevel?.map?.endPoint[0] === charMove.posx && gameCurrentLevel.map.endPoint[1] === charMove.posy;
 }
