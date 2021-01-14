@@ -35,11 +35,23 @@ const charMove: GameCharacterMove = {
     needRender: false
 };
 
-const spirMove: GameCharacterMove = {
-    posx: 0,
-    posy: 0,
-    needRender: false
-};
+const spirMove: GameCharacterMove[] = [
+    {
+        posx: 10,
+        posy: 0,
+        needRender: false
+    },
+    {
+        posx: 20,
+        posy: 19,
+        needRender: false
+    },
+    {
+        posx: 28,
+        posy: 20,
+        needRender: false
+    }
+];
 
 let spiritInterval: number;
 
@@ -104,7 +116,7 @@ export function setCanvas(canvasElement: HTMLCanvasElement | null): CanvasContex
 export function createPauseListener(cb: EmptyCallback): EmptyCallback {
     const handler = createEscapeHandler(cb);
     window.addEventListener('keydown', handler);
-    spiritInterval = window.setInterval(spiritEnabled, 1000);
+    spiritInterval = window.setInterval(spiritTick, 1000);
 
     return () => {
         window.removeEventListener('keydown', handler);
@@ -117,7 +129,7 @@ export function createGameListener(cbEscape: EmptyCallback): EmptyCallback {
     const arrowHandler = createArrowsHandler(move);
     window.addEventListener('keydown', escapeHandler);
     window.addEventListener('keydown', arrowHandler);
-    spiritInterval = window.setInterval(spiritEnabled, 150);
+    spiritInterval = window.setInterval(spiritTick, 150);
 
     return () => {
         window.removeEventListener('keydown', escapeHandler);
@@ -188,7 +200,6 @@ function loop(): void {
     if (gameState !== 'GAME') {
         return;
     }
-
     spiritMove();
     characterMove();
     interactionCheck();
@@ -210,32 +221,38 @@ function characterMove(): void {
     }
 }
 
-function spiritEnabled(): void {
-    spirMove.needRender = true;
+function spiritTick(): void {
+    spirMove[0].needRender = true;
 }
 /*
  * Spirit move by Canvas
  */
 function spiritMove(): void {
-    if (spirMove.needRender) {
+    if (spirMove[0].needRender) {
         spiritChangePosition();
-        spirMove.needRender = false;
-        moves(spirMove.posx, spirMove.posy);
+        spirMove[0].needRender = false;
+        moves(spirMove);
     }
 }
 
 /*
  *
  */
-const spirDiff = [1, 1];
+const spirDiff: [number, number][] = [
+    [1, 1],
+    [1, -1],
+    [-1, 1]
+];
 function spiritChangePosition(): void {
-    spirMove.posx += spirDiff[0];
-    spirMove.posy += spirDiff[1];
-    if (spirMove.posx === LEVEL_SIZE.x || spirMove.posx === 0) {
-        spirDiff[0] = spirDiff[0] === -1 ? 1 : -1;
-    }
-    if (spirMove.posy === LEVEL_SIZE.y || spirMove.posy === 0) {
-        spirDiff[1] = spirDiff[1] === -1 ? 1 : -1;
+    for (let i = 0; i < spirMove.length; i++) {
+        spirMove[i].posx += spirDiff[i][0];
+        spirMove[i].posy += spirDiff[i][1];
+        if (spirMove[i].posx === LEVEL_SIZE.x || spirMove[i].posx === 0) {
+            spirDiff[i][0] = spirDiff[i][0] === -1 ? 1 : -1;
+        }
+        if (spirMove[i].posy === LEVEL_SIZE.y || spirMove[i].posy === 0) {
+            spirDiff[i][1] = spirDiff[i][1] === -1 ? 1 : -1;
+        }
     }
 }
 
