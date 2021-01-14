@@ -202,8 +202,8 @@ function loop(): void {
     }
     spiritMove();
     characterMove();
-    interactionCheck();
-    if (endLevelCheck()) {
+
+    if (endLevelCheck() || spiritCheck()) {
         gameSetStateAction('END');
 
         return;
@@ -292,10 +292,11 @@ function checkWalls(newX: number, newY: number): boolean {
 }
 
 /**
- * Проверка: персонаж не столкнулся с другими объектами
+ * Проверка: персонаж столкнулся с призраком
  */
-function interactionCheck(): boolean {
-    return true;
+
+function spiritCheck(): boolean {
+    return spirMove.some((spiritCoord) => spiritCoord.posx === charMove.posx && spiritCoord.posy === charMove.posy);
 }
 
 /**
