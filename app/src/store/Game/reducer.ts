@@ -28,6 +28,12 @@ export const gameReducer = (state = gameState, action: GameActions): GameState =
 
             return newState;
         }
+        case GAME_ACTION_TYPES.SET_MAP: {
+            const newState = cloneDeep(state);
+            newState.level.map = action.payload;
+
+            return newState;
+        }
         case GAME_ACTION_TYPES.SET_STATE: {
             const newState = cloneDeep(state);
             newState.state = action.payload;

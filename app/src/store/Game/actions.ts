@@ -1,9 +1,11 @@
-import {
-    GAME_ACTION_TYPES,
+import {Level} from '../Level/types';
+import {GAME_ACTION_TYPES} from './types';
+import type {
     GameCharSetNameAction,
     GameCharSetPointsAction,
     GameRemoveAction,
     GameSetLevelAction,
+    GameSetMapAction,
     GameSetStateAction
 } from './types';
 import type {GameLevel, GameStatePoint} from '~/core/types';
@@ -25,6 +27,13 @@ export function gameCharSetPointsAction(characterPoints: number): GameCharSetPoi
 export function gameSetLevelAction(level: GameLevel): GameSetLevelAction {
     return {
         type: GAME_ACTION_TYPES.SET_LEVEL,
+        payload: level
+    };
+}
+
+export function gameSetMapAction(level: Level): GameSetMapAction {
+    return {
+        type: GAME_ACTION_TYPES.SET_MAP,
         payload: level
     };
 }

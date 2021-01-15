@@ -1,43 +1,120 @@
-import {setCanvas} from './engine';
-import {floorSprites} from './sprites/floor';
-import {GRID} from './sprites/utils';
-import {wallSprites} from './sprites/wall';
+import {floorSprites} from '~/core/sprites/map';
 
-import type {Sprite} from './types';
+import {setCanvas} from './engine';
+import {GRID} from './params';
+import {CharParts, charSprites} from './sprites/character/character';
+import {FloorParts} from './sprites/map/floor';
+import {WallParts, wallSprites} from './sprites/map/wall';
+import {ObjectParts, objectSprites} from './sprites/object';
+
+import type {AssetMap, Sprite} from './sprites/types';
+import type {BackgroundMap, CharsMap, Level, ObjectsMap} from '~/store/Level/types';
 
 let ctx: CanvasRenderingContext2D;
 
 export function setBgCanvas(canvasElement: HTMLCanvasElement | null): void {
     ({ctx} = setCanvas(canvasElement));
+}
 
-    // TODO mock
-    Promise.all([wallSprites, floorSprites]).then(([WALL, FLOOR]) => {
-        drawImage(21, 8, WALL.TOP);
-        drawImage(20, 8, WALL.TOP);
-        drawImage(19, 8, WALL.CORNER_BL);
-        drawImage(19, 7, WALL.CORNER_TR);
-        drawImage(18, 7, WALL.TOP);
-        drawImage(17, 7, WALL.TOP);
-        drawImage(16, 7, WALL.TOP);
-        drawImage(15, 7, WALL.CORNER_TL);
-        drawImage(15, 8, WALL.SIDE);
-        drawImage(15, 9, WALL.SIDE);
-        drawImage(15, 10, WALL.SIDE);
-        drawImage(15, 11, WALL.CORNER_BL);
-        drawImage(16, 11, WALL.TOP);
-        drawImage(17, 11, WALL.TOP);
-        drawImage(18, 11, WALL.TOP);
-        drawImage(19, 11, WALL.CORNER_BR);
-        drawImage(19, 10, WALL.CORNER_TL);
-        drawImage(20, 10, WALL.TOP);
-        drawImage(21, 10, WALL.TOP);
-        drawImage(16, 8, FLOOR.ROOM);
-        drawImage(19, 9, FLOOR.HORIZONTAL);
+export function drawMap(fullLevel: Level): void {
+    // render map
+    Promise.all([wallSprites, floorSprites, objectSprites, charSprites]).then(([WALL, FLOOR, OBJECTS, CHARS]) => {
+        drawBackground(fullLevel.map, {
+            floor: FLOOR,
+            wall: WALL
+        });
+
+        drawObjects(fullLevel.objects, {
+            objects: OBJECTS
+        });
+
+        drawChars(fullLevel.chars, {
+            chars: CHARS
+        });
     });
 }
 
+function drawBackground(
+    level: BackgroundMap,
+    sprites: {
+        wall: AssetMap<WallParts>;
+        floor: AssetMap<FloorParts>;
+    }
+): void {
+    const WALL = sprites.wall;
+    const FLOOR = sprites.floor;
+
+    for (let i = 0; i < level.length; i += 1) {
+        for (let j = 0; j < level[i].length; j += 1) {
+            const {asset: backgroundAsset} = level[i][j];
+            if (backgroundAsset) {
+                if (backgroundAsset.type === 'WALL') {
+                    drawImage(j, i, WALL[backgroundAsset.part]);
+                } else {
+                    drawImage(j, i, FLOOR[backgroundAsset.part]);
+                }
+            }
+        }
+    }
+}
+
+function drawObjects(
+    objects: ObjectsMap,
+    sprites: {
+        objects: AssetMap<ObjectParts>;
+    }
+): void {
+    const OBJECTS = sprites.objects;
+
+    for (let i = 0; i < objects.length; i += 1) {
+        for (let j = 0; j < objects[i].length; j += 1) {
+            const {asset: objectAsset} = objects[i][j];
+            if (objectAsset) {
+                switch (objectAsset.part) {
+                    case 'DOOR': {
+                        drawImage(j, i, OBJECTS[objectAsset.part]);
+                        break;
+                    }
+                    case 'KEY': {
+                        drawImage(j, i, OBJECTS[objectAsset.part]);
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+}
+
+function drawChars(
+    chars: CharsMap,
+    sprites: {
+        chars: AssetMap<CharParts>;
+    }
+): void {
+    const CHARS = sprites.chars;
+
+    for (let i = 0; i < chars.length; i += 1) {
+        for (let j = 0; j < chars[i].length; j += 1) {
+            const {asset: charAsset} = chars[i][j];
+            if (charAsset) {
+                switch (charAsset.part) {
+                    case 'SPIRIT': {
+                        drawImage(j, i, CHARS[charAsset.part]);
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
 function drawImage(x: number, y: number, sprite: Sprite) {
-    if (sprite.image) {
+    if (sprite && sprite.image) {
         ctx.drawImage(
             sprite.image,
             sprite.posx,

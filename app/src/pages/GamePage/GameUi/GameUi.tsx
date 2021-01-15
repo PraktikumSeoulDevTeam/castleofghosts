@@ -4,7 +4,6 @@ import {Redirect} from 'react-router-dom';
 
 import {Button} from '~/components';
 import {createPauseListener, createGameListener} from '~/core/engine';
-import {movef} from '~/core/main.canvas';
 import {gameSetStateAction} from '~/store/Game/actions';
 
 import {AppStoreState} from '~/store/types';
@@ -14,6 +13,7 @@ const mapState = (state: AppStoreState) => ({
     character: state.game.character,
     levelName: state.game.level.name,
     levelNumber: state.game.level.number,
+    userPositionCity: state.user.geolocation.city,
     state: state.game.state
 });
 
@@ -25,14 +25,14 @@ const connector = connect(mapState, mapDispatch);
 
 export const GameUi = connector(
     (props: ConnectedProps<typeof connector> & HTMLAttributes<HTMLDivElement>): JSX.Element => {
-        const {character, className, levelName, levelNumber, state, setState} = props;
+        const {character, className, levelName, levelNumber, userPositionCity, state, setState} = props;
         const play = useCallback(() => setState('GAME'), []);
         const exit = useCallback(() => setState('END'), []);
         const pause = useCallback(() => setState('PAUSE'), []);
 
         useEffect(() => {
             if (state === 'GAME') {
-                return createGameListener(pause, movef);
+                return createGameListener(pause);
             }
             if (state === 'PAUSE') {
                 return createPauseListener(play);
@@ -53,6 +53,9 @@ export const GameUi = connector(
                 {state === 'INTERLUDE' && (
                     <div className="game-ui__dialog">
                         <h1 className="t-title">{`Level ${levelNumber}`}</h1>
+                        {userPositionCity ? (
+                            <div className="t-main t-center">{`Somewhere in ${userPositionCity}`}</div>
+                        ) : null}
                         <div className="button-bar button-bar_center mt-8">
                             <Button onClick={play}>Go</Button>
                         </div>

@@ -4,11 +4,13 @@ import {getUserInfo, updateUserInfo, updateUserAvatar, updateUserPassword, signU
 import {toasterAddAction} from '~/store/Toaster/actions';
 import {utilitySetLoading} from '~/store/Utility/actions';
 
-import {userSetAction, userRemoveAction} from './actions';
+import {GeolocationApiGet, GeolocationApiGetCity} from '../../services/geolocation/geolocation';
+import {userSetAction, userRemoveAction, userGeolocationSetAction} from './actions';
 
 import {
     SignInAction,
     SignUpAction,
+    UserStateGeolocation,
     UserUpdateAction,
     UserUpdateAvatarAction,
     UserUpdatePasswordAction,
@@ -24,6 +26,7 @@ export function* userWatcher(): Generator<ForkEffect<never>> {
     yield takeLeading(USER_ACTION_TYPES.SIGN_UP, userSignUpWorker);
     yield takeLeading(USER_ACTION_TYPES.SIGN_IN, userSignInWorker);
     yield takeLeading(USER_ACTION_TYPES.SIGN_OUT, userSignOutWorker);
+    yield takeLeading(USER_ACTION_TYPES.GEOLOCATION_GET, userGeolocationGetWorker);
 }
 
 function* userGetWorker() {
@@ -122,5 +125,22 @@ function* userSignOutWorker() {
     } catch (error) {
         // eslint-disable-next-line no-console
         console.log('[userSignOutWorker error] ', error);
+    }
+}
+
+function* userGeolocationGetWorker() {
+    try {
+        const res: GeolocationPosition = yield call(GeolocationApiGet);
+        if (res) {
+            const data: UserStateGeolocation = {
+                latitude: res.coords.latitude,
+                longitude: res.coords.longitude,
+                city: yield call(GeolocationApiGetCity, res)
+            };
+            yield put(userGeolocationSetAction(data));
+        }
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log('[userGeolocationGetWorker error] ', error);
     }
 }

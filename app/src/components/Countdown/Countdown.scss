@@ -15,8 +15,8 @@
         width: 500%;
         height: 100%;
         align-items: center;
-        animation: countdown 3s;
-        animation-delay: 1s;
+        animation: countdown 0.01s;
+        animation-delay: 0s;
         animation-fill-mode: forwards;
         will-change: transform;
     }
