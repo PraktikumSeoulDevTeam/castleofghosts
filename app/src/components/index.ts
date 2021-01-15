@@ -1,3 +1,4 @@
+export * from './AudioSwitch/AudioSwitch';
 export * from './Button/Button';
 export * from './Copyright/Copyright';
 export * from './FormControl/FormControl';
