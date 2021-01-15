@@ -6,6 +6,7 @@ import {setBgCanvas} from '~/core/bg.canvas';
 import {setMainCanvas} from '~/core/main.canvas';
 import {UiLayout} from '~/layouts';
 import {gameRemoveAction} from '~/store/Game/actions';
+import {FullScreenApi} from '~/webApi/fullScreen';
 
 import {GameUi} from './GameUi/GameUi';
 import './GamePage.scss';
@@ -32,7 +33,12 @@ export const GamePage = connector(
                 gameRemove();
             });
 
-            return () => unblock();
+            FullScreenApi.initFullScreenByButton();
+
+            return () => {
+                unblock();
+                FullScreenApi.disableFullScreenByButton();
+            };
         }, []);
 
         return (

@@ -1,29 +1,38 @@
-export class FullScreenApi {
-    static eventExist = false;
+import fscreen from 'fscreen';
 
-    static enableFullScreen(): void {
+export const FullScreenApi = {
+    eventExist: false,
+
+    enableFullScreen(): void {
         try {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch();
+            if (fscreen.fullscreenEnabled) {
+                fscreen.requestFullscreen(document.documentElement);
             }
         } catch (error) {
             // eslint-disable-next-line no-console
             console.log(`[error-web-api] something wrong in FullScreenApi->enableFullScreen`);
         }
-    }
+    },
 
-    static disableFullScreen(): void {
+    disableFullScreenByButton(): void {
+        if (this.eventExist) {
+            document.removeEventListener('keydown', FullScreenApi.toggleByButtonEvent);
+            this.eventExist = false;
+        }
+    },
+
+    disableFullScreen(): void {
         try {
-            if (document.exitFullscreen) {
-                document.exitFullscreen().catch();
+            if (fscreen.fullscreenEnabled) {
+                fscreen.exitFullscreen();
             }
         } catch (error) {
             // eslint-disable-next-line no-console
             console.log(`[error-web-api] something wrong in FullScreenApi->disableFullScreen`);
         }
-    }
+    },
 
-    private static async toggleByButtonEvent(event: KeyboardEvent): Promise<void> {
+    async toggleByButtonEvent(event: KeyboardEvent): Promise<void> {
         const button = event.code;
 
         if (button !== 'KeyF') {
@@ -40,12 +49,12 @@ export class FullScreenApi {
             // eslint-disable-next-line no-console
             console.log(`[error-web-api] something wrong in FullScreenApi->enableFullScreen`);
         }
-    }
+    },
 
-    static initFullScreenByButton(): void {
+    initFullScreenByButton(): void {
         if (!this.eventExist) {
             document.addEventListener('keydown', FullScreenApi.toggleByButtonEvent);
             this.eventExist = true;
         }
     }
-}
+};
