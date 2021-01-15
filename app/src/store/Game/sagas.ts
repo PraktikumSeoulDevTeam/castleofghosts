@@ -1,8 +1,7 @@
 import shuffle from 'lodash/shuffle';
 import {call, ForkEffect, put, select, takeEvery} from 'redux-saga/effects';
 
-import {drawMap} from '~/core/bg.canvas';
-import {createGame, exitGame, pauseGame, play} from '~/core/engine';
+import {createGame, exitGame, loadLevel, pauseGame, play} from '~/core/engine';
 import {STATE} from '~/core/params';
 import {audioControlSampleAction} from '~/store/Audio/actions';
 
@@ -51,7 +50,7 @@ function* gameSetStateWorker(action: GameSetStateAction) {
                 const level = levels[nextLevelNumber];
                 yield put(gameSetLevelNumberAction());
                 yield put(gameSetLevelAction(level));
-                yield call(drawMap, level);
+                yield call(loadLevel, level);
             } else {
                 yield put(gameSetStateAction(STATE.END));
             }
