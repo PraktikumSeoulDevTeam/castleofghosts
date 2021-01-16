@@ -1,0 +1,27 @@
+@import '~/assets/scss/variables';
+
+.audio-switch {
+    position: fixed;
+    z-index: map-get($z-index, 'overlay');
+    right: 32px;
+    bottom: 32px;
+
+    &__button {
+        padding: none;
+        border: none;
+        background: none;
+    }
+    &__label {
+        &::before {
+            font-size: $fontSize * 3;
+            text-align: end;
+        }
+        &_on::before {
+            content: '\1F56A';
+        }
+        &_off::before {
+            padding-right: 2px; // fix из за особенностей символа
+            content: '\1F568';
+        }
+    }
+}
