@@ -4,6 +4,7 @@ import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '~/store/
 
 import {drawMap, hideFoundedKey} from './bg.canvas';
 import {movef} from './main.canvas';
+import {ROLE} from './params';
 
 import type {ArrowPressCallback, EmptyCallback, GameLevel, GameStatePoint, GameCharacterMove, KeyInfo} from './types';
 import type {GameActions} from '~/store/Game/types';
@@ -47,6 +48,7 @@ export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
     setStartPosition();
+    setEndPosition();
     setKeyPosition();
     loop();
 }
@@ -165,6 +167,26 @@ function characterMove(): void {
 }
 
 /**
+ * Установки точки выхода
+ * Берётся координаты двери из completeObjects
+ * Если нет, то «endPoint» по-умолчанию
+ */
+
+const setEndPosition = (): void => {
+    if (!gameCurrentLevel || !gameCurrentLevel.map) {
+        return;
+    }
+    for (let a = 0; a < gameCurrentLevel.map.objects.length; a++) {
+        for (let b = 0; b < gameCurrentLevel.map.objects[a].length; b++) {
+            if (gameCurrentLevel.map.objects[a][b].role === ROLE.DOOR) {
+                gameCurrentLevel.map.endPoint = [b, a];
+                break;
+            }
+        }
+    }
+};
+
+/**
  * Начальная установка персонажа
  */
 const setStartPosition = (): void => {
@@ -234,8 +256,6 @@ let keyInfo: KeyInfo = {
     isFound: true
 };
 
-const KEY_ROLE = 3;
-
 /**
  * Ключ: начальная установка
  */
@@ -245,7 +265,7 @@ const setKeyPosition = (): void => {
     }
     for (let a = 0; a < gameCurrentLevel.map.objects.length; a++) {
         for (let b = 0; b < gameCurrentLevel.map.objects[a].length; b++) {
-            if (gameCurrentLevel.map.objects[a][b].role === KEY_ROLE) {
+            if (gameCurrentLevel.map.objects[a][b].role === ROLE.KEY) {
                 keyInfo = {
                     posX: b,
                     posY: a,
