@@ -1,11 +1,11 @@
 import cloneDeep from 'lodash/cloneDeep';
 
-import {allOneType, cellNeighborhoods, existAndEqual, randSort, sumOf} from '~/services/LevelGenerator/utils';
-
 import {Levels} from './__levels';
+import {allOneType, cellNeighborhoods, existAndEqual, randSort, sumOf} from './utils';
 
 import {BaseType, GeneratorConfiguration, MapPartials} from './types';
-import {BackgroundMap, BackgroundPart, BackgroundAsset, Level} from '~/store/Level/types';
+import {BackgroundAsset, BackgroundMap} from '~/core/types';
+import type {Level, Tile} from '~/core/types';
 
 const MAX_SUM = 9;
 
@@ -347,7 +347,7 @@ const mapToGameFormat = (level: number[][]): BackgroundMap => {
                     canWalk: level[i][j] === -2
                 };
             } else {
-                const mapElement: BackgroundPart = {
+                const mapElement: Tile<BackgroundAsset> = {
                     canWalk: level[i][j] === 1 || level[i][j] === MapPartials.CORRIDOR_ROAD_3_3,
                     asset: switcher(level[i][j])
                 };
@@ -376,13 +376,14 @@ export class LevelGenerator {
             const stubLevel = Levels[randNum[i]];
             const map = mapToGameFormat(mapWall(stubLevel.map));
 
-            result.push({
-                map: stubLevel.completeMap ?? map,
-                objects: stubLevel.completeObjects ?? [],
-                chars: stubLevel.completeChars ?? [],
+            const level: Level = {
                 startPoint: stubLevel.startPoint,
-                endPoint: stubLevel.endPoint
-            });
+                endPoint: stubLevel.endPoint,
+                keyPoint: stubLevel.keyPoint,
+                map
+            };
+
+            result.push(level);
         }
 
         return result;

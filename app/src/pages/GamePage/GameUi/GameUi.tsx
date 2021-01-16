@@ -4,15 +4,16 @@ import {Redirect} from 'react-router-dom';
 
 import {Button} from '~/components';
 import {createPauseListener, createGameListener} from '~/core/engine';
+import {STATE} from '~/core/params';
 import {gameSetStateAction} from '~/store/Game/actions';
 
-import {AppStoreState} from '~/store/types';
+import type {AppStoreState} from '~/store/types';
 import './GameUi.scss';
 
 const mapState = (state: AppStoreState) => ({
     character: state.game.character,
     levelName: state.game.level.name,
-    levelNumber: state.game.level.number,
+    levelNumber: state.game.levelNumber,
     userPositionCity: state.user.geolocation.city,
     state: state.game.state
 });
@@ -26,31 +27,31 @@ const connector = connect(mapState, mapDispatch);
 export const GameUi = connector(
     (props: ConnectedProps<typeof connector> & HTMLAttributes<HTMLDivElement>): JSX.Element => {
         const {character, className, levelName, levelNumber, userPositionCity, state, setState} = props;
-        const play = useCallback(() => setState('GAME'), []);
-        const exit = useCallback(() => setState('END'), []);
-        const pause = useCallback(() => setState('PAUSE'), []);
+        const play = useCallback(() => setState(STATE.GAME), []);
+        const exit = useCallback(() => setState(STATE.END), []);
+        const pause = useCallback(() => setState(STATE.PAUSE), []);
 
         useEffect(() => {
-            if (state === 'GAME') {
+            if (state === STATE.GAME) {
                 return createGameListener(pause);
             }
-            if (state === 'PAUSE') {
+            if (state === STATE.PAUSE) {
                 return createPauseListener(play);
             }
 
             return undefined;
         }, [state]);
 
-        return state === 'OFF' ? (
+        return state === STATE.END ? (
             <Redirect to="/leaderboard" />
         ) : (
             <div className={`game-ui ${className}`}>
                 <div className="game-ui__bar">
                     <span className="pa-1">{character.name}</span>
-                    <span className="game-ui__lvl pa-1">{`${levelNumber} ${levelName}`}</span>
+                    <span className="game-ui__lvl pa-1">{`Level ${levelNumber} ${levelName || ''}`}</span>
                     <span className="pa-1">{character.points}</span>
                 </div>
-                {state === 'INTERLUDE' && (
+                {state === STATE.INTERLUDE && (
                     <div className="game-ui__dialog">
                         <h1 className="t-title">{`Level ${levelNumber}`}</h1>
                         {userPositionCity ? (
@@ -61,7 +62,7 @@ export const GameUi = connector(
                         </div>
                     </div>
                 )}
-                {state === 'PAUSE' && (
+                {state === STATE.PAUSE && (
                     <div className="game-ui__dialog">
                         <h1 className="t-title">Pause</h1>
                         <div className="button-bar button-bar_center mt-8">

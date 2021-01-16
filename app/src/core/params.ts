@@ -14,26 +14,16 @@ export const HEIGHT = 768;
 export const GRID = 32;
 
 /**
- * Текущая версия формата уровня
+ * Путь к каталогу с уровнями
  */
-export const CURRENT_LEVEL_VERSION = 1;
+export const LEVELS_PATH = './levels/levels.json';
 
-/**
- * Слои игры
- */
-export enum LAYER {
-    MAP = 'map',
-    OBJECTS = 'objects',
-    CHARS = 'chars'
-}
-
-/**
- * Роли тайлов
- */
-export enum ROLE {
-    PLAYER,
-    MOB,
-    DOOR,
-    KEY,
-    SPAWN
+export const enum STATE {
+    OFF = 'OFF',
+    INIT = 'INIT',
+    START = 'START',
+    INTERLUDE = 'INTERLUDE',
+    GAME = 'GAME',
+    PAUSE = 'PAUSE',
+    END = 'END'
 }

@@ -1,17 +1,29 @@
-import type {Level, LevelGenerateAction, LevelSaveAction} from './types';
-import {LEVEL_ACTION_TYPES} from './types';
-import {GeneratorConfiguration} from '~/services/LevelGenerator/types';
+import {LevelsLoadAction, LevelsAddAction, LevelsGenerateAction, LevelsGrabAction, LEVELS_ACTION_TYPES} from './types';
+import type {Level} from '~/core/types';
+import type {GeneratorConfiguration} from '~/services/LevelGenerator/types';
 
-export function levelGenerateAction(generatorConfig?: GeneratorConfiguration): LevelGenerateAction {
+export function levelsLoadAction(): LevelsLoadAction {
     return {
-        type: LEVEL_ACTION_TYPES.GENERATE_LEVELS,
-        payload: generatorConfig
+        type: LEVELS_ACTION_TYPES.LOAD
     };
 }
 
-export function levelSaveAction(levels: Level[]): LevelSaveAction {
+export function levelsAddAction(levels: Level[]): LevelsAddAction {
     return {
-        type: LEVEL_ACTION_TYPES.SAVE_LEVELS,
+        type: LEVELS_ACTION_TYPES.ADD,
         payload: levels
+    };
+}
+
+export function levelsGrabAction(): LevelsGrabAction {
+    return {
+        type: LEVELS_ACTION_TYPES.GRAB
+    };
+}
+
+export function levelsGenerateAction(generatorConfig?: GeneratorConfiguration): LevelsGenerateAction {
+    return {
+        type: LEVELS_ACTION_TYPES.GENERATE,
+        payload: generatorConfig
     };
 }
