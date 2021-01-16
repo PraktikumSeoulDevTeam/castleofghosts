@@ -5,6 +5,7 @@ import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '~/store/
 import {drawMap, hideFoundedKey} from './bg.canvas';
 import {movef} from './main.canvas';
 import {ROLE} from './params';
+import {moves} from './spirit.canvas';
 
 import type {ArrowPressCallback, EmptyCallback, GameLevel, GameStatePoint, GameCharacterMove, KeyInfo} from './types';
 import type {GameActions} from '~/store/Game/types';
@@ -29,6 +30,26 @@ const charMove: GameCharacterMove = {
     needRender: false
 };
 
+const spirMove: GameCharacterMove[] = [
+    {
+        posx: 10,
+        posy: 0,
+        needRender: false
+    },
+    {
+        posx: 20,
+        posy: 19,
+        needRender: false
+    },
+    {
+        posx: 28,
+        posy: 20,
+        needRender: false
+    }
+];
+
+let spiritInterval: number;
+
 export function createGame(): GameActions {
     // eslint-disable-next-line no-console
     console.log('[createGame]');
@@ -47,9 +68,10 @@ export function loadLevel(): GameActions {
 export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
-    setStartPosition();
+    setCharStartPosition();
     setEndPosition();
     setKeyPosition();
+
     loop();
 }
 
@@ -68,9 +90,11 @@ export function exitGame(): GameActions {
 export function createPauseListener(cb: EmptyCallback): EmptyCallback {
     const handler = createEscapeHandler(cb);
     window.addEventListener('keydown', handler);
+    spiritInterval = window.setInterval(spiritTick, 1000);
 
     return () => {
         window.removeEventListener('keydown', handler);
+        window.clearInterval(spiritInterval);
     };
 }
 
@@ -79,10 +103,12 @@ export function createGameListener(cbEscape: EmptyCallback): EmptyCallback {
     const arrowHandler = createArrowsHandler(move);
     window.addEventListener('keydown', escapeHandler);
     window.addEventListener('keydown', arrowHandler);
+    spiritInterval = window.setInterval(spiritTick, 150);
 
     return () => {
         window.removeEventListener('keydown', escapeHandler);
         window.removeEventListener('keydown', arrowHandler);
+        window.clearInterval(spiritInterval);
     };
 }
 
@@ -148,10 +174,11 @@ function loop(): void {
     if (gameState !== 'GAME') {
         return;
     }
-    characterMove();
+    spiritMove();
     keyCheck();
-    interactionCheck();
-    if (endLevelCheck()) {
+    characterMove();
+
+    if (endLevelCheck() || spiritCheck()) {
         gameSetStateAction('WIN');
 
         return;
@@ -159,10 +186,48 @@ function loop(): void {
     requestAnimationFrame(loop);
 }
 
+/*
+ * Main character move
+ */
 function characterMove(): void {
     if (charMove.needRender && checkLimit()) {
         charMove.needRender = false;
         movef(charMove.posx, charMove.posy);
+    }
+}
+
+function spiritTick(): void {
+    spirMove[0].needRender = true;
+}
+/*
+ * Spirit move by Canvas
+ */
+function spiritMove(): void {
+    if (spirMove[0].needRender) {
+        spiritChangePosition();
+        spirMove[0].needRender = false;
+        moves(spirMove);
+    }
+}
+
+/*
+ *
+ */
+const spirDiff: [number, number][] = [
+    [1, 1],
+    [1, -1],
+    [-1, 1]
+];
+function spiritChangePosition(): void {
+    for (let i = 0; i < spirMove.length; i++) {
+        spirMove[i].posx += spirDiff[i][0];
+        spirMove[i].posy += spirDiff[i][1];
+        if (spirMove[i].posx === LEVEL_SIZE.x || spirMove[i].posx === 0) {
+            spirDiff[i][0] = spirDiff[i][0] === -1 ? 1 : -1;
+        }
+        if (spirMove[i].posy === LEVEL_SIZE.y || spirMove[i].posy === 0) {
+            spirDiff[i][1] = spirDiff[i][1] === -1 ? 1 : -1;
+        }
     }
 }
 
@@ -189,7 +254,7 @@ const setEndPosition = (): void => {
 /**
  * Начальная установка персонажа
  */
-const setStartPosition = (): void => {
+const setCharStartPosition = (): void => {
     [charMove.posx, charMove.posy] = gameCurrentLevel.map?.startPoint || [0, 0];
     charMove.needRender = true;
     characterMove();
@@ -231,10 +296,11 @@ function checkWalls(newX: number, newY: number): boolean {
 }
 
 /**
- * Проверка: персонаж не столкнулся с другими объектами
+ * Проверка: персонаж столкнулся с призраком
  */
-function interactionCheck(): boolean {
-    return true;
+
+function spiritCheck(): boolean {
+    return spirMove.some((spiritCoord) => spiritCoord.posx === charMove.posx && spiritCoord.posy === charMove.posy);
 }
 
 /**

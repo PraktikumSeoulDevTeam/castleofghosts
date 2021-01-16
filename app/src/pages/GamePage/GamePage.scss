@@ -16,6 +16,9 @@
     &__main {
         z-index: map-get($z-index, 'game-main');
     }
+    &__spirit {
+        z-index: map-get($z-index, 'spirit-main');
+    }
     &__ui {
         z-index: map-get($z-index, 'game-ui');
     }
