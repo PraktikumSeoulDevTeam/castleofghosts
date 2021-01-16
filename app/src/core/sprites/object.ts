@@ -13,6 +13,7 @@ assetMap.src = './assets/object.png';
 const SPRITES = {
     KEY: createSprite(assetMap, 0, 0),
     DOOR: createSprite(assetMap, 4, 0),
+    DOOR_OPEN: createSprite(assetMap, 5, 0),
     SPAWN: createSprite(assetMap, 7, 0)
 };
 

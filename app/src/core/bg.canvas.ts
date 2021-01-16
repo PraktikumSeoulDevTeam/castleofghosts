@@ -77,12 +77,16 @@ function drawObjects(
             if (objectAsset) {
                 switch (objectAsset.part) {
                     case 'DOOR': {
-                        drawImage(j, i, OBJECTS[objectAsset.part]);
+                        if (!keyIsHide) {
+                            drawImage(j, i, OBJECTS.DOOR);
+                        } else {
+                            drawImage(j, i, OBJECTS.DOOR_OPEN);
+                        }
                         break;
                     }
                     case 'KEY': {
                         if (!keyIsHide) {
-                            drawImage(j, i, OBJECTS[objectAsset.part]);
+                            drawImage(j, i, OBJECTS.KEY);
                         }
                         break;
                     }

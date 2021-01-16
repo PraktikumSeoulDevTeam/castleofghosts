@@ -9,10 +9,10 @@ export interface DefaultLevel {
     completeChars?: CharsMap;
 }
 
-// 24x32
+// 23x31 (y:x)
 const FirstLevel: DefaultLevel = {
-    startPoint: [2, 3],
-    endPoint: [5, 5],
+    startPoint: [1, 1],
+    endPoint: [30, 22],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
@@ -824,7 +824,11 @@ const FirstLevel: DefaultLevel = {
             {},
             {},
             {},
-            {},
+            {
+                asset: {type: 'OBJECT', part: 'DOOR'},
+                role: 2,
+                canWalk: true
+            },
             {}
         ],
         [

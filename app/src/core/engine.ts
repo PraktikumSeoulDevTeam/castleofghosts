@@ -147,12 +147,10 @@ function loop(): void {
         return;
     }
     characterMove();
-    if (!keyInfo.isFound) {
-        keyCheck();
-    }
+    keyCheck();
     interactionCheck();
     if (endLevelCheck()) {
-        gameSetStateAction('END');
+        gameSetStateAction('WIN');
 
         return;
     }
@@ -221,7 +219,11 @@ function interactionCheck(): boolean {
  * Проверка: персонаж не добрался до конца уровня
  */
 function endLevelCheck(): boolean {
-    return gameCurrentLevel?.map?.endPoint[0] === charMove.posx && gameCurrentLevel.map.endPoint[1] === charMove.posy;
+    return (
+        keyInfo.isFound &&
+        gameCurrentLevel?.map?.endPoint[0] === charMove.posx &&
+        gameCurrentLevel.map.endPoint[1] === charMove.posy
+    );
 }
 
 /* Ключ */
@@ -259,7 +261,7 @@ const setKeyPosition = (): void => {
  * Ключ: персонаж нашёл ключ
  */
 const keyCheck = () => {
-    if (charMove.posx === keyInfo.posX && charMove.posy === keyInfo.posY) {
+    if (!keyInfo.isFound && charMove.posx === keyInfo.posX && charMove.posy === keyInfo.posY) {
         keyInfo.isFound = true;
         hideFoundedKey();
         if (gameCurrentLevel.map) {

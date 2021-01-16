@@ -41,4 +41,4 @@ export interface KeyInfo {
     isFound: boolean;
 }
 
-export type GameStatePoint = 'OFF' | 'START' | 'INTERLUDE' | 'GAME' | 'PAUSE' | 'END';
+export type GameStatePoint = 'OFF' | 'START' | 'INTERLUDE' | 'GAME' | 'PAUSE' | 'END' | 'WIN';
