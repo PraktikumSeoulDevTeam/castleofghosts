@@ -234,7 +234,7 @@ function mapWall(inputLevel: number[][]): number[][] {
             if (pos === BaseType.FLOOR) {
                 if (sumFloor === 9) {
                     cellNeighborhoods(i, j).forEach(([k, l]) => {
-                        level[k][l] = -1;
+                        level[k][l] = -2;
                     });
 
                     level[i - 1][j - 1] = MapPartials.CORRIDOR_ROAD_3_3;
@@ -342,13 +342,13 @@ const mapToGameFormat = (level: number[][]): BackgroundMap => {
     for (let i = 0; i < level.length; i += 1) {
         res.push([]);
         for (let j = 0; j < level[i].length; j += 1) {
-            if (level[i][j] === -1) {
+            if (level[i][j] === -1 || level[i][j] === -2) {
                 res[i][j] = {
-                    canWalk: false
+                    canWalk: level[i][j] === -2
                 };
             } else {
                 const mapElement: BackgroundPart = {
-                    canWalk: level[i][j] === 1,
+                    canWalk: level[i][j] === 1 || level[i][j] === MapPartials.CORRIDOR_ROAD_3_3,
                     asset: switcher(level[i][j])
                 };
 
