@@ -1,6 +1,6 @@
 import {floorSprites} from '~/core/sprites/map';
 
-import {setCanvas} from './engine';
+import {setCanvas} from './factory.canvas';
 import {GRID} from './params';
 import {CharParts, charSprites} from './sprites/character/character';
 import {FloorParts} from './sprites/map/floor';
@@ -11,6 +11,11 @@ import type {AssetMap, Sprite} from './sprites/types';
 import type {BackgroundMap, CharsMap, Level, ObjectsMap} from '~/store/Level/types';
 
 let ctx: CanvasRenderingContext2D;
+let keyIsHide = false;
+
+export function hideFoundedKey(): void {
+    keyIsHide = true;
+}
 
 export function setBgCanvas(canvasElement: HTMLCanvasElement | null): void {
     ({ctx} = setCanvas(canvasElement));
@@ -76,7 +81,9 @@ function drawObjects(
                         break;
                     }
                     case 'KEY': {
-                        drawImage(j, i, OBJECTS[objectAsset.part]);
+                        if (!keyIsHide) {
+                            drawImage(j, i, OBJECTS[objectAsset.part]);
+                        }
                         break;
                     }
                     default:

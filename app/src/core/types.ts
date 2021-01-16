@@ -16,6 +16,7 @@ export interface GameCharacterInfo {
     id: number;
     name: string;
     points: number;
+    keyFound: boolean;
 }
 
 /**
@@ -32,6 +33,12 @@ export interface GameLevel {
     name: string;
     number: number;
     map?: Level;
+}
+
+export interface KeyInfo {
+    posX: number;
+    posY: number;
+    isFound: boolean;
 }
 
 export type GameStatePoint = 'OFF' | 'START' | 'INTERLUDE' | 'GAME' | 'PAUSE' | 'END';

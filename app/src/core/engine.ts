@@ -2,16 +2,10 @@ import {Middleware} from 'redux';
 
 import {gameRemoveAction, gameSetLevelAction, gameSetStateAction} from '~/store/Game/actions';
 
+import {drawMap, hideFoundedKey} from './bg.canvas';
 import {movef} from './main.canvas';
 
-import type {
-    ArrowPressCallback,
-    EmptyCallback,
-    GameLevel,
-    GameStatePoint,
-    GameCharacterMove,
-    CanvasContext
-} from './types';
+import type {ArrowPressCallback, EmptyCallback, GameLevel, GameStatePoint, GameCharacterMove, KeyInfo} from './types';
 import type {GameActions} from '~/store/Game/types';
 import {AppStoreState} from '~/store/types';
 
@@ -53,14 +47,9 @@ export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
     setStartPosition();
+    setKeyPosition();
     loop();
 }
-
-const setStartPosition = (): void => {
-    [charMove.posx, charMove.posy] = gameCurrentLevel.map?.startPoint || [0, 0];
-    charMove.needRender = true;
-    characterMove();
-};
 
 export function pauseGame(): void {
     // eslint-disable-next-line no-console
@@ -72,23 +61,6 @@ export function exitGame(): GameActions {
     console.log('[exitGame]');
 
     return gameRemoveAction();
-}
-
-export function setCanvas(canvasElement: HTMLCanvasElement | null): CanvasContext | never {
-    if (!canvasElement) {
-        throw new Error('No canvas found');
-    }
-    const ctx = canvasElement.getContext('2d');
-    if (!ctx) {
-        throw new Error('No canvas context found');
-    }
-    ctx.imageSmoothingEnabled = false;
-
-    return {
-        ctx,
-        width: canvasElement.width,
-        height: canvasElement.height
-    };
 }
 
 export function createPauseListener(cb: EmptyCallback): EmptyCallback {
@@ -175,6 +147,9 @@ function loop(): void {
         return;
     }
     characterMove();
+    if (!keyInfo.isFound) {
+        keyCheck();
+    }
     interactionCheck();
     if (endLevelCheck()) {
         gameSetStateAction('END');
@@ -190,6 +165,15 @@ function characterMove(): void {
         movef(charMove.posx, charMove.posy);
     }
 }
+
+/**
+ * Начальная установка персонажа
+ */
+const setStartPosition = (): void => {
+    [charMove.posx, charMove.posy] = gameCurrentLevel.map?.startPoint || [0, 0];
+    charMove.needRender = true;
+    characterMove();
+};
 
 /**
  * Проверка: персонаж не вышел за пределы экрана
@@ -239,3 +223,48 @@ function interactionCheck(): boolean {
 function endLevelCheck(): boolean {
     return gameCurrentLevel?.map?.endPoint[0] === charMove.posx && gameCurrentLevel.map.endPoint[1] === charMove.posy;
 }
+
+/* Ключ */
+
+let keyInfo: KeyInfo = {
+    posX: 0,
+    posY: 0,
+    isFound: true
+};
+
+const KEY_ROLE = 3;
+
+/**
+ * Ключ: начальная установка
+ */
+const setKeyPosition = (): void => {
+    if (!gameCurrentLevel || !gameCurrentLevel.map) {
+        return;
+    }
+    for (let a = 0; a < gameCurrentLevel.map.objects.length; a++) {
+        for (let b = 0; b < gameCurrentLevel.map.objects[a].length; b++) {
+            if (gameCurrentLevel.map.objects[a][b].role === KEY_ROLE) {
+                keyInfo = {
+                    posX: b,
+                    posY: a,
+                    isFound: false
+                };
+                break;
+            }
+        }
+    }
+};
+
+/**
+ * Ключ: персонаж нашёл ключ
+ */
+const keyCheck = () => {
+    if (charMove.posx === keyInfo.posX && charMove.posy === keyInfo.posY) {
+        keyInfo.isFound = true;
+        hideFoundedKey();
+        if (gameCurrentLevel.map) {
+            drawMap(gameCurrentLevel.map);
+        }
+    }
+};
+/* EOF ключ */
