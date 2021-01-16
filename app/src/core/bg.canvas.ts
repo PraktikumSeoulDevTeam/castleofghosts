@@ -2,13 +2,13 @@ import {floorSprites} from '~/core/sprites/map';
 
 import {setCanvas} from './engine';
 import {GRID} from './params';
-import {CharParts, charSprites} from './sprites/character/character';
+import {charSprites} from './sprites/character/character';
 import {FloorParts} from './sprites/map/floor';
 import {WallParts, wallSprites} from './sprites/map/wall';
-import {ObjectParts, objectSprites} from './sprites/object';
+import {objectSprites} from './sprites/object';
 
 import type {AssetMap, Sprite} from './sprites/types';
-import type {BackgroundMap, CharsMap, Level, ObjectsMap} from '~/core/types';
+import type {BackgroundMap, Level, Point} from '~/core/types';
 
 let ctx: CanvasRenderingContext2D;
 
@@ -18,19 +18,15 @@ export function setBgCanvas(canvasElement: HTMLCanvasElement | null): void {
 
 export function drawMap(fullLevel: Level): void {
     // render map
-    Promise.all([wallSprites, floorSprites, objectSprites, charSprites]).then(([WALL, FLOOR, OBJECTS, CHARS]) => {
+    Promise.all([wallSprites, floorSprites, objectSprites, charSprites]).then(([WALL, FLOOR, OBJECTS]) => {
         drawBackground(fullLevel.map, {
             floor: FLOOR,
             wall: WALL
         });
 
-        drawObjects(fullLevel.objects, {
-            objects: OBJECTS
-        });
+        drawSpriteInPoint(fullLevel.keyPoint, OBJECTS.KEY);
 
-        drawChars(fullLevel.chars, {
-            chars: CHARS
-        });
+        drawSpriteInPoint(fullLevel.endPoint, OBJECTS.DOOR);
     });
 }
 
@@ -58,59 +54,8 @@ function drawBackground(
     }
 }
 
-function drawObjects(
-    objects: ObjectsMap,
-    sprites: {
-        objects: AssetMap<ObjectParts>;
-    }
-): void {
-    const OBJECTS = sprites.objects;
-
-    for (let i = 0; i < objects.length; i += 1) {
-        for (let j = 0; j < objects[i].length; j += 1) {
-            const {asset: objectAsset} = objects[i][j];
-            if (objectAsset) {
-                switch (objectAsset.part) {
-                    case 'DOOR': {
-                        drawImage(j, i, OBJECTS[objectAsset.part]);
-                        break;
-                    }
-                    case 'KEY': {
-                        drawImage(j, i, OBJECTS[objectAsset.part]);
-                        break;
-                    }
-                    default:
-                        break;
-                }
-            }
-        }
-    }
-}
-
-function drawChars(
-    chars: CharsMap,
-    sprites: {
-        chars: AssetMap<CharParts>;
-    }
-): void {
-    const CHARS = sprites.chars;
-
-    for (let i = 0; i < chars.length; i += 1) {
-        for (let j = 0; j < chars[i].length; j += 1) {
-            const {asset: charAsset} = chars[i][j];
-            if (charAsset) {
-                switch (charAsset.part) {
-                    case 'SPIRIT': {
-                        drawImage(j, i, CHARS[charAsset.part]);
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
-                }
-            }
-        }
-    }
+function drawSpriteInPoint(point: Point, sprite: Sprite) {
+    drawImage(point[0], point[1], sprite);
 }
 
 function drawImage(x: number, y: number, sprite: Sprite) {

@@ -1,6 +1,7 @@
 export interface DefaultLevel {
     startPoint: [number, number];
     endPoint: [number, number];
+    keyPoint: [number, number];
     map: number[][];
 }
 
@@ -8,6 +9,7 @@ export interface DefaultLevel {
 const FirstLevel: DefaultLevel = {
     startPoint: [2, 3],
     endPoint: [5, 5],
+    keyPoint: [10, 10],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
@@ -39,6 +41,7 @@ const FirstLevel: DefaultLevel = {
 const SecondLevel: DefaultLevel = {
     startPoint: [1, 1],
     endPoint: [30, 22],
+    keyPoint: [10, 10],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0],
@@ -70,6 +73,7 @@ const SecondLevel: DefaultLevel = {
 const LevelLondon: DefaultLevel = {
     startPoint: [1, 1],
     endPoint: [21, 31],
+    keyPoint: [10, 10],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
@@ -101,6 +105,7 @@ const LevelLondon: DefaultLevel = {
 const LevelParis: DefaultLevel = {
     startPoint: [12, 16],
     endPoint: [10, 14],
+    keyPoint: [10, 10],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0],
@@ -132,6 +137,7 @@ const LevelParis: DefaultLevel = {
 const LevelMadrid: DefaultLevel = {
     startPoint: [1, 1],
     endPoint: [23, 30],
+    keyPoint: [10, 10],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0],

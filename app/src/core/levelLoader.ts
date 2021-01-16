@@ -22,13 +22,15 @@ function transformToShit(levels: LevelEd[]): Level[] {
     const result: Level[] = levels.map<Level>((level: LevelEd) => {
         let startPoint: Point = [0, 0];
         let endPoint: Point = [0, 0];
-        level.objects.find((levelRow: Tile[], y: number) =>
-            levelRow.find((tile: Tile, x: number) => {
+        let keyPoint: Point = [0, 0];
+        level.objects.forEach((levelRow: Tile[], y: number) =>
+            levelRow.forEach((tile: Tile, x: number) => {
                 if (tile.asset) {
                     if (tile.asset.part === 'DOOR') {
                         endPoint = [x, y];
-
-                        return true;
+                    }
+                    if (tile.asset.part === 'KEY') {
+                        keyPoint = [x, y];
                     }
                 }
 
@@ -52,6 +54,7 @@ function transformToShit(levels: LevelEd[]): Level[] {
         return {
             startPoint,
             endPoint,
+            keyPoint,
             map: level.map,
             objects: level.objects,
             chars: []

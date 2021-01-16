@@ -37,18 +37,15 @@ export interface GameCharacterMove {
 
 export type Point = [x: number, y: number];
 
-export type BackgroundMap = Tile<WallAsset | FloorAsset>[][];
-export type ObjectsMap = Tile<ObjectAsset>[][];
-export type CharsMap = Tile<ObjectAsset | CharAsset>[][];
 export type BackgroundAsset = WallAsset | FloorAsset;
+export type BackgroundMap = Tile<BackgroundAsset>[][];
 
 export interface Level {
     name?: string;
     startPoint: Point;
     endPoint: Point;
+    keyPoint: Point;
     map: BackgroundMap;
-    objects: Tile<ObjectAsset>[][];
-    chars: Tile<ObjectAsset | CharAsset>[][];
 }
 
 export interface LevelEd {

@@ -360,10 +360,6 @@ const mapToGameFormat = (level: number[][]): BackgroundMap => {
     return res;
 };
 
-function getNewGrid<T>(width: number, height: number): T[][] {
-    return Array.from({length: height}, () => Array(width).fill({}));
-}
-
 export class LevelGenerator {
     static generate(config: GeneratorConfiguration): Level[] {
         const {count} = config;
@@ -383,9 +379,8 @@ export class LevelGenerator {
             const level: Level = {
                 startPoint: stubLevel.startPoint,
                 endPoint: stubLevel.endPoint,
-                map,
-                objects: getNewGrid(24, 32),
-                chars: getNewGrid(24, 32)
+                keyPoint: stubLevel.keyPoint,
+                map
             };
 
             result.push(level);
