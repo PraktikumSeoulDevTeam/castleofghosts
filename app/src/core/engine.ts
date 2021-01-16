@@ -48,7 +48,7 @@ let currentGameLevel: Level;
 
 export function loadLevel(level: Level): void {
     currentGameLevel = level;
-    drawMap(level, [charMove.posx, charMove.posx]);
+    drawMap(level);
     // eslint-disable-next-line no-console
     console.log('[loadLevel]');
 }

@@ -36,7 +36,7 @@ function getRenderPattern([x, y]: Point): Point[] {
     ];
 }
 
-export function drawMap(fullLevel: Level, position: Point): void {
+export function drawMap(fullLevel: Level, position?: Point): void {
     // render map
     Promise.all([wallSprites, floorSprites, objectSprites, charSprites]).then(([WALL, FLOOR, OBJECTS]) => {
         redraw(
@@ -46,7 +46,7 @@ export function drawMap(fullLevel: Level, position: Point): void {
                 wall: WALL,
                 objects: OBJECTS
             },
-            position
+            position || fullLevel.startPoint
         );
     });
 }
