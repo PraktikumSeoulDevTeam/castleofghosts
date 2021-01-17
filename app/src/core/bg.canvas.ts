@@ -88,6 +88,7 @@ function redraw(
             drawSpriteInPoint(level.keyPoint, OBJECTS.KEY);
         }
         if (j === level.endPoint[0] && i === level.endPoint[1]) {
+            doorIsFound = true;
             const doorSprite = keyIsFound ? OBJECTS.DOOR_OPEN : OBJECTS.DOOR;
             drawSpriteInPoint(level.endPoint, doorSprite);
         }
@@ -112,4 +113,12 @@ function drawImage(x: number, y: number, sprite: Sprite) {
             sprite.height
         );
     }
+}
+
+let doorIsFound = false;
+export function reRenderOpenDoor(fullLevel: Level, doorPosition: Point): void {
+    if (!doorIsFound) {
+        return;
+    }
+    drawMap(fullLevel, doorPosition);
 }

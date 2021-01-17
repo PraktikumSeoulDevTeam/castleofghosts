@@ -1,6 +1,6 @@
 import {Middleware} from 'redux';
 
-import {drawMap, setKeyIsFound} from './bg.canvas';
+import {drawMap, reRenderOpenDoor, setKeyIsFound} from './bg.canvas';
 import {movef} from './main.canvas';
 import {STATE} from './params';
 import {moves} from './spirit.canvas';
@@ -296,8 +296,8 @@ const keyCheck = () => {
     ) {
         keyIsFound = true;
         setKeyIsFound();
-        const pos: Point = [currentGameLevel.endPoint[0], currentGameLevel.endPoint[1]];
-        drawMap(gameCurrentLevel as Level, pos);
+        const pos: Point = [currentGameLevel.endPoint[1], currentGameLevel.endPoint[0]];
+        reRenderOpenDoor(gameCurrentLevel as Level, pos);
     }
 };
 /* EOF ключ */
