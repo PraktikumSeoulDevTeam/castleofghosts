@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom';
 import * as Yup from 'yup';
 
 import {Button, Countdown, FormControl} from '~/components';
+import {STATE} from '~/core/params';
 import {UiLayout} from '~/layouts';
 import {gameCharSetNameAction, gameSetStateAction} from '~/store/Game/actions';
 import {FullScreenApi} from '~/webApi/fullScreen';
@@ -41,7 +42,7 @@ export const StartPage = connector(
         const {characterName, userName, state, charSetName, gameSetState} = props;
         formFields.characterName.initialValue = characterName || userName;
 
-        return state !== 'OFF' ? (
+        return state !== STATE.OFF ? (
             <Redirect push to="/game" />
         ) : (
             <UiLayout isBlock className="start-page">
@@ -62,7 +63,7 @@ export const StartPage = connector(
                     <Countdown
                         onFinish={() => {
                             FullScreenApi.enableFullScreen();
-                            gameSetState('START');
+                            gameSetState(STATE.INIT);
                         }}
                     />
                 )}

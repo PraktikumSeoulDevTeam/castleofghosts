@@ -4,25 +4,24 @@ import {useHistory} from 'react-router-dom';
 
 import {setBgCanvas} from '~/core/bg.canvas';
 import {setMainCanvas} from '~/core/main.canvas';
+import {HEIGHT, STATE, WIDTH} from '~/core/params';
 import {setSpiritCanvas} from '~/core/spirit.canvas';
 import {UiLayout} from '~/layouts';
-import {gameRemoveAction} from '~/store/Game/actions';
+import {gameRemoveAction, gameSetStateAction} from '~/store/Game/actions';
 import {FullScreenApi} from '~/webApi/fullScreen';
 
 import {GameUi} from './GameUi/GameUi';
 import './GamePage.scss';
 
-const width = 1024;
-const height = 768;
-
 const mapDispatch = {
-    gameRemove: gameRemoveAction
+    gameRemove: gameRemoveAction,
+    setState: gameSetStateAction
 };
 
 const connector = connect(null, mapDispatch);
 
 export const GamePage = connector(
-    ({gameRemove}: ConnectedProps<typeof connector>): JSX.Element => {
+    ({gameRemove, setState}: ConnectedProps<typeof connector>): JSX.Element => {
         const bgCanvas = useRef<HTMLCanvasElement>(null);
         const mainCanvas = useRef<HTMLCanvasElement>(null);
         const spiritCanvas = useRef<HTMLCanvasElement>(null);
@@ -35,6 +34,7 @@ export const GamePage = connector(
             const unblock = history.block(() => {
                 gameRemove();
             });
+            setState(STATE.START);
 
             FullScreenApi.initFullScreenByButton();
 
@@ -46,10 +46,10 @@ export const GamePage = connector(
 
         return (
             <UiLayout className="game-page">
-                <div className="game-page__container" style={{width: width + 4, height: height + 50}}>
-                    <canvas ref={bgCanvas} width={width} height={height} className="game-page__bg" />
-                    <canvas ref={mainCanvas} width={width} height={height} className="game-page__main" />
-                    <canvas ref={spiritCanvas} width={width} height={height} className="game-page__spirit" />
+                <div className="game-page__container" style={{width: WIDTH + 4, height: HEIGHT + 52}}>
+                    <canvas ref={bgCanvas} width={WIDTH} height={HEIGHT} className="game-page__bg" />
+                    <canvas ref={mainCanvas} width={WIDTH} height={HEIGHT} className="game-page__main" />
+                    <canvas ref={spiritCanvas} width={WIDTH} height={HEIGHT} className="game-page__spirit" />
                     <GameUi className="game-page__ui" />
                 </div>
             </UiLayout>

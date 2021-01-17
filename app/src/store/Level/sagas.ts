@@ -1,16 +1,23 @@
-import {ForkEffect, put, takeLeading} from 'redux-saga/effects';
+import {call, ForkEffect, put, takeLeading} from 'redux-saga/effects';
 
+import {loadLevels} from '~/core/levelLoader';
 import {LevelGenerator} from '~/services/LevelGenerator/LevelGenerator';
 
-import {levelSaveAction} from './actions';
+import {levelsAddAction} from './actions';
 
-import {LevelGenerateAction, LEVEL_ACTION_TYPES} from './types';
+import {LevelsGenerateAction, LEVELS_ACTION_TYPES} from './types';
 
-export function* levelWatcher(): Generator<ForkEffect<never>> {
-    yield takeLeading(LEVEL_ACTION_TYPES.GENERATE_LEVELS, levelGeneratorWorker);
+export function* levelsWatcher(): Generator<ForkEffect<never>> {
+    yield takeLeading(LEVELS_ACTION_TYPES.LOAD, levelsLoadWorker);
+    yield takeLeading(LEVELS_ACTION_TYPES.GENERATE, levelsGeneratorWorker);
 }
 
-function* levelGeneratorWorker(action: LevelGenerateAction) {
+function* levelsLoadWorker() {
+    const levels = yield call(loadLevels);
+    yield put(levelsAddAction(levels));
+}
+
+function* levelsGeneratorWorker(action: LevelsGenerateAction) {
     /**
      * Получаем уровни с генератора
      */
@@ -25,5 +32,5 @@ function* levelGeneratorWorker(action: LevelGenerateAction) {
     }
 
     const levels = yield LevelGenerator.generate(payload);
-    yield put(levelSaveAction(levels));
+    yield put(levelsAddAction(levels));
 }

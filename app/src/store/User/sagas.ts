@@ -2,7 +2,7 @@ import {call, ForkEffect, put, takeLeading} from 'redux-saga/effects';
 
 import {getUserInfo, updateUserInfo, updateUserAvatar, updateUserPassword, signUp, signIn, signOut} from '~/api';
 import {toasterAddAction} from '~/store/Toaster/actions';
-import {utilitySetLoading} from '~/store/Utility/actions';
+import {utilitySetLoadingAction} from '~/store/Utility/actions';
 
 import {GeolocationApiGet, GeolocationApiGetCity} from '../../services/geolocation/geolocation';
 import {userSetAction, userRemoveAction, userGeolocationSetAction} from './actions';
@@ -69,7 +69,7 @@ function* userChangePasswordWorker(action: UserUpdatePasswordAction) {
 }
 
 function* userSignUpWorker(action: SignUpAction) {
-    yield put(utilitySetLoading(true));
+    yield put(utilitySetLoadingAction(true));
 
     try {
         const isOk: boolean = yield call(signUp, action.payload);
@@ -88,12 +88,12 @@ function* userSignUpWorker(action: SignUpAction) {
         // eslint-disable-next-line no-console
         console.log('[userSignUpWorker error] ', error);
     } finally {
-        yield put(utilitySetLoading(false));
+        yield put(utilitySetLoadingAction(false));
     }
 }
 
 function* userSignInWorker(action: SignInAction) {
-    yield put(utilitySetLoading(true));
+    yield put(utilitySetLoadingAction(true));
 
     try {
         const isOk: boolean = yield call(signIn, action.payload);
@@ -112,7 +112,7 @@ function* userSignInWorker(action: SignInAction) {
         // eslint-disable-next-line no-console
         console.log('[userSignInWorker error] ', error);
     } finally {
-        yield put(utilitySetLoading(false));
+        yield put(utilitySetLoadingAction(false));
     }
 }
 

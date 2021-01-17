@@ -2,4 +2,8 @@ import './img/char.png';
 import './img/floor.png';
 import './img/wall.png';
 import './img/object.png';
+import './audio/click.ogg';
+import './audio/loop.ogg';
+import './audio/win.ogg';
+import './audio/loose.wav';
 import './scss/index.scss';

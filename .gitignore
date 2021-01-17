@@ -117,3 +117,6 @@ dist/*
 
 # Webpack stats
 stats.json
+
+# Temp
+tmp/*

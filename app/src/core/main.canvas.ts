@@ -5,7 +5,7 @@ import type {Sprite} from './sprites/types';
 
 let canvas: HTMLCanvasElement;
 
-let ctx: CanvasRenderingContext2D;
+let ctx: CanvasRenderingContext2D | null;
 
 let fleft: number;
 let ftop: number;
@@ -18,6 +18,11 @@ export function setMainCanvas(canvasElement: HTMLCanvasElement | null): void {
     }
     canvas = canvasElement;
     ctx = canvas.getContext('2d');
+
+    if (!ctx) {
+        return;
+    }
+
     ctx.imageSmoothingEnabled = false;
 
     fleft = 0;
@@ -30,7 +35,7 @@ export function setMainCanvas(canvasElement: HTMLCanvasElement | null): void {
 }
 
 function drawImage(x: number, y: number, sprite: Sprite) {
-    if (sprite.image) {
+    if (sprite.image && ctx) {
         ctx.drawImage(
             sprite.image,
             sprite.posx,
@@ -48,9 +53,14 @@ function drawImage(x: number, y: number, sprite: Sprite) {
 let stepIndex = 0;
 
 export function movef(x: number, y: number): void {
+    if (!ctx) {
+        return;
+    }
+
     stepIndex = stepIndex ? 0 : 1;
     ctx.clearRect(fleft * GRID, ftop * GRID, character[stepIndex].width, character[stepIndex].height);
     fleft = x;
     ftop = y;
+
     drawImage(fleft, ftop, character[stepIndex]);
 }

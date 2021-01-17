@@ -1,8 +1,8 @@
 import {CanvasContext} from './types';
 
 /**
- *
- * @param canvasElement
+ * Создает контекст для canvas HTML элемента
+ * @param canvasElement HTML элемент канваса в DOM
  */
 export function setCanvas(canvasElement: HTMLCanvasElement | null): CanvasContext | never {
     if (!canvasElement) {

@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import {gameEngineMiddleware} from '~/core/engine';
 
+import {levelsGenerateAction, levelsLoadAction} from './Level/actions';
 import {rootReducer} from './rootReducer';
 import {rootSaga} from './rootSaga';
 import {userGeolocationGetAction, userGetAction} from './User/actions';
@@ -17,5 +18,7 @@ export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(s
 
 saga.run(rootSaga);
 
+store.dispatch(levelsLoadAction());
+store.dispatch(levelsGenerateAction());
 store.dispatch(userGetAction());
 store.dispatch(userGeolocationGetAction());

@@ -1,12 +1,14 @@
 const path = require('path');
 
+const CopyPlugin = require('copy-webpack-plugin');
+const HookShellScriptPlugin = require('hook-shell-script-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: path.join(__dirname, 'src', 'index'),
+    entry: path.resolve(__dirname, 'src', 'index'),
     output: {
-        path: path.join(__dirname, '..', 'dist', 'app'),
+        path: path.resolve('dist', 'app'),
         filename: '[name].bundle.js',
         publicPath: '/'
     },
@@ -31,7 +33,7 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
+                test: /\.(png|svg|jpg|jpeg|gif|ico|ogg|mp3|wav)$/,
                 exclude: /node_modules/,
                 use: ['file-loader?name=assets/[name].[ext]']
             },
@@ -46,8 +48,12 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'www', 'index.html')
+            template: path.resolve(__dirname, 'www', 'index.html')
         }),
-        new MiniCssExtractPlugin()
+        new MiniCssExtractPlugin(),
+        new HookShellScriptPlugin({environment: ['node scripts/concatLevels.js ./app/levels ./tmp']}),
+        new CopyPlugin({
+            patterns: [{from: path.resolve('tmp', 'levels.json'), to: 'levels'}]
+        })
     ]
 };
