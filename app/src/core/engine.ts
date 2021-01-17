@@ -1,10 +1,11 @@
 import {Middleware} from 'redux';
 
+import {drawMap} from './bg.canvas';
 import {movef} from './main.canvas';
 import {STATE} from './params';
 import {moves} from './spirit.canvas';
 
-import type {ArrowPressCallback, EmptyCallback, GameCharacterMove, CanvasContext, GameStatePoint, Level} from './types';
+import type {ArrowPressCallback, EmptyCallback, GameCharacterMove, GameStatePoint, Level} from './types';
 import type {AppStoreState} from '~/store/types';
 
 const LEVEL_SIZE = {
@@ -43,7 +44,11 @@ export function createGame(): void {
     console.log('[createGame]');
 }
 
-export function loadLevel(): void {
+let currentGameLevel: Level;
+
+export function loadLevel(level: Level): void {
+    currentGameLevel = level;
+    drawMap(level);
     // eslint-disable-next-line no-console
     console.log('[loadLevel]');
 }
@@ -70,23 +75,6 @@ export function pauseGame(): void {
 export function exitGame(): void {
     // eslint-disable-next-line no-console
     console.log('[exitGame]');
-}
-
-export function setCanvas(canvasElement: HTMLCanvasElement | null): CanvasContext | never {
-    if (!canvasElement) {
-        throw new Error('No canvas found');
-    }
-    const ctx = canvasElement.getContext('2d');
-    if (!ctx) {
-        throw new Error('No canvas context found');
-    }
-    ctx.imageSmoothingEnabled = false;
-
-    return {
-        ctx,
-        width: canvasElement.width,
-        height: canvasElement.height
-    };
 }
 
 export function createPauseListener(cb: EmptyCallback): EmptyCallback {
@@ -193,6 +181,9 @@ function loop(): void {
 function characterMove(): void {
     if (charMove.needRender && checkLimit()) {
         charMove.needRender = false;
+        if (currentGameLevel) {
+            drawMap(currentGameLevel, [charMove.posy, charMove.posx]);
+        }
         movef(charMove.posx, charMove.posy);
     }
 }
