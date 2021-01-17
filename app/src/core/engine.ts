@@ -1,11 +1,11 @@
 import {Middleware} from 'redux';
 
-import {drawMap, hideFoundedKey} from './bg.canvas';
+import {drawMap, setKeyIsFound} from './bg.canvas';
 import {movef} from './main.canvas';
 import {STATE} from './params';
 import {moves} from './spirit.canvas';
 
-import type {ArrowPressCallback, EmptyCallback, GameCharacterMove, GameStatePoint, Level} from './types';
+import type {ArrowPressCallback, EmptyCallback, GameCharacterMove, GameStatePoint, Level, Point} from './types';
 import type {AppStoreState} from '~/store/types';
 
 const LEVEL_SIZE = {
@@ -221,7 +221,7 @@ function spiritChangePosition(): void {
  * Начальная установка персонажа
  */
 const setCharStartPosition = (): void => {
-    [charMove.posx, charMove.posy] = gameCurrentLevel.map?.startPoint || [0, 0];
+    [charMove.posx, charMove.posy] = gameCurrentLevel.startPoint || [0, 0];
     charMove.needRender = true;
     characterMove();
 };
@@ -276,8 +276,8 @@ function endLevelCheck(): boolean {
     return (
         !!gameCurrentLevel.endPoint &&
         keyIsFound &&
-        gameCurrentLevel.endPoint[1] === charMove.posx &&
-        gameCurrentLevel.endPoint[0] === charMove.posy
+        gameCurrentLevel.endPoint[0] === charMove.posx &&
+        gameCurrentLevel.endPoint[1] === charMove.posy
     );
 }
 
@@ -291,14 +291,13 @@ const keyCheck = () => {
     if (
         gameCurrentLevel.keyPoint &&
         !keyIsFound &&
-        charMove.posx === gameCurrentLevel.keyPoint[1] &&
-        charMove.posy === gameCurrentLevel.keyPoint[0]
+        charMove.posx === gameCurrentLevel.keyPoint[0] &&
+        charMove.posy === gameCurrentLevel.keyPoint[1]
     ) {
         keyIsFound = true;
-        hideFoundedKey();
-        if (gameCurrentLevel) {
-            drawMap(gameCurrentLevel as Level);
-        }
+        setKeyIsFound();
+        const pos: Point = [currentGameLevel.endPoint[0], currentGameLevel.endPoint[1]];
+        drawMap(gameCurrentLevel as Level, pos);
     }
 };
 /* EOF ключ */

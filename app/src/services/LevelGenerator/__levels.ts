@@ -7,9 +7,9 @@ export interface DefaultLevel {
 
 // 24x32
 const FirstLevel: DefaultLevel = {
-    startPoint: [2, 3],
+    startPoint: [1, 1],
     endPoint: [5, 5],
-    keyPoint: [10, 10],
+    keyPoint: [7, 10],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],

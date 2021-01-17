@@ -11,10 +11,10 @@ import type {AssetMap, Sprite} from './sprites/types';
 import type {Level, Point} from '~/core/types';
 
 let ctx: CanvasRenderingContext2D;
-let keyIsHide = false;
+let keyIsFound = false;
 
-export function hideFoundedKey(): void {
-    keyIsHide = true;
+export function setKeyIsFound(): void {
+    keyIsFound = true;
 }
 
 export function setBgCanvas(canvasElement: HTMLCanvasElement | null): void {
@@ -84,11 +84,11 @@ function redraw(
             }
         }
 
-        if (j === level.keyPoint[0] && i === level.keyPoint[1]) {
+        if (!keyIsFound && j === level.keyPoint[0] && i === level.keyPoint[1]) {
             drawSpriteInPoint(level.keyPoint, OBJECTS.KEY);
         }
         if (j === level.endPoint[0] && i === level.endPoint[1]) {
-            const doorSprite = keyIsHide ? OBJECTS.DOOR : OBJECTS.DOOR_OPEN;
+            const doorSprite = keyIsFound ? OBJECTS.DOOR_OPEN : OBJECTS.DOOR;
             drawSpriteInPoint(level.endPoint, doorSprite);
         }
     });
