@@ -24,6 +24,7 @@ export interface GameCharacterInfo {
     id: number;
     name: string;
     points: number;
+    keyFound: boolean;
 }
 
 /**

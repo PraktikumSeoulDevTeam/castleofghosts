@@ -11,6 +11,12 @@ import type {AssetMap, Sprite} from './sprites/types';
 import type {Level, Point} from '~/core/types';
 
 let ctx: CanvasRenderingContext2D;
+let keyIsFound = false;
+
+export function setKeyIsFound(): void {
+    keyIsFound = true;
+}
+
 let width: number;
 let height: number;
 
@@ -85,11 +91,13 @@ function redraw(
             }
         }
 
-        if (x === level.keyPoint[0] && y === level.keyPoint[1]) {
+        if (!keyIsFound && x === level.keyPoint[0] && y === level.keyPoint[1]) {
             drawSpriteInPoint(level.keyPoint, OBJECTS.KEY);
         }
         if (x === level.endPoint[0] && y === level.endPoint[1]) {
-            drawSpriteInPoint(level.endPoint, OBJECTS.DOOR);
+            doorIsFound = true;
+            const doorSprite = keyIsFound ? OBJECTS.DOOR_OPEN : OBJECTS.DOOR;
+            drawSpriteInPoint(level.endPoint, doorSprite);
         }
     });
 }
@@ -112,4 +120,12 @@ function drawImage(x: number, y: number, sprite: Sprite) {
             sprite.height
         );
     }
+}
+
+let doorIsFound = false;
+export function reRenderOpenDoor(fullLevel: Level, doorPosition: Point): void {
+    if (!doorIsFound) {
+        return;
+    }
+    drawMap(fullLevel, doorPosition);
 }

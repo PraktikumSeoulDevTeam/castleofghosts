@@ -1,6 +1,6 @@
 import {Middleware} from 'redux';
 
-import {clearMap, drawMap} from './bg.canvas';
+import {drawMap, clearMap, reRenderOpenDoor, setKeyIsFound} from './bg.canvas';
 import {movef} from './main.canvas';
 import {STATE} from './params';
 import {moves} from './spirit.canvas';
@@ -50,7 +50,6 @@ export function loadLevel(level: Level): void {
     clearMap();
     drawMap(level);
     currentGameLevel = level;
-    setCharStartPosition(level.startPoint);
     // eslint-disable-next-line no-console
     console.log('[loadLevel]');
 }
@@ -58,13 +57,9 @@ export function loadLevel(level: Level): void {
 export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
+    setCharStartPosition();
     loop();
 }
-
-const setCharStartPosition = (startPoint: Point): void => {
-    [charMove.posx, charMove.posy] = startPoint;
-    charMove.needRender = true;
-};
 
 export function pauseGame(): void {
     // eslint-disable-next-line no-console
@@ -164,6 +159,7 @@ function loop(): void {
         return;
     }
     spiritMove();
+    keyCheck();
     characterMove();
 
     if (endLevelCheck() || spiritCheck()) {
@@ -223,6 +219,15 @@ function spiritChangePosition(): void {
 }
 
 /**
+ * Начальная установка персонажа
+ */
+const setCharStartPosition = (): void => {
+    [charMove.posx, charMove.posy] = gameCurrentLevel.startPoint || [0, 0];
+    charMove.needRender = true;
+    characterMove();
+};
+
+/**
  * Проверка: персонаж не вышел за пределы экрана
  */
 function checkLimit(): boolean {
@@ -266,8 +271,34 @@ function spiritCheck(): boolean {
 }
 
 /**
- * Проверка: персонаж не добрался до конца уровня
+ * Проверка: персонаж добрался до конца уровня
  */
 function endLevelCheck(): boolean {
-    return gameCurrentLevel?.endPoint?.[0] === charMove.posx && gameCurrentLevel.endPoint[1] === charMove.posy;
+    return (
+        !!gameCurrentLevel.endPoint &&
+        keyIsFound &&
+        gameCurrentLevel.endPoint[0] === charMove.posx &&
+        gameCurrentLevel.endPoint[1] === charMove.posy
+    );
 }
+
+/* Ключ */
+
+let keyIsFound = false;
+/**
+ * Ключ: персонаж нашёл ключ
+ */
+const keyCheck = () => {
+    if (
+        gameCurrentLevel.keyPoint &&
+        !keyIsFound &&
+        charMove.posx === gameCurrentLevel.keyPoint[0] &&
+        charMove.posy === gameCurrentLevel.keyPoint[1]
+    ) {
+        keyIsFound = true;
+        setKeyIsFound();
+        const pos: Point = [currentGameLevel.endPoint[1], currentGameLevel.endPoint[0]];
+        reRenderOpenDoor(gameCurrentLevel as Level, pos);
+    }
+};
+/* EOF ключ */
