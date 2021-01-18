@@ -1,21 +1,21 @@
 import {getSampleFile, playSample, stopSample} from './utils';
 
-import type {SampleControl} from './types';
+import type {SampleContainer, SampleControl} from './types';
 
 const samplePromise = getSampleFile('./assets/loose.wav');
 
-let node: AudioBufferSourceNode | undefined;
+let container: SampleContainer | undefined;
 
 function play(): void {
     samplePromise.then((sample) => {
         if (sample) {
-            node = playSample(sample) || node;
+            container = playSample(sample) || container;
         }
     });
 }
 
 function stop(): void {
-    node = stopSample(node);
+    container = stopSample(container);
 }
 
 export function controlLoose(control: SampleControl): void {

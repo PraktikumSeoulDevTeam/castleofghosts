@@ -1,6 +1,6 @@
 import {Middleware} from 'redux';
 
-import {drawMap, reRenderOpenDoor, setKeyIsFound} from './bg.canvas';
+import {drawMap, clearMap, reRenderOpenDoor, setKeyIsFound} from './bg.canvas';
 import {movef} from './main.canvas';
 import {STATE} from './params';
 import {moves} from './spirit.canvas';
@@ -47,8 +47,9 @@ export function createGame(): void {
 let currentGameLevel: Level;
 
 export function loadLevel(level: Level): void {
-    currentGameLevel = level;
+    clearMap();
     drawMap(level);
+    currentGameLevel = level;
     // eslint-disable-next-line no-console
     console.log('[loadLevel]');
 }
@@ -176,7 +177,7 @@ function characterMove(): void {
     if (charMove.needRender && checkLimit()) {
         charMove.needRender = false;
         if (currentGameLevel) {
-            drawMap(currentGameLevel, [charMove.posy, charMove.posx]);
+            drawMap(currentGameLevel, [charMove.posx, charMove.posy]);
         }
         movef(charMove.posx, charMove.posy);
     }

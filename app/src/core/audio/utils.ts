@@ -1,3 +1,5 @@
+import {SampleContainer} from './types';
+
 export const audioCtx = new AudioContext();
 
 /**
@@ -29,20 +31,22 @@ export async function getSampleFile(filepath: string): Promise<AudioBuffer | und
  * выполняются действия только для зацикленных семплов
  * @param audioBuffer   Буффер с аудио сэмплом
  * @param loop          Нужно ли зациклить сэмпл
- * @returns             Нода с буффером аудио сэмпла или ничего
+ * @returns             Контейнер с нодой аудио буффера и временем старта сэмпла; или ничего;
  */
-export function playSample(audioBuffer: AudioBuffer, loop = false): AudioBufferSourceNode | undefined {
+export function playSample(audioBuffer: AudioBuffer, loop = false): SampleContainer | undefined {
+    let startTime;
     if (loop || audioCtx.state === 'running') {
-        const sample = audioCtx.createBufferSource();
-        sample.loop = loop;
-        sample.buffer = audioBuffer;
-        sample.connect(audioCtx.destination);
-        sample.onended = () => sample.disconnect();
+        const node = audioCtx.createBufferSource();
+        node.loop = loop;
+        node.buffer = audioBuffer;
+        node.connect(audioCtx.destination);
+        node.onended = () => node.disconnect();
         if (audioCtx.state === 'running') {
-            sample.start();
+            node.start();
+            startTime = audioCtx.currentTime;
         }
 
-        return sample;
+        return {node, startTime};
     }
 
     return undefined;
@@ -50,12 +54,14 @@ export function playSample(audioBuffer: AudioBuffer, loop = false): AudioBufferS
 
 /**
  * Остановка и отключение ноды
- * @param node Нода, которую нужно остановить
+ * @param container Контейнер, ноду в котором остановить
  */
-export function stopSample(node?: AudioBufferSourceNode): undefined {
-    if (node) {
-        node.stop();
-        node.disconnect();
+export function stopSample(container?: SampleContainer): undefined {
+    if (container) {
+        if (container.startTime && container.startTime < audioCtx.currentTime) {
+            container.node.stop();
+        }
+        container.node.disconnect();
     }
 
     return undefined;

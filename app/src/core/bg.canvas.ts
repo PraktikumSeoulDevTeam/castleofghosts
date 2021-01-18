@@ -17,8 +17,11 @@ export function setKeyIsFound(): void {
     keyIsFound = true;
 }
 
+let width: number;
+let height: number;
+
 export function setBgCanvas(canvasElement: HTMLCanvasElement | null): void {
-    ({ctx} = setCanvas(canvasElement));
+    ({ctx, width, height} = setCanvas(canvasElement));
 }
 
 function getRenderPattern([x, y]: Point): Point[] {
@@ -39,6 +42,10 @@ function getRenderPattern([x, y]: Point): Point[] {
         [x + 1, y - 1],
         [x - 1, y - 1]
     ];
+}
+
+export function clearMap(): void {
+    ctx.clearRect(0, 0, width, height);
 }
 
 export function drawMap(fullLevel: Level, position?: Point): void {
@@ -70,24 +77,24 @@ function redraw(
     const OBJECTS = sprites.objects;
     const pattern = getRenderPattern(position);
 
-    pattern.forEach(([i, j]) => {
+    pattern.forEach(([x, y]) => {
         // Граница карты
-        if (i < 0 || j < 0 || i >= level.map.length || j >= level.map[0].length) {
+        if (x < 0 || y < 0 || y >= level.map.length || x >= level.map[0].length) {
             return;
         }
-        const {asset: backgroundAsset} = level.map[i][j];
+        const {asset: backgroundAsset} = level.map[y][x];
         if (backgroundAsset) {
             if (backgroundAsset.type === 'WALL') {
-                drawImage(j, i, WALL[backgroundAsset.part]);
+                drawImage(x, y, WALL[backgroundAsset.part]);
             } else {
-                drawImage(j, i, FLOOR[backgroundAsset.part]);
+                drawImage(x, y, FLOOR[backgroundAsset.part]);
             }
         }
 
-        if (!keyIsFound && j === level.keyPoint[0] && i === level.keyPoint[1]) {
+        if (!keyIsFound && x === level.keyPoint[0] && y === level.keyPoint[1]) {
             drawSpriteInPoint(level.keyPoint, OBJECTS.KEY);
         }
-        if (j === level.endPoint[0] && i === level.endPoint[1]) {
+        if (x === level.endPoint[0] && y === level.endPoint[1]) {
             doorIsFound = true;
             const doorSprite = keyIsFound ? OBJECTS.DOOR_OPEN : OBJECTS.DOOR;
             drawSpriteInPoint(level.endPoint, doorSprite);
