@@ -1,15 +1,15 @@
 import {getSampleFile, playSample, stopSample} from './utils';
 
-import type {SampleControl} from './types';
+import type {SampleContainer, SampleControl} from './types';
 
 const samplePromise = getSampleFile('./assets/loop.ogg');
 
-let node: AudioBufferSourceNode | undefined;
+let container: SampleContainer | undefined;
 
 export function play(): void {
     samplePromise.then((sample) => {
         if (sample) {
-            node = playSample(sample, true) || node;
+            container = playSample(sample, true) || container;
         }
     });
 }
@@ -17,18 +17,20 @@ export function play(): void {
 /**
  * Отдельный старт нужен если включили звук после того как был создан буффер
  */
-export function playGameLoopQueue(): void {
+export function playGameLoopQueue(currentTime: number): void {
     try {
-        if (node) {
-            node.start();
+        if (container && !container.startTime) {
+            container.node.start();
+            container.startTime = currentTime;
         }
-        // Тут почти всегда будет ошибка, но это нормально
-        // eslint-disable-next-line no-empty
-    } catch (error) {}
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('[playGameLoopQueue] Error on loop start ', error);
+    }
 }
 
 function stop(): void {
-    node = stopSample(node);
+    container = stopSample(container);
 }
 
 export function controlGameLoop(control: SampleControl): void {
