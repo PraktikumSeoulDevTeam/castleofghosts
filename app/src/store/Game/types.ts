@@ -5,6 +5,7 @@ export const enum GAME_ACTION_TYPES {
     CHAR_SET_POINTS = 'cog/game/char-set-points',
     SET_LEVEL = 'cog/game/set-level',
     SET_LEVEL_NUMBER = 'cog/game/set-level-number',
+    SET_COUNT_LEVELS = 'cog/game/set-count-levels',
     SET_LEVELS_ORDER = 'cog/game/set-levels-order',
     SET_STATE = 'cog/game/set-state',
     REMOVE = 'cog/game/remove'
@@ -14,6 +15,7 @@ export interface GameState {
     character: Partial<GameCharacterInfo>;
     level: Partial<Level>;
     levelNumber: number;
+    countLevels: number;
     levelsOrder: number[];
     state: GameStatePoint;
 }
@@ -48,6 +50,11 @@ export interface GameSetStateAction {
     payload: GameStatePoint;
 }
 
+export interface GameSetCountLevels {
+    type: GAME_ACTION_TYPES.SET_COUNT_LEVELS;
+    payload: number;
+}
+
 export interface GameRemoveAction {
     type: GAME_ACTION_TYPES.REMOVE;
 }
@@ -59,4 +66,5 @@ export type GameActions =
     | GameSetLevelNumberAction
     | GameSetLevelsOrderAction
     | GameSetStateAction
-    | GameRemoveAction;
+    | GameRemoveAction
+    | GameSetCountLevels;

@@ -25,5 +25,7 @@ export const enum STATE {
     INTERLUDE = 'INTERLUDE',
     GAME = 'GAME',
     PAUSE = 'PAUSE',
+    LOOSE = 'LOOSE',
+    WIN = 'WIN',
     END = 'END'
 }

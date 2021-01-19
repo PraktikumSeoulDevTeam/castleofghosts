@@ -1,11 +1,18 @@
 import shuffle from 'lodash/shuffle';
 import {call, ForkEffect, put, select, takeEvery} from 'redux-saga/effects';
 
-import {createGame, exitGame, loadLevel, pauseGame, play} from '~/core/engine';
+import {createGame, exitGame, loadLevel, pauseGame, play, resetGameParams} from '~/core/engine';
 import {STATE} from '~/core/params';
 import {audioControlSampleAction} from '~/store/Audio/actions';
 
-import {gameSetLevelAction, gameSetLevelNumberAction, gameSetLevelsOrderAction, gameSetStateAction} from './actions';
+import {
+    gameRemoveAction,
+    gameSetCountLevels,
+    gameSetLevelAction,
+    gameSetLevelNumberAction,
+    gameSetLevelsOrderAction,
+    gameSetStateAction
+} from './actions';
 
 import {GameSetStateAction, GAME_ACTION_TYPES} from './types';
 import type {SampleControl} from '~/core/audio/types';
@@ -32,8 +39,12 @@ function* gameSetStateWorker(action: GameSetStateAction) {
             const levels: Level[] = yield select((state: AppStoreState) => state.levels.levels);
             if (levels.length) {
                 let c = levels.length - 1;
-                const shuffleArray = shuffle(Array.from({length: levels.length}, () => c--));
+                const shuffleArray = shuffle(Array.from({length: levels.length}, () => c--)).slice(
+                    0,
+                    Math.floor(Math.random() * 5) + 1
+                );
                 yield put(gameSetLevelsOrderAction(shuffleArray));
+                yield put(gameSetCountLevels(shuffleArray.length));
             }
             yield call(createGame);
             break;
@@ -46,13 +57,15 @@ function* gameSetStateWorker(action: GameSetStateAction) {
             const levels: Level[] = yield select((state: AppStoreState) => state.levels.levels);
             const levelsOrder: number[] = yield select((state: AppStoreState) => state.game.levelsOrder);
             const nextLevelNumber = levelsOrder.pop();
+
+            yield call(resetGameParams);
             if (nextLevelNumber !== undefined) {
                 const level = levels[nextLevelNumber];
                 yield put(gameSetLevelNumberAction());
                 yield put(gameSetLevelAction(level));
                 yield call(loadLevel, level);
             } else {
-                yield put(gameSetStateAction(STATE.END));
+                yield put(gameSetStateAction(STATE.WIN));
             }
             yield put(gameSetLevelsOrderAction(levelsOrder));
             break;
@@ -69,7 +82,14 @@ function* gameSetStateWorker(action: GameSetStateAction) {
         }
         case STATE.END: {
             yield call(exitGame);
+            yield call(resetGameParams);
+            yield put(gameRemoveAction());
             yield put(audioControlSampleAction(gameLoopStop));
+            break;
+        }
+        case STATE.LOOSE: {
+            yield call(resetGameParams);
+            yield put(gameSetLevelNumberAction(0));
             break;
         }
         default:

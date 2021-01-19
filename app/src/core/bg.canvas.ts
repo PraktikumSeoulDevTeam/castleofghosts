@@ -17,6 +17,10 @@ export function setKeyIsFound(): void {
     keyIsFound = true;
 }
 
+export function setKeyIsNotFound(): void {
+    keyIsFound = false;
+}
+
 let width: number;
 let height: number;
 

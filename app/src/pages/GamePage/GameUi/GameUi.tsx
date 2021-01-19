@@ -3,7 +3,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
 import {Button} from '~/components';
-import {createPauseListener, createGameListener} from '~/core/engine';
+import {createPauseListener, createGameListener, registerStateChanges} from '~/core/engine';
 import {STATE} from '~/core/params';
 import {gameSetStateAction} from '~/store/Game/actions';
 
@@ -15,7 +15,8 @@ const mapState = (state: AppStoreState) => ({
     levelName: state.game.level.name,
     levelNumber: state.game.levelNumber,
     userPositionCity: state.user.geolocation.city,
-    state: state.game.state
+    state: state.game.state,
+    countLevel: state.game.countLevels
 });
 
 const mapDispatch = {
@@ -26,10 +27,16 @@ const connector = connect(mapState, mapDispatch);
 
 export const GameUi = connector(
     (props: ConnectedProps<typeof connector> & HTMLAttributes<HTMLDivElement>): JSX.Element => {
-        const {character, className, levelName, levelNumber, userPositionCity, state, setState} = props;
+        const {character, className, levelName, levelNumber, userPositionCity, state, setState, countLevel} = props;
         const play = useCallback(() => setState(STATE.GAME), []);
         const exit = useCallback(() => setState(STATE.END), []);
         const pause = useCallback(() => setState(STATE.PAUSE), []);
+        const loose = useCallback(() => setState(STATE.LOOSE), []);
+        const nextLevel = useCallback(() => setState(STATE.INTERLUDE), []);
+        const newGame = useCallback(() => {
+            setState(STATE.INIT);
+            setState(STATE.INTERLUDE);
+        }, []);
 
         useEffect(() => {
             if (state === STATE.GAME) {
@@ -38,6 +45,8 @@ export const GameUi = connector(
             if (state === STATE.PAUSE) {
                 return createPauseListener(play);
             }
+
+            registerStateChanges(nextLevel, loose);
 
             return undefined;
         }, [state]);
@@ -53,7 +62,9 @@ export const GameUi = connector(
                 </div>
                 {state === STATE.INTERLUDE && (
                     <div className="game-ui__dialog">
-                        <h1 className="t-title">{`Level ${levelNumber}`}</h1>
+                        <h1 className="t-title">
+                            {`Level ${levelNumber}`}/{countLevel}
+                        </h1>
                         {userPositionCity ? (
                             <div className="t-main t-center">{`Somewhere in ${userPositionCity}`}</div>
                         ) : null}
@@ -68,6 +79,24 @@ export const GameUi = connector(
                         <div className="button-bar button-bar_center mt-8">
                             <Button onClick={exit}>Exit</Button>
                             <Button onClick={play}>Continue</Button>
+                        </div>
+                    </div>
+                )}
+                {state === STATE.LOOSE && (
+                    <div className="game-ui__dialog">
+                        <h1 className="t-title">You loose :(</h1>
+                        <div className="button-bar button-bar_center mt-8">
+                            <Button onClick={exit}>Exit</Button>
+                            <Button onClick={newGame}>Try again</Button>
+                        </div>
+                    </div>
+                )}
+                {state === STATE.WIN && (
+                    <div className="game-ui__dialog">
+                        <h1 className="t-title">You win!!!</h1>
+                        <div className="button-bar button-bar_center mt-8">
+                            <Button onClick={exit}>Exit</Button>
+                            <Button onClick={newGame}>New Game</Button>
                         </div>
                     </div>
                 )}
