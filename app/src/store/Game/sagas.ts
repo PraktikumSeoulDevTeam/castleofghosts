@@ -6,7 +6,6 @@ import {STATE} from '~/core/params';
 import {audioControlSampleAction} from '~/store/Audio/actions';
 
 import {
-    gameRemoveAction,
     gameSetCountLevels,
     gameSetLevelAction,
     gameSetLevelNumberAction,
@@ -46,6 +45,7 @@ function* gameSetStateWorker(action: GameSetStateAction) {
                 yield put(gameSetLevelsOrderAction(shuffleArray));
                 yield put(gameSetCountLevels(shuffleArray.length));
             }
+            yield put(gameSetLevelNumberAction(0));
             yield call(createGame);
             break;
         }
@@ -83,13 +83,11 @@ function* gameSetStateWorker(action: GameSetStateAction) {
         case STATE.END: {
             yield call(exitGame);
             yield call(resetGameParams);
-            yield put(gameRemoveAction());
             yield put(audioControlSampleAction(gameLoopStop));
             break;
         }
         case STATE.LOOSE: {
             yield call(resetGameParams);
-            yield put(gameSetLevelNumberAction(0));
             break;
         }
         default:

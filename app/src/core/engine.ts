@@ -27,6 +27,9 @@ let spiritInterval: number;
 let nextLevelCb: EmptyCallback | null = null;
 let looseCb: EmptyCallback | null = null;
 
+/**
+ * Сбрасываем игровые настройки к INIT состоянию
+ */
 export function resetGameParams(): void {
     [charMove.posx, charMove.posy] = [-1, -1];
     charMove.needRender = true;
@@ -72,6 +75,7 @@ export function loadLevel(level: Level): void {
 export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
+    clearMap();
     setCharStartPosition();
     loop();
 }
