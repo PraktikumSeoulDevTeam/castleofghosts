@@ -33,7 +33,6 @@ export function createGame(): void {
 }
 
 export function loadLevel(level: Level): void {
-    pauseGame();
     // eslint-disable-next-line no-console
     console.log('[Game loadLevel]');
     currentGameLevel = level;
@@ -56,8 +55,14 @@ export function pauseGame(): void {
     stopLoop();
 }
 
-export function exitGame(): void {
+export function endLevel(): void {
     pauseGame();
+    // eslint-disable-next-line no-console
+    console.log('[Game endLevel]');
+}
+
+export function exitGame(): void {
+    endLevel();
     // eslint-disable-next-line no-console
     console.log('[Game exit]');
 }

@@ -91,7 +91,7 @@ export async function updateUserAvatar(data: FormData): Promise<ApiUserInfo> {
 
 /**
  * Запрос обновления пароля пользователя
- * @param data  Пара старый/новый паролей пользователя
+ * @param data  Пара старый/новый пароль пользователя
  */
 export async function updateUserPassword(data: ApiChangePasswordRequest): Promise<boolean> {
     const response = await ax.put<string>('/user/password', data, {
@@ -103,10 +103,10 @@ export async function updateUserPassword(data: ApiChangePasswordRequest): Promis
 
 /**
  * Запрос на добавление в таблицу рекордов
- * @param data  ???
+ * @param data Объект ответа API с информацией о персонаже в формате @see GameCharacterInfo
  */
 export async function addToLeaderboard(data: ApiAddToLeaderboardRequest): Promise<boolean> {
-    const response = await ax.put<string>('/leaderboard', data, {
+    const response = await ax.post<string>('/leaderboard', data, {
         responseType: 'text'
     });
 
@@ -115,7 +115,7 @@ export async function addToLeaderboard(data: ApiAddToLeaderboardRequest): Promis
 
 /**
  * Запрос на получение таблицы рекордов
- * @param data  ???
+ * @param data  Объект запроса API таблицы рекотров
  * @return      Данные из таблицы рекордов
  */
 export async function getLeaderboard(data: ApiGetLeaderboardRequest): Promise<ApiGetLeaderboardResponse> {

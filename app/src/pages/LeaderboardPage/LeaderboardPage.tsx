@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import {Button} from '~/components';
 import {UiLayout} from '~/layouts';
+import {lbDownloadAction} from '~/store/Leaderboard/actions';
 
 import {LeaderboardRecord} from './LeaderboardRecord/LeaderboardRecord';
 
@@ -14,13 +15,21 @@ const mapState = (state: AppStoreState) => ({
     leaderboard: state.leaderboard.list
 });
 
-const connector = connect(mapState);
+const mapDispatch = {
+    loadLeaderboard: lbDownloadAction
+};
+
+const connector = connect(mapState, mapDispatch);
 
 export const LeaderboardPage = connector(
-    ({leaderboard}: ConnectedProps<typeof connector>): JSX.Element => {
+    ({leaderboard, loadLeaderboard}: ConnectedProps<typeof connector>): JSX.Element => {
         const leaderboardRecords = leaderboard.map((character, index) => (
             <LeaderboardRecord key={character.id} position={index + 1} character={character} />
         ));
+
+        useEffect(() => {
+            loadLeaderboard(10);
+        }, []);
 
         return (
             <UiLayout isStatic isBlock className="leaderboard-page">

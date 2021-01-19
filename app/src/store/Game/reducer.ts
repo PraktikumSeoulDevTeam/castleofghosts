@@ -1,12 +1,11 @@
-import cloneDeep from 'lodash/cloneDeep';
+import clone from 'lodash/clone';
 
 import {STATE} from '~/core/params';
 
 import {GAME_ACTION_TYPES, GameState, GameActions} from './types';
 
 const gameState: GameState = {
-    character: {},
-    level: {},
+    character: createNewCharacter(),
     levelNumber: 0,
     levelsOrder: [],
     state: STATE.OFF
@@ -15,47 +14,52 @@ const gameState: GameState = {
 export const gameReducer = (state = gameState, action: GameActions): GameState => {
     switch (action.type) {
         case GAME_ACTION_TYPES.CHAR_SET_NAME: {
-            const newState = cloneDeep(state);
-            newState.character.name = action.payload;
+            const newState = clone(state);
+            const newCharacter = clone(newState.character);
+            newCharacter.name = action.payload;
+            newState.character = newCharacter;
 
             return newState;
         }
-        case GAME_ACTION_TYPES.CHAR_SET_POINTS: {
-            const newState = cloneDeep(state);
-            newState.character.points = action.payload;
+        case GAME_ACTION_TYPES.CHAR_SET_TIME: {
+            const newState = clone(state);
+            const newCharacter = clone(newState.character);
+            newCharacter.cogTime = action.payload;
+            newState.character = newCharacter;
 
             return newState;
         }
-        case GAME_ACTION_TYPES.SET_LEVEL: {
-            const newState = cloneDeep(state);
-            newState.level = cloneDeep(action.payload);
+        case GAME_ACTION_TYPES.CHAR_ADD_TIME: {
+            const newState = clone(state);
+            const newCharacter = clone(newState.character);
+            newCharacter.cogTime += action.payload;
+            newState.character = newCharacter;
 
             return newState;
         }
         case GAME_ACTION_TYPES.SET_LEVEL_NUMBER: {
-            const newState = cloneDeep(state);
+            const newState = clone(state);
             newState.levelNumber = action.payload;
 
             return newState;
         }
         case GAME_ACTION_TYPES.SET_LEVELS_ORDER: {
-            const newState = cloneDeep(state);
+            const newState = clone(state);
             newState.levelsOrder = action.payload;
 
             return newState;
         }
         case GAME_ACTION_TYPES.SET_STATE: {
-            const newState = cloneDeep(state);
+            const newState = clone(state);
             newState.state = action.payload;
 
             return newState;
         }
         case GAME_ACTION_TYPES.REMOVE: {
-            const newState = cloneDeep(state);
-            newState.character = {};
+            const newState = clone(state);
+            newState.character = createNewCharacter();
             newState.levelsOrder = [];
             newState.levelNumber = 0;
-            newState.level = {};
             newState.state = STATE.OFF;
 
             return newState;
@@ -64,3 +68,10 @@ export const gameReducer = (state = gameState, action: GameActions): GameState =
             return state;
     }
 };
+
+function createNewCharacter() {
+    return {
+        id: Date.now(),
+        cogTime: 0
+    };
+}
