@@ -9,6 +9,11 @@ export const WIDTH = 1024;
 export const HEIGHT = 768;
 
 /**
+ * Количество уровней в игре
+ */
+export const COUNT_LEVELS_IN_GAME = 4;
+
+/**
  * Эквивалени единицы размера в игре
  */
 export const GRID = 32;

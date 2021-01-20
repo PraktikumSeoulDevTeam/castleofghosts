@@ -2,7 +2,7 @@ import shuffle from 'lodash/shuffle';
 import {call, ForkEffect, put, select, takeEvery} from 'redux-saga/effects';
 
 import {createGame, exitGame, loadLevel, pauseGame, play, resetGameParams} from '~/core/engine';
-import {STATE} from '~/core/params';
+import {COUNT_LEVELS_IN_GAME, STATE} from '~/core/params';
 import {audioControlSampleAction} from '~/store/Audio/actions';
 
 import {
@@ -40,7 +40,7 @@ function* gameSetStateWorker(action: GameSetStateAction) {
                 let c = levels.length - 1;
                 const shuffleArray = shuffle(Array.from({length: levels.length}, () => c--)).slice(
                     0,
-                    Math.floor(Math.random() * 5) + 1
+                    COUNT_LEVELS_IN_GAME
                 );
                 yield put(gameSetLevelsOrderAction(shuffleArray));
                 yield put(gameSetCountLevels(shuffleArray.length));

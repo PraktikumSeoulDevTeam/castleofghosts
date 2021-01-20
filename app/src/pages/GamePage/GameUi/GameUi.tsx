@@ -85,8 +85,9 @@ export const GameUi = connector(
                 {state === STATE.LOOSE && (
                     <div className="game-ui__dialog">
                         <h1 className="t-title">You loose :(</h1>
+                        <div className="t-main t-center">Total score: 55</div>
                         <div className="button-bar button-bar_center mt-8">
-                            <Button onClick={exit}>Exit</Button>
+                            <Button onClick={exit}>Continue</Button>
                             <Button onClick={newGame}>Try again</Button>
                         </div>
                     </div>
@@ -94,9 +95,9 @@ export const GameUi = connector(
                 {state === STATE.WIN && (
                     <div className="game-ui__dialog">
                         <h1 className="t-title">You win!!!</h1>
+                        <div className="t-main t-center">Total score: 55</div>
                         <div className="button-bar button-bar_center mt-8">
-                            <Button onClick={exit}>Exit</Button>
-                            <Button onClick={newGame}>New Game</Button>
+                            <Button onClick={exit}>Continue</Button>
                         </div>
                     </div>
                 )}

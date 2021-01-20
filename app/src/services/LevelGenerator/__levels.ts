@@ -41,7 +41,7 @@ const FirstLevel: DefaultLevel = {
 const SecondLevel: DefaultLevel = {
     startPoint: [1, 1],
     endPoint: [30, 22],
-    keyPoint: [9, 11],
+    keyPoint: [9, 12],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0],
