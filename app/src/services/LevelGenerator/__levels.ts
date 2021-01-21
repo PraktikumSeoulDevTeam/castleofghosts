@@ -5,7 +5,7 @@ export interface DefaultLevel {
     map: number[][];
 }
 
-// 24x32
+// 32X24
 const FirstLevel: DefaultLevel = {
     startPoint: [1, 1],
     endPoint: [5, 5],
@@ -72,8 +72,8 @@ const SecondLevel: DefaultLevel = {
 
 const LevelLondon: DefaultLevel = {
     startPoint: [1, 1],
-    endPoint: [21, 31],
-    keyPoint: [10, 10],
+    endPoint: [30, 24],
+    keyPoint: [8, 9],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],

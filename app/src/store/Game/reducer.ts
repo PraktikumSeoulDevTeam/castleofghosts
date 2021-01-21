@@ -9,7 +9,6 @@ const gameState: GameState = {
     level: {},
     levelNumber: 0,
     levelsOrder: [],
-    countLevels: 0,
     state: STATE.OFF
 };
 
@@ -18,12 +17,6 @@ export const gameReducer = (state = gameState, action: GameActions): GameState =
         case GAME_ACTION_TYPES.CHAR_SET_NAME: {
             const newState = cloneDeep(state);
             newState.character.name = action.payload;
-
-            return newState;
-        }
-        case GAME_ACTION_TYPES.SET_COUNT_LEVELS: {
-            const newState = cloneDeep(state);
-            newState.countLevels = action.payload;
 
             return newState;
         }
@@ -41,11 +34,7 @@ export const gameReducer = (state = gameState, action: GameActions): GameState =
         }
         case GAME_ACTION_TYPES.SET_LEVEL_NUMBER: {
             const newState = cloneDeep(state);
-            if (action.payload !== undefined) {
-                newState.levelNumber = action.payload;
-            } else {
-                newState.levelNumber += 1;
-            }
+            newState.levelNumber = action.payload;
 
             return newState;
         }
@@ -67,7 +56,6 @@ export const gameReducer = (state = gameState, action: GameActions): GameState =
             newState.levelsOrder = [];
             newState.levelNumber = 0;
             newState.level = {};
-            newState.countLevels = 0;
             newState.state = STATE.OFF;
 
             return newState;

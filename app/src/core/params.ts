@@ -11,7 +11,7 @@ export const HEIGHT = 768;
 /**
  * Количество уровней в игре
  */
-export const COUNT_LEVELS_IN_GAME = 4;
+export const LEVELS_COUNT = 4;
 
 /**
  * Эквивалени единицы размера в игре

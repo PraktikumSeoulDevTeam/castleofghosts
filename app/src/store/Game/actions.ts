@@ -6,8 +6,7 @@ import {
     GameSetLevelsOrderAction,
     GameSetLevelAction,
     GameSetStateAction,
-    GameSetLevelNumberAction,
-    GameSetCountLevels
+    GameSetLevelNumberAction
 } from './types';
 import type {Level, GameStatePoint} from '~/core/types';
 
@@ -39,14 +38,7 @@ export function gameSetLevelAction(level: Level): GameSetLevelAction {
     };
 }
 
-export function gameSetCountLevels(count: number): GameSetCountLevels {
-    return {
-        type: GAME_ACTION_TYPES.SET_COUNT_LEVELS,
-        payload: count
-    };
-}
-
-export function gameSetLevelNumberAction(levelNumber?: number): GameSetLevelNumberAction {
+export function gameSetLevelNumberAction(levelNumber: number): GameSetLevelNumberAction {
     return {
         type: GAME_ACTION_TYPES.SET_LEVEL_NUMBER,
         payload: levelNumber

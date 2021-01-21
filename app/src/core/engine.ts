@@ -16,8 +16,8 @@ const LEVEL_SIZE = {
 /* Ключ */
 let keyIsFound = false;
 const charMove: GameCharacterMove = {
-    posx: -1,
-    posy: -1,
+    posx: 0,
+    posy: 0,
     needRender: false
 };
 
@@ -31,7 +31,8 @@ let looseCb: EmptyCallback | null = null;
  * Сбрасываем игровые настройки к INIT состоянию
  */
 export function resetGameParams(): void {
-    [charMove.posx, charMove.posy] = [-1, -1];
+    charMove.posx = 0;
+    charMove.posy = 0;
     charMove.needRender = true;
     keyIsFound = false;
 
@@ -57,7 +58,6 @@ export function resetGameParams(): void {
 }
 
 export function createGame(): void {
-    resetGameParams();
     // eslint-disable-next-line no-console
     console.log('[createGame]');
 }
@@ -65,6 +65,7 @@ export function createGame(): void {
 let currentGameLevel: Level;
 
 export function loadLevel(level: Level): void {
+    resetGameParams();
     clearMap();
     drawMap(level);
     currentGameLevel = level;
@@ -75,7 +76,6 @@ export function loadLevel(level: Level): void {
 export function play(): void {
     // eslint-disable-next-line no-console
     console.log('[play]');
-    clearMap();
     setCharStartPosition();
     loop();
 }
@@ -262,10 +262,7 @@ function spiritChangePosition(): void {
  * Начальная установка персонажа
  */
 const setCharStartPosition = (): void => {
-    if (charMove.posx < 0 || charMove.posy < 0) {
-        [charMove.posx, charMove.posy] = gameCurrentLevel.startPoint || [0, 0];
-    }
-
+    [charMove.posx, charMove.posy] = gameCurrentLevel.startPoint || [0, 0];
     charMove.needRender = true;
     characterMove();
 };
