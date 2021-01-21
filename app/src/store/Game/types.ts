@@ -35,7 +35,7 @@ export interface GameSetLevelAction {
 
 export interface GameSetLevelNumberAction {
     type: GAME_ACTION_TYPES.SET_LEVEL_NUMBER;
-    payload?: number;
+    payload: number;
 }
 
 export interface GameSetLevelsOrderAction {

@@ -34,11 +34,7 @@ export const gameReducer = (state = gameState, action: GameActions): GameState =
         }
         case GAME_ACTION_TYPES.SET_LEVEL_NUMBER: {
             const newState = cloneDeep(state);
-            if (action.payload) {
-                newState.levelNumber = action.payload;
-            } else {
-                newState.levelNumber += 1;
-            }
+            newState.levelNumber = action.payload;
 
             return newState;
         }

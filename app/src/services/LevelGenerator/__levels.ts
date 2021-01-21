@@ -5,7 +5,7 @@ export interface DefaultLevel {
     map: number[][];
 }
 
-// 24x32
+// 32X24
 const FirstLevel: DefaultLevel = {
     startPoint: [1, 1],
     endPoint: [5, 5],
@@ -41,7 +41,7 @@ const FirstLevel: DefaultLevel = {
 const SecondLevel: DefaultLevel = {
     startPoint: [1, 1],
     endPoint: [30, 22],
-    keyPoint: [10, 10],
+    keyPoint: [9, 12],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0],
@@ -72,8 +72,8 @@ const SecondLevel: DefaultLevel = {
 
 const LevelLondon: DefaultLevel = {
     startPoint: [1, 1],
-    endPoint: [21, 31],
-    keyPoint: [10, 10],
+    endPoint: [30, 24],
+    keyPoint: [8, 9],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
@@ -103,9 +103,9 @@ const LevelLondon: DefaultLevel = {
 };
 
 const LevelParis: DefaultLevel = {
-    startPoint: [12, 16],
-    endPoint: [10, 14],
-    keyPoint: [10, 10],
+    startPoint: [1, 1],
+    endPoint: [9, 15],
+    keyPoint: [10, 11],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0],
@@ -136,8 +136,8 @@ const LevelParis: DefaultLevel = {
 
 const LevelMadrid: DefaultLevel = {
     startPoint: [1, 1],
-    endPoint: [23, 30],
-    keyPoint: [10, 10],
+    endPoint: [22, 16],
+    keyPoint: [9, 12],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0],

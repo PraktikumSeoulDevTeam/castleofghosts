@@ -3,8 +3,8 @@ import {connect, ConnectedProps} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
 import {Button} from '~/components';
-import {createPauseListener, createGameListener} from '~/core/engine';
-import {STATE} from '~/core/params';
+import {createPauseListener, createGameListener, registerStateChanges} from '~/core/engine';
+import {LEVELS_COUNT, STATE} from '~/core/params';
 import {gameSetStateAction} from '~/store/Game/actions';
 
 import type {AppStoreState} from '~/store/types';
@@ -30,6 +30,12 @@ export const GameUi = connector(
         const play = useCallback(() => setState(STATE.GAME), []);
         const exit = useCallback(() => setState(STATE.END), []);
         const pause = useCallback(() => setState(STATE.PAUSE), []);
+        const loose = useCallback(() => setState(STATE.LOOSE), []);
+        const nextLevel = useCallback(() => setState(STATE.INTERLUDE), []);
+        const newGame = useCallback(() => {
+            setState(STATE.INIT);
+            setState(STATE.START);
+        }, []);
 
         useEffect(() => {
             if (state === STATE.GAME) {
@@ -38,6 +44,8 @@ export const GameUi = connector(
             if (state === STATE.PAUSE) {
                 return createPauseListener(play);
             }
+
+            registerStateChanges(nextLevel, loose);
 
             return undefined;
         }, [state]);
@@ -53,7 +61,9 @@ export const GameUi = connector(
                 </div>
                 {state === STATE.INTERLUDE && (
                     <div className="game-ui__dialog">
-                        <h1 className="t-title">{`Level ${levelNumber}`}</h1>
+                        <h1 className="t-title">
+                            {`Level ${levelNumber}`}/{LEVELS_COUNT}
+                        </h1>
                         {userPositionCity ? (
                             <div className="t-main t-center">{`Somewhere in ${userPositionCity}`}</div>
                         ) : null}
@@ -68,6 +78,25 @@ export const GameUi = connector(
                         <div className="button-bar button-bar_center mt-8">
                             <Button onClick={exit}>Exit</Button>
                             <Button onClick={play}>Continue</Button>
+                        </div>
+                    </div>
+                )}
+                {state === STATE.LOOSE && (
+                    <div className="game-ui__dialog">
+                        <h1 className="t-title">You loose</h1>
+                        <div className="t-main t-center">Total score: 55</div>
+                        <div className="button-bar button-bar_center mt-8">
+                            <Button onClick={exit}>Exit</Button>
+                            <Button onClick={newGame}>Try again</Button>
+                        </div>
+                    </div>
+                )}
+                {state === STATE.WIN && (
+                    <div className="game-ui__dialog">
+                        <h1 className="t-title">You win!!!</h1>
+                        <div className="t-main t-center">Total score: 55</div>
+                        <div className="button-bar button-bar_center mt-8">
+                            <Button onClick={exit}>Continue</Button>
                         </div>
                     </div>
                 )}

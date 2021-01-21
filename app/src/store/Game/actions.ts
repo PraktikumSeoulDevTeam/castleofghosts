@@ -38,7 +38,7 @@ export function gameSetLevelAction(level: Level): GameSetLevelAction {
     };
 }
 
-export function gameSetLevelNumberAction(levelNumber?: number): GameSetLevelNumberAction {
+export function gameSetLevelNumberAction(levelNumber: number): GameSetLevelNumberAction {
     return {
         type: GAME_ACTION_TYPES.SET_LEVEL_NUMBER,
         payload: levelNumber

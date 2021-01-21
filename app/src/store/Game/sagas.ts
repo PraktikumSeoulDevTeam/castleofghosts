@@ -2,7 +2,7 @@ import shuffle from 'lodash/shuffle';
 import {call, ForkEffect, put, select, takeEvery} from 'redux-saga/effects';
 
 import {createGame, exitGame, loadLevel, pauseGame, play} from '~/core/engine';
-import {STATE} from '~/core/params';
+import {LEVELS_COUNT, STATE} from '~/core/params';
 import {audioControlSampleAction} from '~/store/Audio/actions';
 
 import {gameSetLevelAction, gameSetLevelNumberAction, gameSetLevelsOrderAction, gameSetStateAction} from './actions';
@@ -32,7 +32,7 @@ function* gameSetStateWorker(action: GameSetStateAction) {
             const levels: Level[] = yield select((state: AppStoreState) => state.levels.levels);
             if (levels.length) {
                 let c = levels.length - 1;
-                const shuffleArray = shuffle(Array.from({length: levels.length}, () => c--));
+                const shuffleArray = shuffle(Array.from({length: levels.length}, () => c--)).slice(0, LEVELS_COUNT);
                 yield put(gameSetLevelsOrderAction(shuffleArray));
             }
             yield call(createGame);
@@ -48,11 +48,11 @@ function* gameSetStateWorker(action: GameSetStateAction) {
             const nextLevelNumber = levelsOrder.pop();
             if (nextLevelNumber !== undefined) {
                 const level = levels[nextLevelNumber];
-                yield put(gameSetLevelNumberAction());
+                yield put(gameSetLevelNumberAction(LEVELS_COUNT - levelsOrder.length));
                 yield put(gameSetLevelAction(level));
                 yield call(loadLevel, level);
             } else {
-                yield put(gameSetStateAction(STATE.END));
+                yield put(gameSetStateAction(STATE.WIN));
             }
             yield put(gameSetLevelsOrderAction(levelsOrder));
             break;
@@ -64,6 +64,14 @@ function* gameSetStateWorker(action: GameSetStateAction) {
         }
         case STATE.PAUSE: {
             yield call(pauseGame);
+            yield put(audioControlSampleAction(gameLoopStop));
+            break;
+        }
+        case STATE.WIN: {
+            yield put(audioControlSampleAction(gameLoopStop));
+            break;
+        }
+        case STATE.LOOSE: {
             yield put(audioControlSampleAction(gameLoopStop));
             break;
         }

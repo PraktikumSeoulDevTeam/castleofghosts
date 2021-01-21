@@ -1,6 +1,6 @@
 import {Middleware} from 'redux';
 
-import {drawMap, clearMap, reRenderOpenDoor, setKeyIsFound} from './bg.canvas';
+import {drawMap, clearMap, reRenderOpenDoor, setKeyIsFound, setKeyIsNotFound} from './bg.canvas';
 import {movef} from './main.canvas';
 import {STATE} from './params';
 import {moves} from './spirit.canvas';
@@ -13,31 +13,49 @@ const LEVEL_SIZE = {
     y: 23
 };
 
+/* Ключ */
+let keyIsFound = false;
 const charMove: GameCharacterMove = {
     posx: 0,
     posy: 0,
     needRender: false
 };
 
-const spirMove: GameCharacterMove[] = [
-    {
-        posx: 10,
-        posy: 0,
-        needRender: false
-    },
-    {
-        posx: 20,
-        posy: 19,
-        needRender: false
-    },
-    {
-        posx: 28,
-        posy: 20,
-        needRender: false
-    }
-];
-
+let spirMove: GameCharacterMove[] = [];
 let spiritInterval: number;
+
+let nextLevelCb: EmptyCallback | null = null;
+let looseCb: EmptyCallback | null = null;
+
+/**
+ * Сбрасываем игровые настройки к INIT состоянию
+ */
+export function resetGameParams(): void {
+    charMove.posx = 0;
+    charMove.posy = 0;
+    charMove.needRender = true;
+    keyIsFound = false;
+
+    spirMove = [
+        {
+            posx: 1,
+            posy: 12,
+            needRender: false
+        },
+        {
+            posx: 10,
+            posy: 4,
+            needRender: false
+        },
+        {
+            posx: 11,
+            posy: 20,
+            needRender: false
+        }
+    ];
+
+    setKeyIsNotFound();
+}
 
 export function createGame(): void {
     // eslint-disable-next-line no-console
@@ -47,6 +65,7 @@ export function createGame(): void {
 let currentGameLevel: Level;
 
 export function loadLevel(level: Level): void {
+    resetGameParams();
     clearMap();
     drawMap(level);
     currentGameLevel = level;
@@ -69,6 +88,25 @@ export function pauseGame(): void {
 export function exitGame(): void {
     // eslint-disable-next-line no-console
     console.log('[exitGame]');
+}
+
+export function registerStateChanges(next: EmptyCallback, loose: EmptyCallback): void {
+    nextLevelCb = next;
+    looseCb = loose;
+}
+
+function gameLoose() {
+    setState(STATE.LOOSE);
+    if (looseCb) {
+        looseCb();
+    }
+}
+
+function changeLevel() {
+    setState(STATE.INTERLUDE);
+    if (nextLevelCb) {
+        nextLevelCb();
+    }
 }
 
 export function createPauseListener(cb: EmptyCallback): EmptyCallback {
@@ -162,11 +200,13 @@ function loop(): void {
     keyCheck();
     characterMove();
 
-    if (endLevelCheck() || spiritCheck()) {
-        // TODO нужно куда-то отправлять состояние =)
-
-        return;
+    if (endLevelCheck()) {
+        changeLevel();
     }
+    if (spiritCheck()) {
+        gameLoose();
+    }
+
     requestAnimationFrame(loop);
 }
 
@@ -282,9 +322,6 @@ function endLevelCheck(): boolean {
     );
 }
 
-/* Ключ */
-
-let keyIsFound = false;
 /**
  * Ключ: персонаж нашёл ключ
  */
