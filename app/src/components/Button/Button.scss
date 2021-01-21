@@ -27,4 +27,16 @@
             text-decoration: none;
         }
     }
+    &_reset {
+        min-width: initial;
+        padding: 0;
+        border: none;
+        margin: 0;
+        background: none;
+        white-space: nowrap;
+        &:hover {
+            background: none;
+            text-decoration: none;
+        }
+    }
 }

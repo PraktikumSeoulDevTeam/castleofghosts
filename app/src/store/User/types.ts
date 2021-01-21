@@ -10,6 +10,8 @@ export const enum USER_ACTION_TYPES {
     SIGN_UP = 'cog/user/signup',
     SIGN_IN = 'cog/user/signin',
     SIGN_OUT = 'cog/user/signout',
+    OAUTH_REQUEST = 'cog/user/oauth/request',
+    OAUTH_RESPONSE = 'cog/user/oauth/response',
     GEOLOCATION_GET = 'cog/user/geolocation/get',
     GEOLOCATION_SET = 'cog/user/geolocation/set'
 }
@@ -67,6 +69,14 @@ export interface SignOutAction {
     type: USER_ACTION_TYPES.SIGN_OUT;
 }
 
+export interface OAuthRequestAction {
+    type: USER_ACTION_TYPES.OAUTH_REQUEST;
+}
+
+export interface OAuthResponseAction {
+    type: USER_ACTION_TYPES.OAUTH_RESPONSE;
+}
+
 export interface UserGeolocationGetAction {
     type: USER_ACTION_TYPES.GEOLOCATION_GET;
 }
@@ -86,5 +96,7 @@ export type UserActions =
     | SignUpAction
     | SignInAction
     | SignOutAction
+    | OAuthRequestAction
+    | OAuthResponseAction
     | UserGeolocationGetAction
     | UserGeolocationSetAction;

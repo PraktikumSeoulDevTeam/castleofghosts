@@ -77,6 +77,13 @@ export interface ApiGetLeaderboardRequest {
 export type ApiGetLeaderboardResponse = GameCharacterInfo[];
 
 /**
+ * Ответ на запрос получения serviceID
+ */
+export interface ApiServiceIdResponse {
+    service_id: string;
+}
+
+/**
  * Ответ сервера с ошибкой
  */
 export interface ApiBadRequestError {

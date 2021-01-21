@@ -1,11 +1,22 @@
-import {call, ForkEffect, put, takeLeading} from 'redux-saga/effects';
+import {call, ForkEffect, put, select, takeLeading} from 'redux-saga/effects';
 
-import {getUserInfo, updateUserInfo, updateUserAvatar, updateUserPassword, signUp, signIn, signOut} from '~/api';
+import {
+    getUserInfo,
+    updateUserInfo,
+    updateUserAvatar,
+    updateUserPassword,
+    signUp,
+    signIn,
+    signOut,
+    getServiceId,
+    authWithCode
+} from '~/api';
+import {GeolocationApiGet, GeolocationApiGetCity} from '~/services/geolocation/geolocation';
 import {toasterAddAction} from '~/store/Toaster/actions';
 import {utilitySetLoadingAction} from '~/store/Utility/actions';
+import {clearQueryParams, getQueryParam, redirectToYandexOAuth} from '~/utils';
 
-import {GeolocationApiGet, GeolocationApiGetCity} from '../../services/geolocation/geolocation';
-import {userSetAction, userRemoveAction, userGeolocationSetAction} from './actions';
+import {userSetAction, userRemoveAction, userGeolocationSetAction, userGetAction} from './actions';
 
 import {
     SignInAction,
@@ -17,6 +28,7 @@ import {
     USER_ACTION_TYPES
 } from './types';
 import type {ApiUserInfo} from '~/api/types';
+import type {AppStoreState} from '~/store/types';
 
 export function* userWatcher(): Generator<ForkEffect<never>> {
     yield takeLeading(USER_ACTION_TYPES.GET, userGetWorker);
@@ -26,6 +38,8 @@ export function* userWatcher(): Generator<ForkEffect<never>> {
     yield takeLeading(USER_ACTION_TYPES.SIGN_UP, userSignUpWorker);
     yield takeLeading(USER_ACTION_TYPES.SIGN_IN, userSignInWorker);
     yield takeLeading(USER_ACTION_TYPES.SIGN_OUT, userSignOutWorker);
+    yield takeLeading(USER_ACTION_TYPES.OAUTH_REQUEST, userOAuthRequestWorker);
+    yield takeLeading(USER_ACTION_TYPES.OAUTH_RESPONSE, userOAuthResponseWorker);
     yield takeLeading(USER_ACTION_TYPES.GEOLOCATION_GET, userGeolocationGetWorker);
 }
 
@@ -142,5 +156,34 @@ function* userGeolocationGetWorker() {
     } catch (error) {
         // eslint-disable-next-line no-console
         console.log('[userGeolocationGetWorker error] ', error);
+    }
+}
+
+function* userOAuthRequestWorker() {
+    try {
+        const serviceId = yield call(getServiceId);
+        yield call(redirectToYandexOAuth, serviceId);
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log('[userOAuthRequestWorker error] ', error);
+    }
+}
+
+function* userOAuthResponseWorker() {
+    try {
+        const code = yield call(getQueryParam, 'code');
+        if (code) {
+            const isAuthenticated: boolean = yield select((state: AppStoreState) => !!state.user.info.id);
+            if (!isAuthenticated) {
+                const isOk = yield call(authWithCode, code);
+                if (isOk) {
+                    yield put(userGetAction());
+                }
+            }
+            yield clearQueryParams();
+        }
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log('[userOAuthResponseWorker error] ', error);
     }
 }
