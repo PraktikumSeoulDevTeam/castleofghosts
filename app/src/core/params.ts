@@ -19,6 +19,11 @@ export const LEVELS_COUNT = 4;
 export const GRID = 32;
 
 /**
+ * Скорость передвижения мобов
+ */
+export const MOB_SPEED = 300;
+
+/**
  * Путь к каталогу с уровнями
  */
 export const LEVELS_PATH = './levels/levels.json';

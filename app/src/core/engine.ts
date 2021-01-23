@@ -1,93 +1,91 @@
-import {Middleware} from 'redux';
-
-import {drawMap, clearMap, reRenderOpenDoor, setKeyIsFound, setKeyIsNotFound} from './bg.canvas';
+import {drawMap, clearMap, renderDoor, setKeyIsFound} from './bg.canvas';
 import {movef} from './main.canvas';
-import {STATE} from './params';
-import {moves} from './spirit.canvas';
+import {MOB_SPEED} from './params';
+import {moves, resetSpiritCoords} from './spirit.canvas';
 
-import type {ArrowPressCallback, EmptyCallback, GameCharacterMove, GameStatePoint, Level, Point} from './types';
-import type {AppStoreState} from '~/store/types';
+import type {ArrowPressCallback, EmptyCallback, GameCharacterMove, Level, Point} from './types';
 
 const LEVEL_SIZE = {
     x: 31,
     y: 23
 };
 
-/* Ключ */
-let keyIsFound = false;
-const charMove: GameCharacterMove = {
-    posx: 0,
-    posy: 0,
+const player: GameCharacterMove = {
+    point: [0, 0],
     needRender: false
 };
 
-let spirMove: GameCharacterMove[] = [];
+let currentGameLevel: Level;
+
+let keyIsFound = false;
+
+let spirits: GameCharacterMove[] = [];
 let spiritInterval: number;
 
 let nextLevelCb: EmptyCallback | null = null;
 let looseCb: EmptyCallback | null = null;
 
-/**
- * Сбрасываем игровые настройки к INIT состоянию
- */
-export function resetGameParams(): void {
-    charMove.posx = 0;
-    charMove.posy = 0;
-    charMove.needRender = true;
-    keyIsFound = false;
-
-    spirMove = [
-        {
-            posx: 1,
-            posy: 12,
-            needRender: false
-        },
-        {
-            posx: 10,
-            posy: 4,
-            needRender: false
-        },
-        {
-            posx: 11,
-            posy: 20,
-            needRender: false
-        }
-    ];
-
-    setKeyIsNotFound();
-}
+let loopStopId: number;
 
 export function createGame(): void {
     // eslint-disable-next-line no-console
-    console.log('[createGame]');
+    console.log('[Game create]');
 }
-
-let currentGameLevel: Level;
 
 export function loadLevel(level: Level): void {
-    resetGameParams();
+    pauseGame();
+    // eslint-disable-next-line no-console
+    console.log('[Game loadLevel]');
+    currentGameLevel = level;
+    resetGameParams(level);
     clearMap();
     drawMap(level);
-    currentGameLevel = level;
-    // eslint-disable-next-line no-console
-    console.log('[loadLevel]');
 }
 
-export function play(): void {
+export function playGame(): void {
     // eslint-disable-next-line no-console
-    console.log('[play]');
-    setCharStartPosition();
+    console.log('[Game play]');
+    spiritInterval = window.setInterval(spiritTick, MOB_SPEED);
     loop();
 }
 
 export function pauseGame(): void {
     // eslint-disable-next-line no-console
-    console.log('[pauseGame]');
+    console.log('[Game pause]');
+    window.clearInterval(spiritInterval);
+    stopLoop();
 }
 
 export function exitGame(): void {
+    pauseGame();
     // eslint-disable-next-line no-console
-    console.log('[exitGame]');
+    console.log('[Game exit]');
+}
+
+/**
+ * Сбрасываем игровые настройки к INIT состоянию
+ */
+function resetGameParams(level: Level): void {
+    player.point = [...level.startPoint];
+    player.needRender = true;
+
+    keyIsFound = false;
+
+    spirits = [
+        {
+            point: [1, 12],
+            needRender: false
+        },
+        {
+            point: [10, 4],
+            needRender: false
+        },
+        {
+            point: [11, 20],
+            needRender: false
+        }
+    ];
+    resetSpiritCoords(spirits);
 }
 
 export function registerStateChanges(next: EmptyCallback, loose: EmptyCallback): void {
@@ -96,27 +94,29 @@ export function registerStateChanges(next: EmptyCallback, loose: EmptyCallback):
 }
 
 function gameLoose() {
-    setState(STATE.LOOSE);
     if (looseCb) {
         looseCb();
     }
 }
 
 function changeLevel() {
-    setState(STATE.INTERLUDE);
     if (nextLevelCb) {
         nextLevelCb();
+    }
+}
+
+function stopLoop() {
+    if (loopStopId) {
+        cancelAnimationFrame(loopStopId);
     }
 }
 
 export function createPauseListener(cb: EmptyCallback): EmptyCallback {
     const handler = createEscapeHandler(cb);
     window.addEventListener('keydown', handler);
-    spiritInterval = window.setInterval(spiritTick, 1000);
 
     return () => {
         window.removeEventListener('keydown', handler);
-        window.clearInterval(spiritInterval);
     };
 }
 
@@ -125,12 +125,10 @@ export function createGameListener(cbEscape: EmptyCallback): EmptyCallback {
     const arrowHandler = createArrowsHandler(move);
     window.addEventListener('keydown', escapeHandler);
     window.addEventListener('keydown', arrowHandler);
-    spiritInterval = window.setInterval(spiritTick, 150);
 
     return () => {
         window.removeEventListener('keydown', escapeHandler);
         window.removeEventListener('keydown', arrowHandler);
-        window.clearInterval(spiritInterval);
     };
 }
 
@@ -163,179 +161,106 @@ function createArrowsHandler(cb: ArrowPressCallback) {
 }
 
 export function move(x: number, y: number): void {
-    if (checkWalls(charMove.posx + x, charMove.posy + y)) {
-        charMove.posx += x;
-        charMove.posy += y;
-        charMove.needRender = true;
+    if (checkWalls(player.point[0] + x, player.point[1] + y)) {
+        player.point[0] += x;
+        player.point[1] += y;
+        player.needRender = true;
     }
 }
-
-let gameState: GameStatePoint = STATE.OFF;
-
-function setState(newGameState: GameStatePoint): void {
-    gameState = newGameState;
-}
-
-let gameCurrentLevel: Partial<Level>;
-function setLevel(nv: Partial<Level>) {
-    gameCurrentLevel = nv;
-}
-
-export const gameEngineMiddleware: Middleware = (store) => (next) => (action) => {
-    const returnValue = next(action);
-    const afterActionState: AppStoreState = store.getState();
-    setState(afterActionState.game.state);
-    if (afterActionState.game.level) {
-        setLevel(afterActionState.game.level);
-    }
-
-    return returnValue;
-};
 
 function loop(): void {
-    if (gameState !== STATE.GAME) {
-        return;
-    }
-    spiritMove();
-    keyCheck();
-    characterMove();
+    loopStopId = requestAnimationFrame(loop);
 
+    characterMove();
+    keyCheck();
     if (endLevelCheck()) {
         changeLevel();
     }
     if (spiritCheck()) {
         gameLoose();
     }
-
-    requestAnimationFrame(loop);
+    spiritMove();
 }
 
-/*
+/**
  * Main character move
  */
 function characterMove(): void {
-    if (charMove.needRender && checkLimit()) {
-        charMove.needRender = false;
-        if (currentGameLevel) {
-            drawMap(currentGameLevel, [charMove.posx, charMove.posy]);
-        }
-        movef(charMove.posx, charMove.posy);
+    if (player.needRender) {
+        player.needRender = false;
+        drawMap(currentGameLevel, player.point);
+        movef(player.point);
     }
 }
 
 function spiritTick(): void {
-    spirMove[0].needRender = true;
+    spirits[0].needRender = true;
 }
-/*
+
+/**
  * Spirit move by Canvas
  */
 function spiritMove(): void {
-    if (spirMove[0].needRender) {
+    if (spirits[0].needRender) {
+        spirits[0].needRender = false;
         spiritChangePosition();
-        spirMove[0].needRender = false;
-        moves(spirMove);
+        moves(spirits);
     }
 }
 
-/*
- *
- */
-const spirDiff: [number, number][] = [
+const moveDelta: Point[] = [
     [1, 1],
     [1, -1],
     [-1, 1]
 ];
+
 function spiritChangePosition(): void {
-    for (let i = 0; i < spirMove.length; i++) {
-        spirMove[i].posx += spirDiff[i][0];
-        spirMove[i].posy += spirDiff[i][1];
-        if (spirMove[i].posx === LEVEL_SIZE.x || spirMove[i].posx === 0) {
-            spirDiff[i][0] = spirDiff[i][0] === -1 ? 1 : -1;
+    for (let i = 0; i < spirits.length; i++) {
+        let [x, y] = spirits[i].point;
+        let [dx, dy] = moveDelta[i];
+        x += dx;
+        y += dy;
+        if (x === LEVEL_SIZE.x || x === 0) {
+            dx = -dx;
         }
-        if (spirMove[i].posy === LEVEL_SIZE.y || spirMove[i].posy === 0) {
-            spirDiff[i][1] = spirDiff[i][1] === -1 ? 1 : -1;
+        if (y === LEVEL_SIZE.y || y === 0) {
+            dy = -dy;
         }
+        spirits[i].point = [x, y];
+        moveDelta[i] = [dx, dy];
     }
-}
-
-/**
- * Начальная установка персонажа
- */
-const setCharStartPosition = (): void => {
-    [charMove.posx, charMove.posy] = gameCurrentLevel.startPoint || [0, 0];
-    charMove.needRender = true;
-    characterMove();
-};
-
-/**
- * Проверка: персонаж не вышел за пределы экрана
- */
-function checkLimit(): boolean {
-    if (charMove.posx < 0) {
-        charMove.posx = 0;
-
-        return false;
-    }
-    if (charMove.posx > LEVEL_SIZE.x) {
-        charMove.posx = LEVEL_SIZE.x;
-
-        return false;
-    }
-    if (charMove.posy < 0) {
-        charMove.posy = 0;
-
-        return false;
-    }
-    if (charMove.posy > LEVEL_SIZE.y) {
-        charMove.posy = LEVEL_SIZE.y;
-
-        return false;
-    }
-
-    return true;
 }
 
 /**
  * Проверка: персонаж не наскочил на стену
  */
 function checkWalls(newX: number, newY: number): boolean {
-    return gameCurrentLevel?.map?.[newY][newX]?.canWalk || false;
+    return currentGameLevel.map[newY][newX]?.canWalk || false;
 }
 
 /**
  * Проверка: персонаж столкнулся с призраком
  */
-
 function spiritCheck(): boolean {
-    return spirMove.some((spiritCoord) => spiritCoord.posx === charMove.posx && spiritCoord.posy === charMove.posy);
+    return spirits.some((spirit) => isSamePoint(player.point, spirit.point));
 }
 
 /**
  * Проверка: персонаж добрался до конца уровня
  */
 function endLevelCheck(): boolean {
-    return (
-        !!gameCurrentLevel.endPoint &&
-        keyIsFound &&
-        gameCurrentLevel.endPoint[0] === charMove.posx &&
-        gameCurrentLevel.endPoint[1] === charMove.posy
-    );
+    return keyIsFound && isSamePoint(player.point, currentGameLevel.endPoint);
 }
 
 /**
  * Ключ: персонаж нашёл ключ
  */
-const keyCheck = () => {
-    if (
-        gameCurrentLevel.keyPoint &&
-        !keyIsFound &&
-        charMove.posx === gameCurrentLevel.keyPoint[0] &&
-        charMove.posy === gameCurrentLevel.keyPoint[1]
-    ) {
+function keyCheck() {
+    if (!keyIsFound && isSamePoint(player.point, currentGameLevel.keyPoint)) {
         keyIsFound = true;
         setKeyIsFound();
-        const pos: Point = [currentGameLevel.endPoint[1], currentGameLevel.endPoint[0]];
-        reRenderOpenDoor(gameCurrentLevel as Level, pos);
+        renderDoor(currentGameLevel.endPoint);
     }
-};
-/* EOF ключ */
+}
+
+const isSamePoint = (aPoint: Point, bPoint: Point): boolean => aPoint[0] === bPoint[0] && aPoint[1] === bPoint[1];

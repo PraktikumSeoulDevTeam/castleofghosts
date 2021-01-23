@@ -1,7 +1,7 @@
 import shuffle from 'lodash/shuffle';
 import {call, ForkEffect, put, select, takeEvery} from 'redux-saga/effects';
 
-import {createGame, exitGame, loadLevel, pauseGame, play} from '~/core/engine';
+import {createGame, exitGame, loadLevel, pauseGame, playGame} from '~/core/engine';
 import {LEVELS_COUNT, STATE} from '~/core/params';
 import {audioControlSampleAction} from '~/store/Audio/actions';
 
@@ -58,7 +58,7 @@ function* gameSetStateWorker(action: GameSetStateAction) {
             break;
         }
         case STATE.GAME: {
-            yield call(play);
+            yield call(playGame);
             yield put(audioControlSampleAction(gameLoopStart));
             break;
         }
@@ -68,10 +68,12 @@ function* gameSetStateWorker(action: GameSetStateAction) {
             break;
         }
         case STATE.WIN: {
+            yield call(pauseGame);
             yield put(audioControlSampleAction(gameLoopStop));
             break;
         }
         case STATE.LOOSE: {
+            yield call(pauseGame);
             yield put(audioControlSampleAction(gameLoopStop));
             break;
         }

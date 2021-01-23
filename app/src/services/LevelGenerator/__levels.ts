@@ -72,7 +72,7 @@ const SecondLevel: DefaultLevel = {
 
 const LevelLondon: DefaultLevel = {
     startPoint: [1, 1],
-    endPoint: [30, 24],
+    endPoint: [30, 22],
     keyPoint: [8, 9],
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

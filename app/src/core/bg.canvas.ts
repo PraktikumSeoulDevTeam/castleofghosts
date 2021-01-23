@@ -1,31 +1,35 @@
 import {floorSprites} from '~/core/sprites/map';
 
-import {GRID} from './params';
-import {charSprites} from './sprites/character/character';
 import {FloorParts} from './sprites/map/floor';
 import {WallParts, wallSprites} from './sprites/map/wall';
 import {ObjectParts, objectSprites} from './sprites/object';
-import {setCanvas} from './utils';
+import {drawImage, setCanvas} from './utils';
 
 import type {AssetMap, Sprite} from './sprites/types';
 import type {Level, Point} from '~/core/types';
 
 let ctx: CanvasRenderingContext2D;
+let width: number;
+let height: number;
+
+let WALL: AssetMap<WallParts>;
+let FLOOR: AssetMap<FloorParts>;
+let OBJECTS: AssetMap<ObjectParts>;
+
+let doorIsFound = false;
+
 let keyIsFound = false;
 
 export function setKeyIsFound(): void {
     keyIsFound = true;
 }
 
-export function setKeyIsNotFound(): void {
-    keyIsFound = false;
-}
-
-let width: number;
-let height: number;
-
-export function setBgCanvas(canvasElement: HTMLCanvasElement | null): void {
+export async function setBgCanvas(canvasElement: HTMLCanvasElement | null): Promise<void> {
     ({ctx, width, height} = setCanvas(canvasElement));
+
+    await Promise.all([wallSprites, floorSprites, objectSprites]).then((sprites) => {
+        [WALL, FLOOR, OBJECTS] = sprites;
+    });
 }
 
 function getRenderPattern([x, y]: Point): Point[] {
@@ -49,37 +53,13 @@ function getRenderPattern([x, y]: Point): Point[] {
 }
 
 export function clearMap(): void {
+    doorIsFound = false;
+    keyIsFound = false;
     ctx.clearRect(0, 0, width, height);
 }
 
-export function drawMap(fullLevel: Level, position?: Point): void {
-    // render map
-    Promise.all([wallSprites, floorSprites, objectSprites, charSprites]).then(([WALL, FLOOR, OBJECTS]) => {
-        redraw(
-            fullLevel,
-            {
-                floor: FLOOR,
-                wall: WALL,
-                objects: OBJECTS
-            },
-            position || fullLevel.startPoint
-        );
-    });
-}
-
-function redraw(
-    level: Level,
-    sprites: {
-        wall: AssetMap<WallParts>;
-        floor: AssetMap<FloorParts>;
-        objects: AssetMap<ObjectParts>;
-    },
-    position: Point
-): void {
-    const WALL = sprites.wall;
-    const FLOOR = sprites.floor;
-    const OBJECTS = sprites.objects;
-    const pattern = getRenderPattern(position);
+export function drawMap(level: Level, position?: Point): void {
+    const pattern = getRenderPattern(position || level.startPoint);
 
     pattern.forEach(([x, y]) => {
         // Граница карты
@@ -89,9 +69,9 @@ function redraw(
         const {asset: backgroundAsset} = level.map[y][x];
         if (backgroundAsset) {
             if (backgroundAsset.type === 'WALL') {
-                drawImage(x, y, WALL[backgroundAsset.part]);
+                drawImage(ctx, x, y, WALL[backgroundAsset.part]);
             } else {
-                drawImage(x, y, FLOOR[backgroundAsset.part]);
+                drawImage(ctx, x, y, FLOOR[backgroundAsset.part]);
             }
         }
 
@@ -100,36 +80,18 @@ function redraw(
         }
         if (x === level.endPoint[0] && y === level.endPoint[1]) {
             doorIsFound = true;
-            const doorSprite = keyIsFound ? OBJECTS.DOOR_OPEN : OBJECTS.DOOR;
-            drawSpriteInPoint(level.endPoint, doorSprite);
+            renderDoor(level.endPoint);
         }
     });
 }
 
-function drawSpriteInPoint(point: Point, sprite: Sprite) {
-    drawImage(point[0], point[1], sprite);
-}
-
-function drawImage(x: number, y: number, sprite: Sprite) {
-    if (sprite && sprite.image) {
-        ctx.drawImage(
-            sprite.image,
-            sprite.posx,
-            sprite.posy,
-            sprite.width,
-            sprite.height,
-            GRID * x,
-            GRID * y,
-            sprite.width,
-            sprite.height
-        );
+export function renderDoor(point: Point): void {
+    if (doorIsFound) {
+        const doorSprite = keyIsFound ? OBJECTS.DOOR_OPEN : OBJECTS.DOOR;
+        drawSpriteInPoint(point, doorSprite);
     }
 }
 
-let doorIsFound = false;
-export function reRenderOpenDoor(fullLevel: Level, doorPosition: Point): void {
-    if (!doorIsFound) {
-        return;
-    }
-    drawMap(fullLevel, doorPosition);
+function drawSpriteInPoint([x, y]: Point, sprite: Sprite) {
+    drawImage(ctx, x, y, sprite);
 }
