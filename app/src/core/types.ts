@@ -31,8 +31,7 @@ export interface GameCharacterInfo {
  * Информация о движении персонажа
  */
 export interface GameCharacterMove {
-    posx: number;
-    posy: number;
+    point: Point;
     needRender: boolean;
 }
 

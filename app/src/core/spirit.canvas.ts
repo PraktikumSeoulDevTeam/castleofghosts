@@ -1,56 +1,41 @@
 import {GRID} from './params';
 import {charSprites} from './sprites/character/character';
+import {drawImage, setCanvas} from './utils';
 
 import type {Sprite} from './sprites/types';
-import {GameCharacterMove} from './types';
-
-let canvas: HTMLCanvasElement;
+import type {GameCharacterMove, Point} from './types';
 
 let ctx: CanvasRenderingContext2D;
+let width: number;
+let height: number;
 
-let pos: [number, number][] = [];
+let coords: Point[] = [];
 
 let character: Sprite[];
 
-export function setSpiritCanvas(canvasElement: HTMLCanvasElement | null): void {
-    if (!canvasElement) {
-        return;
-    }
-    canvas = canvasElement;
-    ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = false;
-    Promise.all([charSprites]).then(([CHAR]) => {
+let stepIndex = 0;
+
+export async function setSpiritCanvas(canvasElement: HTMLCanvasElement | null): Promise<void> {
+    ({ctx, width, height} = setCanvas(canvasElement));
+
+    await Promise.all([charSprites]).then(([CHAR]) => {
         character = [CHAR.SPIRIT, CHAR.SPIRIT_2];
     });
 }
 
-function drawImage(x: number, y: number, sprite: Sprite) {
-    if (sprite.image) {
-        ctx.drawImage(
-            sprite.image,
-            sprite.posx,
-            sprite.posy,
-            sprite.width,
-            sprite.height,
-            GRID * x,
-            GRID * y,
-            sprite.width,
-            sprite.height
-        );
-    }
+export function resetSpiritCoords(spirits: GameCharacterMove[]): void {
+    ctx.clearRect(0, 0, width, height);
+    coords = spirits.map((spirit) => spirit.point);
 }
 
-let stepIndex = 0;
-
-export function moves(coord: GameCharacterMove[]): void {
+export function moves(spirits: GameCharacterMove[]): void {
     stepIndex = stepIndex ? 0 : 1;
 
-    if (!pos.length) {
-        pos = Array(coord.length).fill([0, 0]);
-    }
-    for (let i = 0; i < coord.length; i++) {
-        ctx.clearRect(pos[i][0] * GRID, pos[i][1] * GRID, character[stepIndex].width, character[stepIndex].height);
-        pos[i] = [coord[i].posx, coord[i].posy];
-        drawImage(pos[i][0], pos[i][1], character[stepIndex]);
+    for (let i = 0; i < spirits.length; i++) {
+        const [x, y] = spirits[i].point;
+        const [oldx, oldy] = coords[i];
+        ctx.clearRect(oldx * GRID, oldy * GRID, GRID, GRID);
+        coords[i] = [x, y];
+        drawImage(ctx, x, y, character[stepIndex]);
     }
 }

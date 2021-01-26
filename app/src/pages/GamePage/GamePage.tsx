@@ -28,13 +28,16 @@ export const GamePage = connector(
         const history = useHistory();
 
         useEffect(() => {
-            setBgCanvas(bgCanvas.current);
-            setMainCanvas(mainCanvas.current);
-            setSpiritCanvas(spiritCanvas.current);
+            Promise.all([
+                setBgCanvas(bgCanvas.current),
+                setMainCanvas(mainCanvas.current),
+                setSpiritCanvas(spiritCanvas.current)
+            ]).then(() => {
+                setState(STATE.START);
+            });
             const unblock = history.block(() => {
                 gameRemove();
             });
-            setState(STATE.START);
 
             FullScreenApi.initFullScreenByButton();
 
