@@ -11,7 +11,8 @@
     "yarn": ">=1.22"
   },
   "scripts": {
-    "start": "run-s app:build server:build server:run",
+    "start": "yarn server:run",
+    "build": "run-p app:build server:build",
     "app:serve": "webpack serve -c ./app/webpack.config.js --mode development --watch",
     "app:build": "webpack -c ./app/webpack.config.js --mode production",
     "app:analyze": "webpack -c ./app/webpack.config.js --mode production --analyze",
@@ -27,8 +28,8 @@
     "server:nodemon": "nodemon dist/server.js",
     "server:run": "node dist/server.js",
     "server:clear": "rimraf ./dist/server.js",
-    "docker:build": "docker build --tag castleofghosts .",
-    "docker:run": "docker run -p 3000:3000 castleofghosts",
+    "docker:build": "docker build --tag seoulteam/castleofghosts:latest .",
+    "docker:run": "docker run -p 3000:3000 --name castleofghosts seoulteam/castleofghosts",
     "docker:heroku": "run-s docker:heroku:push docker:heroku:release",
     "docker:heroku:push": "heroku container:push web",
     "docker:heroku:release": "heroku container:release web",
