@@ -25,16 +25,16 @@ export const performanceCheckEnd = (hash: string | undefined): void => {
         return;
     }
     item.duration = measure[0].duration;
-    performance.clearMeasures();
     checkAndDelete(item);
 };
 
-const DURATION_LIMIT = 100;
+const DURATION_LIMIT = 10000;
 
 const checkAndDelete = (item: PerfomanceItem): void => {
     if (item.duration && DURATION_LIMIT < item.duration) {
         warningActions(item);
     }
+    performance.clearMeasures(item.hash);
 };
 
 const PERFOMANCE_URL = '/performance';
