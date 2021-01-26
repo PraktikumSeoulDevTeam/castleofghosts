@@ -22,9 +22,8 @@ export interface CanvasContext {
  */
 export interface GameCharacterInfo {
     id: number;
-    name: string;
-    points: number;
-    keyFound: boolean;
+    cogTime: number;
+    name?: string;
 }
 
 /**

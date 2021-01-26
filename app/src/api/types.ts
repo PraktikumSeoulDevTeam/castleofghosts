@@ -57,7 +57,7 @@ export interface ApiSignInRequest {
  * Запрос на добавление в таблице рекордов
  */
 export interface ApiAddToLeaderboardRequest {
-    ratingFieldName: 'points';
+    ratingFieldName: 'cogTime';
     data: GameCharacterInfo;
 }
 
@@ -65,16 +65,23 @@ export interface ApiAddToLeaderboardRequest {
  * Запрос таблицы рекордов
  */
 export interface ApiGetLeaderboardRequest {
-    ratingFieldName: 'points';
+    ratingFieldName: 'cogTime';
     cursor: number;
     limit: number;
 }
 
 /**
- * Ответ на запрос таблицы рекордов
- * Возвращает сортированный список персонажей
+ * Объект из таблицы рекордов на сервере
  */
-export type ApiGetLeaderboardResponse = GameCharacterInfo[];
+export interface ApiGetLeaderboardResponseElement {
+    data: GameCharacterInfo;
+}
+
+/**
+ * Ответ на запрос таблицы рекордов
+ * Возвращает сортированный список объектов с информацией о персонаже
+ */
+export type ApiGetLeaderboardResponse = ApiGetLeaderboardResponseElement[];
 
 /**
  * Ответ на запрос получения serviceID

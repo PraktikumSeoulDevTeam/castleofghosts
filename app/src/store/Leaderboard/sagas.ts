@@ -1,11 +1,18 @@
-import {call, ForkEffect, put, takeLeading} from 'redux-saga/effects';
+import isEqual from 'lodash/isEqual';
+import {call, ForkEffect, put, select, takeLeading} from 'redux-saga/effects';
 
 import {addToLeaderboard, getLeaderboard} from '~/api';
 
-import {lbAddAction} from './actions';
+import {lbPutAction} from './actions';
 
 import {LB_ACTION_TYPES, LbUploadAction, LbDownloadAction} from './types';
-import type {ApiAddToLeaderboardRequest, ApiGetLeaderboardResponse} from '~/api/types';
+import type {
+    ApiAddToLeaderboardRequest,
+    ApiGetLeaderboardRequest,
+    ApiGetLeaderboardResponse,
+    ApiGetLeaderboardResponseElement
+} from '~/api/types';
+import type {AppStoreState} from '~/store/types';
 
 export function* leaderboardWatcher(): Generator<ForkEffect<never>> {
     yield takeLeading(LB_ACTION_TYPES.UPLOAD, addToLeaderboardWorker);
@@ -14,7 +21,7 @@ export function* leaderboardWatcher(): Generator<ForkEffect<never>> {
 
 function* addToLeaderboardWorker(action: LbUploadAction) {
     const addToLeaderboardRquest: ApiAddToLeaderboardRequest = {
-        ratingFieldName: 'points',
+        ratingFieldName: 'cogTime',
         data: action.payload
     };
     try {
@@ -29,10 +36,21 @@ function* addToLeaderboardWorker(action: LbUploadAction) {
 }
 
 function* getLeaderboardWorker(action: LbDownloadAction) {
+    const getLeaderboardRquest: ApiGetLeaderboardRequest = {
+        ratingFieldName: 'cogTime',
+        cursor: 0,
+        limit: action.payload
+    };
     try {
-        const leaderboardInfo: ApiGetLeaderboardResponse = yield call(getLeaderboard, action.payload);
-        if (leaderboardInfo.length) {
-            yield put(lbAddAction(leaderboardInfo));
+        const leaderboardElements: ApiGetLeaderboardResponse = yield call(getLeaderboard, getLeaderboardRquest);
+        if (leaderboardElements.length) {
+            const newLeaderboardRecords = leaderboardElements.map(
+                (leaderboardElement: ApiGetLeaderboardResponseElement) => leaderboardElement.data
+            );
+            const leaderboardRecords = yield select((state: AppStoreState) => state.leaderboard.list);
+            if (!isEqual(leaderboardRecords, newLeaderboardRecords)) {
+                yield put(lbPutAction(newLeaderboardRecords));
+            }
         }
     } catch (error) {
         // eslint-disable-next-line no-console

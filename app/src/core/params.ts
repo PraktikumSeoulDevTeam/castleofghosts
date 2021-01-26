@@ -14,6 +14,11 @@ export const HEIGHT = 768;
 export const LEVELS_COUNT = 4;
 
 /**
+ * Время(сек), за которое необходимо завершить уровень
+ */
+export const LEVEL_TIME = 60;
+
+/**
  * Эквивалени единицы размера в игре
  */
 export const GRID = 32;
@@ -21,7 +26,7 @@ export const GRID = 32;
 /**
  * Скорость передвижения мобов
  */
-export const MOB_SPEED = 300;
+export const MOB_SPEED = 600;
 
 /**
  * Путь к каталогу с уровнями
@@ -32,10 +37,11 @@ export const enum STATE {
     OFF = 'OFF',
     INIT = 'INIT',
     START = 'START',
-    INTERLUDE = 'INTERLUDE',
+    LEVEL_START = 'LEVEL_START',
     GAME = 'GAME',
     PAUSE = 'PAUSE',
-    LOOSE = 'LOOSE',
+    LEVEL_END = 'LEVEL_END',
     WIN = 'WIN',
+    LOOSE = 'LOOSE',
     END = 'END'
 }
