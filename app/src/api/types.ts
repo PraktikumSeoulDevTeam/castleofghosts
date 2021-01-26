@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 
+import {AxiosRequestConfig, AxiosResponse} from 'axios';
+
 import type {GameCharacterInfo} from '../core/types';
 
 /**
@@ -99,4 +101,12 @@ export interface ApiBadRequestError {
         description: string;
     };
     status?: number;
+}
+
+export interface AxiosRequestConfigWithHash extends AxiosRequestConfig {
+    hash?: string;
+}
+
+export interface AxiosResponseWithHash<T> extends AxiosResponse<T> {
+    config: AxiosRequestConfigWithHash;
 }
