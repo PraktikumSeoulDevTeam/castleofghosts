@@ -1,4 +1,5 @@
 import {
+    USER_ACTION_TYPES,
     UserGetAction,
     UserSetAction,
     UserUpdateAction,
@@ -8,9 +9,10 @@ import {
     SignUpAction,
     SignInAction,
     SignOutAction,
+    OAuthRequestAction,
+    OAuthResponseAction,
     UserGeolocationGetAction,
     UserGeolocationSetAction,
-    USER_ACTION_TYPES,
     UserStateGeolocation
 } from './types';
 import type {ApiUserInfo, ApiChangePasswordRequest, ApiSignUpRequest, ApiSignInRequest} from '~/api/types';
@@ -72,6 +74,18 @@ export function signInAction(signInData: ApiSignInRequest): SignInAction {
 export function signOutAction(): SignOutAction {
     return {
         type: USER_ACTION_TYPES.SIGN_OUT
+    };
+}
+
+export function oAuthRequestAction(): OAuthRequestAction {
+    return {
+        type: USER_ACTION_TYPES.OAUTH_REQUEST
+    };
+}
+
+export function oAuthResponseAction(): OAuthResponseAction {
+    return {
+        type: USER_ACTION_TYPES.OAUTH_RESPONSE
     };
 }
 

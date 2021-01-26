@@ -6,6 +6,7 @@ import type {
     ApiChangePasswordRequest,
     ApiGetLeaderboardRequest,
     ApiGetLeaderboardResponse,
+    ApiServiceIdResponse,
     ApiSignInRequest,
     ApiSignUpRequest,
     ApiSignUpResponce,
@@ -121,6 +122,32 @@ export async function getLeaderboard(data: ApiGetLeaderboardRequest): Promise<Ap
     const response = await ax.post<ApiGetLeaderboardResponse>('/leaderboard/all', data);
 
     return response.data;
+}
+
+/**
+ * Запрос на serviceID для использования в Oauth
+ */
+export async function getServiceId(): Promise<string> {
+    const response = await ax.get<ApiServiceIdResponse>('/oauth/yandex/service-id');
+
+    return response.data.service_id;
+}
+
+/**
+ * Аутентификация в API через код с сервиса Oauth
+ */
+export async function authWithCode(code: string): Promise<boolean> {
+    const response = await ax.post<string>(
+        '/oauth/yandex',
+        {
+            code
+        },
+        {
+            responseType: 'text'
+        }
+    );
+
+    return response.data === 'OK' || Promise.reject(response);
 }
 
 /**

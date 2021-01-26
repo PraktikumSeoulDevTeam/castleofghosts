@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 
 import {Button, FormControl} from '~/components';
 import {UiLayout} from '~/layouts';
-import {signInAction} from '~/store/User/actions';
+import {oAuthRequestAction, signInAction} from '~/store/User/actions';
 
 import type {ApiSignInRequest} from '~/api/types';
 import type {FormControlFields, FormFields} from '~/components/FormControl/types';
@@ -39,21 +39,27 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         };
 
         dispatch(signInAction(userData));
+    },
+    oAuthRequest: () => {
+        dispatch(oAuthRequestAction());
     }
 });
 
 const connecter = connect(null, mapDispatchToProps);
 
 export const AuthorizationPage = connecter(
-    ({onAuth}: ConnectedProps<typeof connecter>): JSX.Element => (
+    ({onAuth, oAuthRequest}: ConnectedProps<typeof connecter>): JSX.Element => (
         <UiLayout isBlock>
             <h1 className="t-title">Authorization</h1>
             <FormControl schema={AuthorizationSchema} fields={authorizationField} onSubmit={onAuth}>
                 <footer className="button-bar mt-5">
                     <Link to="/registration">
-                        <Button className="btn btn_txt">Registration</Button>
+                        <Button className="btn_txt">Registration</Button>
                     </Link>
                     <Button type="submit">Enter</Button>
+                    <Button onClick={() => oAuthRequest()} className="btn_reset">
+                        <i className="logo logo_yandex" />
+                    </Button>
                 </footer>
             </FormControl>
         </UiLayout>

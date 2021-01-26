@@ -9,3 +9,4 @@ export * from './Spinner/Spinner';
 export * from './Toaster/Toaster';
 export * from './Menu/Menu';
 export * from './Countdown/Countdown';
+export * from './Init/Init';

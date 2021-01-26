@@ -1,6 +1,7 @@
 import {SampleContainer} from './types';
 
 export const audioCtx = new AudioContext();
+audioCtx.suspend();
 
 /**
  * Загрузка файла с семплом через fetch
