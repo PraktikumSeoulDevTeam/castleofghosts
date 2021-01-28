@@ -21,6 +21,8 @@ export const redirectToYandexOAuth = async (serviceId: string): Promise<void> =>
     }
 };
 
+export const isServer = !(typeof window !== 'undefined' && window.document && window.document.createElement);
+
 /**
  * Получить значение параметра запроса из адресной строки по его названию
  * @param param Название параметра

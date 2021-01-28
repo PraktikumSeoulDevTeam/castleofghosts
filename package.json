@@ -11,10 +11,11 @@
     "yarn": ">=1.22"
   },
   "scripts": {
+    "test-build": "webpack -c ./webpack.config.ts --mode production",
     "start": "run-s app:build server:build server:run",
-    "app:serve": "webpack serve -c ./app/webpack.config.js --mode development --watch",
-    "app:build": "webpack -c ./app/webpack.config.js --mode production",
-    "app:analyze": "webpack -c ./app/webpack.config.js --mode production --analyze",
+    "app:serve": "webpack serve -c ./webpack.config.ts --name client --mode development --watch",
+    "app:build": "webpack -c ./webpack.config.ts --mode production",
+    "app:analyze": "webpack -c ./webpack.config.ts --mode production --analyze",
     "app:levels": "node scripts/concatLevels.js ./app/levels ./tmp",
     "lint:verify": "eslint --max-warnings=0 \"**/*\"",
     "lint:fix": "eslint --fix \"**/*\"",
@@ -24,8 +25,8 @@
     "server:serve": "run-p server:ts:watch server:nodemon",
     "server:ts:compile": "tsc -p server",
     "server:ts:watch": "tsc -p server -w",
-    "server:nodemon": "nodemon dist/server.js",
-    "server:run": "node dist/server.js",
+    "server:nodemon": "nodemon dist/server/server.js",
+    "server:run": "node dist/server/server.js",
     "server:clear": "rimraf ./dist/server.js",
     "docker:build": "docker build --tag castleofghosts .",
     "docker:run": "docker run -p 3000:3000 castleofghosts",
@@ -67,6 +68,7 @@
     "@babel/preset-env": "7.12.1",
     "@babel/preset-react": "7.12.1",
     "@babel/preset-typescript": "7.12.1",
+    "@babel/register": "^7.12.10",
     "@types/express": "4.17.9",
     "@types/fscreen": "^1.0.1",
     "@types/lodash": "4.14.165",
@@ -97,6 +99,7 @@
     "mini-css-extract-plugin": "1.2.1",
     "nodemon": "2.0.6",
     "npm-run-all": "4.1.5",
+    "null-loader": "^4.0.1",
     "prettier": "2.2.1",
     "rimraf": "3.0.2",
     "sass": "1.28.0",
@@ -104,10 +107,12 @@
     "style-loader": "2.0.0",
     "stylelint": "13.8.0",
     "stylelint-config-idiomatic-order": "8.1.0",
+    "ts-loader": "^8.0.14",
     "typescript": "4.0.5",
     "webpack": "5.4.0",
     "webpack-bundle-analyzer": "4.2.0",
     "webpack-cli": "4.2.0",
-    "webpack-dev-server": "3.11.0"
+    "webpack-dev-server": "3.11.0",
+    "webpack-node-externals": "^2.5.2"
   }
 }

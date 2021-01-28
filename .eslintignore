@@ -3,7 +3,6 @@
 Procfile
 Dockerfile
 *.*
-
 !*.tsx
 !*.ts
 !*.jsx
