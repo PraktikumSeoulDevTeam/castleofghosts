@@ -8,10 +8,14 @@ import {rootSaga} from './rootSaga';
 
 export function configStore(defaultState = {}): Store {
     const saga = createSagaMiddleware();
+    let composeEnhancers = compose;
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    if (!isServer) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    }
+
     const store = createStore(rootReducer, defaultState, composeEnhancers(applyMiddleware(saga)));
 
     if (!isServer) {

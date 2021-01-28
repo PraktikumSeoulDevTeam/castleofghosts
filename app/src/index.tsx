@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
+import {BrowserRouter} from 'react-router-dom';
 
 import {App} from './App';
 import {configStore} from './store/configStore';
 
-import './assets';
 import {AppStoreState} from './store/types';
+
+import './assets';
 
 declare global {
     interface Window {
@@ -19,7 +21,9 @@ const store = configStore(window.__INITIAL_STATE__);
 
 ReactDOM.hydrate(
     <Provider store={store}>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </Provider>,
     document.getElementById('root')
 );

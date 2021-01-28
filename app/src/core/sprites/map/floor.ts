@@ -1,8 +1,10 @@
+import {isServer} from '~/utils';
+
 import {createLoadPromise, createSprite, variantFactory} from '../utils';
 
 import type {AssetVariants, Sprite} from '../types';
 
-const assetMap: HTMLImageElement = new Image();
+const assetMap: HTMLImageElement = isServer ? ({} as HTMLImageElement) : new Image();
 assetMap.src = './assets/floor.png';
 
 /**
