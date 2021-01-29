@@ -101,12 +101,14 @@ export async function updateUserPassword(data: ApiChangePasswordRequest): Promis
     return response.data === 'OK' || Promise.reject(response);
 }
 
+export const LEADERBOARD_URL = '/leaderboard';
+
 /**
  * Запрос на добавление в таблицу рекордов
  * @param data Объект ответа API с информацией о персонаже в формате @see GameCharacterInfo
  */
 export async function addToLeaderboard(data: ApiAddToLeaderboardRequest): Promise<boolean> {
-    const response = await ax.post<string>('/leaderboard', data, {
+    const response = await ax.post<string>(LEADERBOARD_URL, data, {
         responseType: 'text'
     });
 
@@ -119,6 +121,10 @@ export async function addToLeaderboard(data: ApiAddToLeaderboardRequest): Promis
  * @return      Данные из таблицы рекордов
  */
 export async function getLeaderboard(data: ApiGetLeaderboardRequest): Promise<ApiGetLeaderboardResponse> {
+    if (navigator) {
+        navigator.serviceWorker?.controller?.postMessage({url: '/leaderboard/all', payload: data});
+    }
+
     const response = await ax.post<ApiGetLeaderboardResponse>('/leaderboard/all', data);
 
     return response.data;

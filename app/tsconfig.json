@@ -8,6 +8,6 @@
     "paths": {
       "~/*": ["./*"]
     },
-    "lib": ["webworker"]
+    "lib": ["dom", "webworker"]
   }
 }
