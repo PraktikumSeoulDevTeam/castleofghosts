@@ -43,7 +43,8 @@ const config: Configuration = {
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve('app', 'www', 'index.html'),
-            publicPath: '/'
+            publicPath: '/',
+            filename: 'index-csr.html'
         }),
         new MiniCssExtractPlugin(),
         new HookShellScriptPlugin({environment: ['node scripts/concatLevels.js ./app/levels ./tmp']}),

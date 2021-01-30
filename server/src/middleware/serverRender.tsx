@@ -32,9 +32,9 @@ function getHtml(reactHtml: string, reduxState = {}) {
 }
 
 export function serverRemderMiddleware(req: Request, res: Response): void {
-    const store = configStore();
     const location = req.url;
     const context: StaticRouterContext = {};
+    const store = configStore();
 
     const jsx = (
         <ReduxProvider store={store}>
@@ -46,6 +46,12 @@ export function serverRemderMiddleware(req: Request, res: Response): void {
 
     const reactHtml = renderToString(jsx);
     const reduxState = store.getState();
+
+    if (context.url) {
+        res.redirect(context.url);
+
+        return;
+    }
 
     res.status(200).send(getHtml(reactHtml, reduxState));
 }
