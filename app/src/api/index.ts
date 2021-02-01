@@ -13,7 +13,7 @@ import type {
     ApiUserInfo
 } from './types';
 
-const API_URL = new URL('https://ya-praktikum.tech/api/v2');
+export const API_URL = new URL('https://ya-praktikum.tech/api/v2');
 
 /**
  * Клиент для API https://ya-praktikum.tech/api/v2/swagger/

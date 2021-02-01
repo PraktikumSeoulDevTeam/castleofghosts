@@ -1,12 +1,15 @@
 // import { LEADERBOARD_URL } from "./api";
+import {API_URL} from './api';
+
 export default null;
 declare let self: ServiceWorkerGlobalScope;
 
 const STORE_NAME = 'cogPostRequest';
 const SYNC_NAME = 'cogOnlineEvent';
 const DB_VERSION = 5;
+const LEADERBOARD_URL = '/leaderboard/all'; // COMMENT ON PROD
+const URLS: string[] = [LEADERBOARD_URL];
 let payload: Record<string, string>;
-const LEADERBOARD_URL = '/leaderboard/all';
 
 type DBRequestRecord = {
     id: number;
@@ -20,26 +23,26 @@ self.addEventListener('install', () => {
 });
 
 self.addEventListener('message', (event: ExtendableMessageEvent) => {
-    if (event.data.url === LEADERBOARD_URL && event.data.payload) {
-        // receives payload from 'getLeaderboard'
+    if (URLS.includes(event.data.url) && event.data.payload) {
+        // receives payload from API
         payload = event.data.payload;
     }
 });
 
 self.addEventListener('fetch', (event: FetchEvent) => {
-    if (event.request.url.includes(LEADERBOARD_URL)) {
-        event.respondWith(
-            (async () =>
-                fetch(event.request.clone()).catch(() => {
-                    saveRequests(event.request.clone().url);
-                }))()
-        );
+    const url = event.request.url.replace(API_URL.href, '');
+    if (URLS.includes(url)) {
+        fetch(event.request.clone())
+            .then((response: Response) => event.respondWith(response))
+            .catch(() => {
+                saveRequests(event.request.clone());
+            });
     }
 });
 
 self.addEventListener('sync', (event) => {
     if (event.tag === SYNC_NAME) {
-        event.waitUntil(sendRequests());
+        event.waitUntil(sendRequestsFromDB());
     }
 });
 
@@ -52,18 +55,19 @@ if ('serviceWorker' in navigator) {
         });
 }
 
-const saveRequests = (url: string) => {
+const saveRequests = (request: Request) => {
     getObjectStore(STORE_NAME, 'readwrite').add({
-        url,
+        url: request.url,
         payload,
-        method: 'POST'
+        method: request.method
     });
 };
 
-const sendRequests = () => {
+const sendRequestsFromDB = () => {
     const req = getObjectStore(STORE_NAME).openCursor();
     const savedRequests: DBRequestRecord[] = [];
-    req.onsuccess = async (event): Promise<void> => {
+    req.onsuccess = async (event: Event): Promise<void> => {
+        // https://github.com/microsoft/TypeScript/issues/30669 2021-01 solution not found
         const cursor = event?.target?.result;
         if (cursor) {
             savedRequests.push(cursor.value);
@@ -107,8 +111,9 @@ const openDatabase = () => {
         }
     };
 
-    indexedDBOpenRequest.onsuccess = (event): void => {
-        db = event.target.result;
+    indexedDBOpenRequest.onsuccess = (event: Event): void => {
+        // https://github.com/microsoft/TypeScript/issues/30669 2021-01 solution not found
+        db = event?.target?.result;
     };
 };
 // IDBDatabase
