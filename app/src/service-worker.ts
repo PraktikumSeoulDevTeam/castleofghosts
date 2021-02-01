@@ -1,122 +1,14 @@
-// import { LEADERBOARD_URL } from "./api";
-import {API_URL} from './api';
+import {fetchRequest, onOnlineEvent, savePayload} from './services/offlineRequests/offlineRequest';
 
 export default null;
 declare let self: ServiceWorkerGlobalScope;
-
-const STORE_NAME = 'cogPostRequest';
-const SYNC_NAME = 'cogOnlineEvent';
-const DB_VERSION = 5;
-const LEADERBOARD_URL = '/leaderboard/all'; // COMMENT ON PROD
-const URLS: string[] = [LEADERBOARD_URL];
-let payload: Record<string, string>;
-
-type DBRequestRecord = {
-    id: number;
-    url: string;
-    method: string;
-    payload: string;
-};
 
 self.addEventListener('install', () => {
     self.skipWaiting();
 });
 
-self.addEventListener('message', (event: ExtendableMessageEvent) => {
-    if (URLS.includes(event.data.url) && event.data.payload) {
-        // receives payload from API
-        payload = event.data.payload;
-    }
-});
+self.addEventListener('message', savePayload);
 
-self.addEventListener('fetch', (event: FetchEvent) => {
-    const url = event.request.url.replace(API_URL.href, '');
-    if (URLS.includes(url)) {
-        fetch(event.request.clone())
-            .then((response: Response) => event.respondWith(response))
-            .catch(() => {
-                saveRequests(event.request.clone());
-            });
-    }
-});
+self.addEventListener('fetch', fetchRequest);
 
-self.addEventListener('sync', (event) => {
-    if (event.tag === SYNC_NAME) {
-        event.waitUntil(sendRequestsFromDB());
-    }
-});
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready
-        .then((registration) => registration.sync.register(SYNC_NAME))
-        .catch((error) => {
-            // eslint-disable-next-line no-console
-            console.error('[Service worker | navigator.serviceWorker.ready | error]  ', error);
-        });
-}
-
-const saveRequests = (request: Request) => {
-    getObjectStore(STORE_NAME, 'readwrite').add({
-        url: request.url,
-        payload,
-        method: request.method
-    });
-};
-
-const sendRequestsFromDB = () => {
-    const req = getObjectStore(STORE_NAME).openCursor();
-    const savedRequests: DBRequestRecord[] = [];
-    req.onsuccess = async (event: Event): Promise<void> => {
-        // https://github.com/microsoft/TypeScript/issues/30669 2021-01 solution not found
-        const cursor = event?.target?.result;
-        if (cursor) {
-            savedRequests.push(cursor.value);
-            cursor.continue();
-        } else {
-            for (let i = 0; i < savedRequests.length; i++) {
-                const pl = JSON.stringify(savedRequests[i].payload);
-                const {method, url, id} = savedRequests[i];
-                const headers = {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                };
-                const credentials: RequestCredentials = 'include';
-                fetch(url, {headers, credentials, method, body: pl})
-                    .then((response) => {
-                        if (response.status < 400) {
-                            getObjectStore(STORE_NAME, 'readwrite').delete(id);
-                        }
-                    })
-                    .catch((error) => {
-                        // eslint-disable-next-line no-console
-                        console.error('[Service worker | sendRequests | error] ', error);
-                        throw error;
-                    });
-            }
-        }
-    };
-};
-
-const getObjectStore = (
-    storeName: string,
-    mode: 'readwrite' | 'readonly' | 'versionchange' | undefined = 'readwrite'
-) => db.transaction([storeName], mode).objectStore(storeName);
-
-const openDatabase = () => {
-    const indexedDBOpenRequest = indexedDB.open('cog', DB_VERSION);
-
-    indexedDBOpenRequest.onupgradeneeded = () => {
-        if (db) {
-            db.createObjectStore(STORE_NAME, {autoIncrement: true, keyPath: 'id'});
-        }
-    };
-
-    indexedDBOpenRequest.onsuccess = (event: Event): void => {
-        // https://github.com/microsoft/TypeScript/issues/30669 2021-01 solution not found
-        db = event?.target?.result;
-    };
-};
-// IDBDatabase
-let db: IDBDatabase;
-
-openDatabase();
+self.addEventListener('sync', onOnlineEvent);
