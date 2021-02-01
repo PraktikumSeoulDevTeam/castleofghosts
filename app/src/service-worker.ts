@@ -1,4 +1,4 @@
-import { fetchRequest, savePayload} from './services/offlineRequests/offlineRequest';
+import {fetchRequest, savePayload} from './services/offlineRequests/offlineRequest';
 
 export default null;
 declare let self: ServiceWorkerGlobalScope;

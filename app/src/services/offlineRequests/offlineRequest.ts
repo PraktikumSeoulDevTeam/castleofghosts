@@ -1,12 +1,10 @@
-// import { LEADERBOARD_URL } from "./api";
-import {API_URL} from '~/api';
+import {API_URL, LEADERBOARD_URL} from '~/api';
 import {getObjectStore, openDatabase} from '~/services/IDB/IDB';
 
 import {DBRequestRecord} from './types';
 
 const STORE_NAME = 'cogPostRequest';
 
-const LEADERBOARD_URL = '/leaderboard/all'; // COMMENT ON PROD
 const URLS: string[] = [LEADERBOARD_URL];
 let payload: Record<string, string>;
 
