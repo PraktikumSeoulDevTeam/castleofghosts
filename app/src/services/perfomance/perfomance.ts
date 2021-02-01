@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const measures: PerfomanceItem[] = [];
 
 type PerfomanceItem = {
@@ -37,9 +35,9 @@ const checkAndDelete = (item: PerfomanceItem): void => {
     performance.clearMeasures(item.hash);
 };
 
-const PERFOMANCE_URL = '/performance';
 const warningActions = (item: PerfomanceItem): void => {
-    axios.post(PERFOMANCE_URL, {data: item});
+    // eslint-disable-next-line no-console
+    console.warn(item);
 };
 
 const generateUniqueID = (): string =>
