@@ -1,10 +1,6 @@
-const measures: PerfomanceItem[] = [];
+import {PerfomanceItem} from './types';
 
-type PerfomanceItem = {
-    url: string;
-    hash: string;
-    duration?: number;
-};
+const measures: PerfomanceItem[] = [];
 
 export const performanceCheckStart = (url = 'Unknown URL'): string => {
     const hash = generateUniqueID();
@@ -36,8 +32,7 @@ const checkAndDelete = (item: PerfomanceItem): void => {
 };
 
 const warningActions = (item: PerfomanceItem): void => {
-    // eslint-disable-next-line no-console
-    console.warn(item);
+    window.ym(71737372, 'reachGoal', 'apiRequestTimeout', {url: item.url});
 };
 
 const generateUniqueID = (): string =>
