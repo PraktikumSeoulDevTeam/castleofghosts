@@ -10,3 +10,4 @@ export * from './Toaster/Toaster';
 export * from './Menu/Menu';
 export * from './Countdown/Countdown';
 export * from './Init/Init';
+export * from './ForumHeader/ForumHeader';
