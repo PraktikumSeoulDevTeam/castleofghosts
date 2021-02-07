@@ -11,3 +11,6 @@ export * from './Menu/Menu';
 export * from './Countdown/Countdown';
 export * from './Init/Init';
 export * from './ForumHeader/ForumHeader';
+export * from './Rect/Rect';
+export * from './TopicsList/TopicsList';
+export * from './TopicsList/TopicsList.stub';

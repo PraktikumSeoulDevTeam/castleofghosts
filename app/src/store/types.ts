@@ -1,4 +1,5 @@
 import {AudioState} from './Audio/types';
+import {ForumState} from './Forum/types';
 import type {GameState} from './Game/types';
 import type {LeadeboardState} from './Leaderboard/types';
 import type {LevelsState} from './Level/types';
@@ -14,4 +15,5 @@ export interface AppStoreState {
     leaderboard: LeadeboardState;
     toaster: ToasterState;
     utility: UtilityState;
+    forum: ForumState;
 }

@@ -14,7 +14,7 @@ export const ForumSearch = (): JSX.Element => (
         >
             <Form className="search-block__form">
                 <Field
-                    autocomplete={false}
+                    autoComplete="off"
                     placeholder="Search..."
                     className="input__field forum-search"
                     name="searchBlock"
