@@ -4,11 +4,7 @@ import {UserActions, UserState, USER_ACTION_TYPES} from './types';
 
 const userState: UserState = {
     info: {},
-    geolocation: {
-        latitude: null,
-        longitude: null,
-        city: null
-    }
+    geolocation: {}
 };
 
 export const userReducer = (state = userState, action: UserActions): UserState => {

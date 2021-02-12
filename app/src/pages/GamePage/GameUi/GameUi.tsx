@@ -16,7 +16,7 @@ import './GameUi.scss';
 const mapState = (state: AppStoreState) => ({
     character: state.game.character,
     levelNumber: state.game.levelNumber,
-    userPositionCity: state.user.geolocation.city,
+    city: state.user.geolocation.city,
     state: state.game.state
 });
 
@@ -28,7 +28,7 @@ const connector = connect(mapState, mapDispatch);
 
 export const GameUi = connector(
     (props: ConnectedProps<typeof connector> & HTMLAttributes<HTMLDivElement>): JSX.Element => {
-        const {character, className, levelNumber, userPositionCity, state, setState} = props;
+        const {character, className, levelNumber, city, state, setState} = props;
         const play = useCallback(() => setState(STATE.GAME), []);
         const exit = useCallback(() => setState(STATE.END), []);
         const pause = useCallback(() => setState(STATE.PAUSE), []);
@@ -68,9 +68,7 @@ export const GameUi = connector(
                         <h1 className="t-title">
                             {`Level ${levelNumber}`}/{LEVELS_COUNT}
                         </h1>
-                        {userPositionCity ? (
-                            <div className="t-main t-center">{`Somewhere in ${userPositionCity}`}</div>
-                        ) : null}
+                        {city && <div className="t-main t-center">{`Somewhere in ${city}`}</div>}
                         <div className="button-bar button-bar_center mt-8">
                             <Button onClick={play}>Go</Button>
                         </div>

@@ -1,4 +1,5 @@
 import type {ApiChangePasswordRequest, ApiSignInRequest, ApiSignUpRequest, ApiUserInfo} from '~/api/types';
+import type {AppPosition} from '~/services/geolocation/types';
 
 export const enum USER_ACTION_TYPES {
     GET = 'cog/user/get',
@@ -18,13 +19,7 @@ export const enum USER_ACTION_TYPES {
 
 export interface UserState {
     info: Partial<ApiUserInfo>;
-    geolocation: UserStateGeolocation;
-}
-
-export interface UserStateGeolocation {
-    latitude: number;
-    longitude: number;
-    city: string;
+    geolocation: AppPosition;
 }
 
 export interface UserGetAction {
@@ -83,7 +78,7 @@ export interface UserGeolocationGetAction {
 
 export interface UserGeolocationSetAction {
     type: USER_ACTION_TYPES.GEOLOCATION_SET;
-    payload: UserStateGeolocation;
+    payload: AppPosition;
 }
 
 export type UserActions =
