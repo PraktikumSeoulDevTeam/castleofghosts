@@ -17,7 +17,7 @@ export function play(): void {
 /**
  * Отдельный старт нужен если включили звук после того как был создан буффер
  */
-export function playGameLoopQueue(currentTime: number): void {
+export function playGameLoopQueue(currentTime?: number): void {
     try {
         if (container && !container.startTime) {
             container.node.start();

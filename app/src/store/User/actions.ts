@@ -12,10 +12,10 @@ import {
     OAuthRequestAction,
     OAuthResponseAction,
     UserGeolocationGetAction,
-    UserGeolocationSetAction,
-    UserStateGeolocation
+    UserGeolocationSetAction
 } from './types';
 import type {ApiUserInfo, ApiChangePasswordRequest, ApiSignUpRequest, ApiSignInRequest} from '~/api/types';
+import {AppPosition} from '~/services/geolocation/types';
 
 export function userGetAction(): UserGetAction {
     return {
@@ -95,7 +95,7 @@ export function userGeolocationGetAction(): UserGeolocationGetAction {
     };
 }
 
-export function userGeolocationSetAction(payload: UserStateGeolocation): UserGeolocationSetAction {
+export function userGeolocationSetAction(payload: AppPosition): UserGeolocationSetAction {
     return {
         type: USER_ACTION_TYPES.GEOLOCATION_SET,
         payload

@@ -91,7 +91,10 @@
       "rules": {
         "no-undef": "off", // TODO https://github.com/typescript-eslint/typescript-eslint/issues/2477
         "no-use-before-define": "off", // TODO https://github.com/typescript-eslint/typescript-eslint/issues/2502
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.ts", "**/*.test.tsx"]}]
+        "import/no-extraneous-dependencies": [
+          "error",
+          {"devDependencies": ["**/*.test.ts", "**/*.test.tsx", "jest.setup.ts"]}
+        ]
       }
     }
   ]
