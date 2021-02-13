@@ -1,12 +1,10 @@
 import path from 'path';
 
-import bodyParser from 'body-parser';
 import express, {Request, Response} from 'express';
 
 const PORT = process.argv[2] || process.env.PORT || 3000;
 
 const server = express();
-server.use(bodyParser.json());
 
 server.use('/', express.static(path.join(__dirname, '..', 'dist', 'app')));
 
