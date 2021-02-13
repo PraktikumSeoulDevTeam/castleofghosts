@@ -1,5 +1,5 @@
 export type PerfomanceItem = {
     url: string;
-    hash: string;
+    uniqueName: string;
     duration?: number;
 };

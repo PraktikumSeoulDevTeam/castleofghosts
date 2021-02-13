@@ -1,20 +1,21 @@
 import {PerfomanceItem} from './types';
 
 const measures: PerfomanceItem[] = [];
-
+let lastId = 0;
 export const performanceCheckStart = (url = 'Unknown URL'): string => {
-    const hash = generateUniqueID();
-    performance.measure(hash);
-    measures.push({url, hash});
+    lastId++;
+    const uniqueName = url + lastId;
+    performance.measure(uniqueName);
+    measures.push({url, uniqueName});
 
-    return hash;
+    return uniqueName;
 };
-export const performanceCheckEnd = (hash: string | undefined): void => {
-    if (!hash) {
+export const performanceCheckEnd = (uniqueName: string | undefined): void => {
+    if (!uniqueName) {
         return;
     }
-    const item = measures.find((a: PerfomanceItem) => a.hash === hash);
-    const measure = performance.getEntriesByName(hash);
+    const item = measures.find((a: PerfomanceItem) => a.uniqueName === uniqueName);
+    const measure = performance.getEntriesByName(uniqueName);
     if (!item || !measure[0]) {
         return;
     }
@@ -28,12 +29,9 @@ const checkAndDelete = (item: PerfomanceItem): void => {
     if (item.duration && DURATION_LIMIT < item.duration) {
         warningActions(item);
     }
-    performance.clearMeasures(item.hash);
+    performance.clearMeasures(item.uniqueName);
 };
 
 const warningActions = (item: PerfomanceItem): void => {
     window.ym(71737372, 'reachGoal', 'apiRequestTimeout', {url: item.url});
 };
-
-const generateUniqueID = (): string =>
-    Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);

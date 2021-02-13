@@ -1,4 +1,4 @@
-import axios, {AxiosError} from 'axios';
+import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {performanceCheckEnd, performanceCheckStart} from '~/services/perfomance/perfomance';
 
@@ -12,9 +12,7 @@ import type {
     ApiSignInRequest,
     ApiSignUpRequest,
     ApiSignUpResponce,
-    ApiUserInfo,
-    AxiosRequestConfigWithHash,
-    AxiosResponseWithHash
+    ApiUserInfo
 } from './types';
 
 const API_URL = new URL('https://ya-praktikum.tech/api/v2');
@@ -159,8 +157,8 @@ export async function authWithCode(code: string): Promise<boolean> {
  * до отправки в сетевой стэк
  * @param request   Объект конфигурации запроса на сервер
  */
-function requestHandler(request: AxiosRequestConfigWithHash): AxiosRequestConfigWithHash {
-    request.hash = performanceCheckStart(request.url);
+function requestHandler(request: AxiosRequestConfig): AxiosRequestConfig {
+    request.headers.common['x-perf'] = performanceCheckStart(request.url);
     // eslint-disable-next-line no-console
     console.log('[API req]', request);
 
@@ -172,10 +170,12 @@ function requestHandler(request: AxiosRequestConfigWithHash): AxiosRequestConfig
  * до возвращения в промис вызвавшего метода
  * @param response  Объект ответ от сервера
  */
-function responseHandler<T>(response: AxiosResponseWithHash<T>): AxiosResponseWithHash<T> {
+function responseHandler<T>(response: AxiosResponse<T>): AxiosResponse<T> {
     // eslint-disable-next-line no-console
     console.log('[API resp]', response);
-    performanceCheckEnd(response.config.hash);
+
+    const perfUniqueName = response.config.headers['x-perf'];
+    performanceCheckEnd(perfUniqueName);
 
     return response;
 }
