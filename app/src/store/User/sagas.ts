@@ -11,7 +11,7 @@ import {
     getServiceId,
     authWithCode
 } from '~/api';
-import {GeolocationApiGet, GeolocationApiGetCity} from '~/services/geolocation/geolocation';
+import {GeolocationApiGet} from '~/services/geolocation/geolocation';
 import {toasterAddAction} from '~/store/Toaster/actions';
 import {utilitySetLoadingAction} from '~/store/Utility/actions';
 import {clearQueryParams, getQueryParam, redirectToYandexOAuth} from '~/utils';
@@ -21,13 +21,13 @@ import {userSetAction, userRemoveAction, userGeolocationSetAction, userGetAction
 import {
     SignInAction,
     SignUpAction,
-    UserStateGeolocation,
     UserUpdateAction,
     UserUpdateAvatarAction,
     UserUpdatePasswordAction,
     USER_ACTION_TYPES
 } from './types';
 import type {ApiUserInfo} from '~/api/types';
+import type {AppPosition} from '~/services/geolocation/types';
 import type {AppStoreState} from '~/store/types';
 
 export function* userWatcher(): Generator<ForkEffect<never>> {
@@ -144,14 +144,9 @@ function* userSignOutWorker() {
 
 function* userGeolocationGetWorker() {
     try {
-        const res: GeolocationPosition = yield call(GeolocationApiGet);
-        if (res) {
-            const data: UserStateGeolocation = {
-                latitude: res.coords.latitude,
-                longitude: res.coords.longitude,
-                city: yield call(GeolocationApiGetCity, res)
-            };
-            yield put(userGeolocationSetAction(data));
+        const appPosition: AppPosition = yield call(GeolocationApiGet);
+        if (appPosition) {
+            yield put(userGeolocationSetAction(appPosition));
         }
     } catch (error) {
         // eslint-disable-next-line no-console
