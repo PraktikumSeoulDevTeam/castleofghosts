@@ -4,7 +4,7 @@ import {Rect} from '~/components/Rect/Rect';
 
 import './TopicElement.scss';
 
-export const TopicStub = (): JSX.Element => (
+export const TopicElementStub = (): JSX.Element => (
     <li className="topic-element mt-5">
         <Rect width="100%" height="32px" type="black" />
         <div className="topic-element__statistics">

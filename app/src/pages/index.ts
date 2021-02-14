@@ -7,3 +7,4 @@ export * from './AuthorizationPage/AuthorizationPage';
 export * from './RegistrationPage/RegistrationPage';
 export * from './EditPage/EditPage';
 export * from './ForumPage/ForumPage';
+export * from './TopicPage/TopicPage';

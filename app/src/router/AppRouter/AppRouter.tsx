@@ -10,7 +10,8 @@ import {
     RegistrationPage,
     EditPage,
     WelcomePage,
-    ForumPage
+    ForumPage,
+    TopicPage
 } from '~/pages';
 
 import {PrivateRoute} from '../PrivateRoute/PrivateRoute';
@@ -39,8 +40,11 @@ export const AppRouter = (): JSX.Element => (
             <PrivateRoute path="/game">
                 <GamePage />
             </PrivateRoute>
-            <PrivateRoute path="/forum">
+            <PrivateRoute exact path="/forum">
                 <ForumPage />
+            </PrivateRoute>
+            <PrivateRoute path="/forum/topic/:id">
+                <TopicPage />
             </PrivateRoute>
             <PrivateRoute path="/leaderboard">
                 <LeaderboardPage />

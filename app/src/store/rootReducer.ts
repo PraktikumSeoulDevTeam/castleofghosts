@@ -6,6 +6,7 @@ import {gameReducer} from './Game/reducer';
 import {leaderboardReducer} from './Leaderboard/reducer';
 import {levelsReducer} from './Level/reducer';
 import {toasterReducer} from './Toaster/reducer';
+import {topicReducer} from './Topic/reducer';
 import {userReducer} from './User/reducer';
 import {utilityReducer} from './Utility/reducer';
 
@@ -17,5 +18,6 @@ export const rootReducer = combineReducers({
     leaderboard: leaderboardReducer,
     toaster: toasterReducer,
     utility: utilityReducer,
-    forum: forumReducer
+    forum: forumReducer,
+    topic: topicReducer
 });

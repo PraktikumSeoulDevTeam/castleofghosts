@@ -78,13 +78,13 @@ export function getTopics(): Promise<Topic[]> {
                             createdAt: randomDate()
                         }
                     ],
-                    title: `My name is Greta Thunberg and I am inviting you to be a part of the solution.
+                    title: `My name is Greta Thunberg`,
+                    content: `And I am inviting you to be a part of the solution.
   
-            As #ParisAgreement turns 5, our leaders present their 'hopeful' distant hypothetical targets, 'net zero' loopholes and empty promises.
-            
-            
-            But the real hope comes from the people.`,
-                    content: ``,
+                    As #ParisAgreement turns 5, our leaders present their 'hopeful' distant hypothetical targets, 'net zero' loopholes and empty promises.
+                    
+                    
+                    But the real hope comes from the people.`,
                     createdAt: new Date('2020-11-11'),
                     rating: 330
                 },

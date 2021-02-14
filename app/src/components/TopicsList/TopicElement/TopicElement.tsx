@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import './TopicElement.scss';
 
@@ -14,15 +15,17 @@ export const TopicElement = (props: TopicProps): JSX.Element => {
     const {comments, createdAt, id, raiting, title} = props;
 
     return (
-        <li className="topic-element mb-5">
-            <h4 className="topic-element__header">
-                #{id} {title}
-            </h4>
-            <div className="topic-element__statistics">
-                <div>Comments: {comments}</div>
-                <div>Raiting: {raiting}</div>
-                <div>Created at: {`${createdAt.getFullYear()}-${createdAt.getMonth()}-${createdAt.getDate()}`}</div>
-            </div>
-        </li>
+        <Link to={`/forum/topic/${id}`}>
+            <li className="topic-element mb-5">
+                <h4 className="topic-element__header">
+                    #{id} {title}
+                </h4>
+                <div className="topic-element__statistics">
+                    <div>Comments: {comments}</div>
+                    <div>Raiting: {raiting}</div>
+                    <div>Created at: {`${createdAt.getFullYear()}-${createdAt.getMonth()}-${createdAt.getDate()}`}</div>
+                </div>
+            </li>
+        </Link>
     );
 };

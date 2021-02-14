@@ -1,0 +1,19 @@
+.topic-header {
+    width: 100%;
+
+    &__title {
+        font-size: 1em;
+        font-weight: bold;
+    }
+
+    &__back {
+        margin-right: 15px;
+        font-size: 32px;
+    }
+
+    &__author {
+        height: 30px;
+        font-size: 0.4em;
+        line-height: 30px;
+    }
+}

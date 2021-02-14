@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {TopicStub} from './TopicElement/Topic.stub';
+import {TopicElementStub} from './TopicElement/TopicElement.stub';
 
 import './TopicsList.scss';
 
@@ -15,7 +15,7 @@ export const TopicsListStub = ({count}: TopicsListStubProps): JSX.Element => {
         <ul className="topics-list">
             {list.map((_, i) => (
                 // eslint-disable-next-line react/no-array-index-key
-                <TopicStub key={i} />
+                <TopicElementStub key={i} />
             ))}
         </ul>
     );

@@ -14,3 +14,5 @@ export * from './ForumHeader/ForumHeader';
 export * from './Rect/Rect';
 export * from './TopicsList/TopicsList';
 export * from './TopicsList/TopicsList.stub';
+export * from './Topic/Topic.stub';
+export * from './Topic/Topic';

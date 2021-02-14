@@ -7,6 +7,7 @@ import {gameWatcher} from './Game/sagas';
 import {leaderboardWatcher} from './Leaderboard/sagas';
 import {levelsWatcher} from './Level/sagas';
 import {toasterWatcher} from './Toaster/sagas';
+import {topicWatcher} from './Topic/sagas';
 import {userWatcher} from './User/sagas';
 
 export function* rootSaga(): Generator<ForkEffect<SagaReturnType<Saga>>> {
@@ -17,4 +18,5 @@ export function* rootSaga(): Generator<ForkEffect<SagaReturnType<Saga>>> {
     yield fork(gameWatcher);
     yield fork(levelsWatcher);
     yield fork(forumWatcher);
+    yield fork(topicWatcher);
 }
