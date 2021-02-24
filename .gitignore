@@ -123,6 +123,11 @@ tmp/*
 
 # Docker host folder
 docker/*
+
 !docker/nginx
 docker/nginx/*
 !docker/*/config
+
+!docker/postgres
+docker/postgres/*
+!docker/postgres/docker-entrypoint-initdb.d
