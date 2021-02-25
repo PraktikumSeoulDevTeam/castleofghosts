@@ -1,4 +1,4 @@
-import {FieldInputProps, FormikHelpers} from 'formik';
+import {FormikHelpers} from 'formik';
 import Yup from 'yup';
 
 export type FormFields = Record<string, string>;
@@ -25,13 +25,9 @@ export type FormControlFields = Record<
     }
 >;
 
-export interface FormControlProps extends JSX.ElementChildrenAttribute {
+export interface FormControlProps {
     fields: FormControlFields;
     schema: Yup.ObjectSchema;
+    children: React.ReactNode;
     onSubmit: (values: FormFields, formikHelpers: FormikHelpers<FormFields>) => void;
-}
-
-export interface FormFieldComponentProps {
-    formikHelpers: FormikHelpers<FormFields>;
-    field: FieldInputProps<File>;
 }

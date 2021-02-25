@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 
 import {userUpdatePasswordAction} from '~/store/User/actions';
 
-import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
 
 import type {FormControlFields, FormFields} from '../FormControl/types';
@@ -61,11 +60,9 @@ const mapDispatch = (dispatch: Dispatch) => ({
 const connector = connect(null, mapDispatch);
 
 export const UserPasswordChange = connector(
-    ({onUpdate}: ConnectedProps<typeof connector>): JSX.Element => (
+    ({children, onUpdate}: ConnectedProps<typeof connector> & JSX.ElementChildrenAttribute): JSX.Element => (
         <FormControl schema={UserPasswordSchema} fields={UserPasswordFields} onSubmit={onUpdate}>
-            <footer className="button-bar mt-5">
-                <Button type="submit">Change</Button>
-            </footer>
+            {children}
         </FormControl>
     )
 );

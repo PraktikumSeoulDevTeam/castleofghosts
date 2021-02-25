@@ -1,4 +1,5 @@
 import React, {useState, memo} from 'react';
+import {Link} from 'react-router-dom';
 
 import {UserDataChange, UserPasswordChange, UserAvatarChange, Button} from '~/components';
 import {UiLayout} from '~/layouts';
@@ -9,22 +10,29 @@ const enum VIEW_TAB {
     AVATAR = 'Avatar'
 }
 
+const userEditFormFooter: JSX.Element = (
+    <footer className="button-bar mt-5">
+        <Link to="/">
+            <Button className="btn_txt">Return</Button>
+        </Link>
+        <Button type="submit">Save</Button>
+    </footer>
+);
+
 export const EditPage = memo(
     (): JSX.Element => {
         const [view, setView] = useState(VIEW_TAB.DATA);
         let cnt: JSX.Element;
         switch (view) {
-            case VIEW_TAB.DATA:
-                cnt = <UserDataChange />;
-                break;
             case VIEW_TAB.PASSWORD:
-                cnt = <UserPasswordChange />;
+                cnt = <UserPasswordChange>{userEditFormFooter}</UserPasswordChange>;
                 break;
             case VIEW_TAB.AVATAR:
-                cnt = <UserAvatarChange />;
+                cnt = <UserAvatarChange>{userEditFormFooter}</UserAvatarChange>;
                 break;
+            case VIEW_TAB.DATA:
             default:
-                cnt = <UserDataChange />;
+                cnt = <UserDataChange>{userEditFormFooter}</UserDataChange>;
         }
 
         return (
