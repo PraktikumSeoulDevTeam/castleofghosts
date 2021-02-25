@@ -29,8 +29,6 @@
         margin-left: auto;
         background-image: $charMapUrl;
         background-repeat: no-repeat;
-        image-rendering: pixelated;
-        image-rendering: crisp-edges;
         &_tema {
             background-position: $charSprite1;
         }

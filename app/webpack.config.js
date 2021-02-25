@@ -62,7 +62,10 @@ module.exports = {
         new MiniCssExtractPlugin(),
         new HookShellScriptPlugin({environment: ['node scripts/concatLevels.js ./app/levels ./tmp']}),
         new CopyPlugin({
-            patterns: [{from: path.resolve('tmp', 'levels.json'), to: 'levels'}]
+            patterns: [
+                {from: path.resolve('tmp', 'levels.json'), to: 'levels'},
+                {from: path.resolve('app', 'www', 'favicon.ico'), to: '.'}
+            ]
         })
     ]
 };

@@ -1,6 +1,8 @@
 body {
     background: var(--color-bg);
     color: var(--color-main);
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
     @include t-main;
 }
 
