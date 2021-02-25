@@ -21,12 +21,12 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "map": [["~", "./app/src"]],
+        "map": [["~", "./app/src"], ["~~", "./server/src"], ["@", "./@types"]],
         "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
       },
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"],
-        "moduleDirectory": ["app/src", "node_modules"]
+        "moduleDirectory": ["app/src", "server/src", "node_modules"]
       }
     }
   },
@@ -55,6 +55,16 @@
             "patternOptions": {"matchBase": true},
             "group": "index",
             "position": "after"
+          },
+          {
+            "pattern": "@/**",
+            "patternOptions": {"matchBase": true},
+            "group": "index",
+            "position": "after"
+          },
+          {
+            "pattern": "~~/**",
+            "group": "internal"
           },
           {
             "pattern": "~/**",

@@ -2,6 +2,7 @@ const path = require('path');
 
 const CopyPlugin = require('copy-webpack-plugin');
 const HookShellScriptPlugin = require('hook-shell-script-webpack-plugin');
+const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -51,6 +52,13 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'www', 'index.html')
         }),
+        new HtmlWebpackPartialsPlugin([
+            {
+                path: path.join(__dirname, 'www', 'partials', '_yaMetrika.html'),
+                priority: 'low',
+                location: 'head'
+            }
+        ]),
         new MiniCssExtractPlugin(),
         new HookShellScriptPlugin({environment: ['node scripts/concatLevels.js ./app/levels ./tmp']}),
         new CopyPlugin({
