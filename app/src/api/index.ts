@@ -1,5 +1,7 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 
+import {performanceCheckEnd, performanceCheckStart} from '~/services/perfomance/perfomance';
+
 import type {
     ApiAddToLeaderboardRequest,
     ApiBadRequestError,
@@ -13,7 +15,7 @@ import type {
     ApiUserInfo
 } from './types';
 
-const API_URL = new URL('https://ya-praktikum.tech/api/v2');
+export const API_URL = new URL('https://ya-praktikum.tech/api/v2');
 
 /**
  * Клиент для API https://ya-praktikum.tech/api/v2/swagger/
@@ -101,12 +103,14 @@ export async function updateUserPassword(data: ApiChangePasswordRequest): Promis
     return response.data === 'OK' || Promise.reject(response);
 }
 
+export const LEADERBOARD_URL = '/leaderboard';
+
 /**
  * Запрос на добавление в таблицу рекордов
  * @param data Объект ответа API с информацией о персонаже в формате @see GameCharacterInfo
  */
 export async function addToLeaderboard(data: ApiAddToLeaderboardRequest): Promise<boolean> {
-    const response = await ax.post<string>('/leaderboard', data, {
+    const response = await ax.post<string>(LEADERBOARD_URL, data, {
         responseType: 'text'
     });
 
@@ -119,6 +123,10 @@ export async function addToLeaderboard(data: ApiAddToLeaderboardRequest): Promis
  * @return      Данные из таблицы рекордов
  */
 export async function getLeaderboard(data: ApiGetLeaderboardRequest): Promise<ApiGetLeaderboardResponse> {
+    if (navigator) {
+        navigator.serviceWorker?.controller?.postMessage({url: '/leaderboard/all', payload: data});
+    }
+
     const response = await ax.post<ApiGetLeaderboardResponse>('/leaderboard/all', data);
 
     return response.data;
@@ -156,6 +164,7 @@ export async function authWithCode(code: string): Promise<boolean> {
  * @param request   Объект конфигурации запроса на сервер
  */
 function requestHandler(request: AxiosRequestConfig): AxiosRequestConfig {
+    request.headers.common['x-perf'] = performanceCheckStart(request.url);
     // eslint-disable-next-line no-console
     console.log('[API req]', request);
 
@@ -170,6 +179,9 @@ function requestHandler(request: AxiosRequestConfig): AxiosRequestConfig {
 function responseHandler<T>(response: AxiosResponse<T>): AxiosResponse<T> {
     // eslint-disable-next-line no-console
     console.log('[API resp]', response);
+
+    const perfUniqueName = response.config.headers['x-perf'];
+    performanceCheckEnd(perfUniqueName);
 
     return response;
 }

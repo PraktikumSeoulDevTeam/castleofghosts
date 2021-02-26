@@ -55,9 +55,7 @@ function transformToShit(levels: LevelEd[]): Level[] {
             startPoint,
             endPoint,
             keyPoint,
-            map: level.map,
-            objects: level.objects,
-            chars: []
+            map: level.map
         };
     });
 

@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 
 import {userUpdateAvatarAction} from '~/store/User/actions';
 
-import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
 
 import type {FormControlFields, FormFields} from '../FormControl/types';
@@ -51,14 +50,17 @@ const mapDispatch = (dispatch: Dispatch) => ({
 const connector = connect(mapState, mapDispatch);
 
 export const UserAvatarChange = connector(
-    ({avatar, firstName, onUpdate}: ConnectedProps<typeof connector>): JSX.Element => (
+    ({
+        children,
+        avatar,
+        firstName,
+        onUpdate
+    }: ConnectedProps<typeof connector> & JSX.ElementChildrenAttribute): JSX.Element => (
         <div>
-            {avatar && <img src={avatar} alt={firstName} className="my-2" />}
+            {avatar && <img src={avatar} alt={firstName} className="my-2" style={{maxHeight: '300px'}} />}
 
             <FormControl schema={UserAvatarSchema} fields={UserAvatarFields} onSubmit={onUpdate}>
-                <footer className="button-bar mt-5">
-                    <Button type="submit">Change</Button>
-                </footer>
+                {children}
             </FormControl>
         </div>
     )

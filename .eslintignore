@@ -1,4 +1,5 @@
 /dist
+/docker
 /node_modules
 Procfile
 Dockerfile

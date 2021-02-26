@@ -2,8 +2,7 @@ import {Request, Response} from 'express';
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 import {Provider as ReduxProvider} from 'react-redux';
-import {StaticRouterContext} from 'react-router';
-import {StaticRouter} from 'react-router-dom';
+import {StaticRouter, StaticRouterContext} from 'react-router';
 
 import {App} from '../../../app/src/App';
 import {configStore} from '../../../app/src/store/configStore';

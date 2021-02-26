@@ -1,11 +1,26 @@
 {
   "extends": "../tsconfig.common.json",
   "compilerOptions": {
-    "outDir": "../dist",
-    "baseUrl": "./",
-    "jsx": "react",
+    "baseUrl": "src",
+    "outDir": "../dist/server",
+    "rootDir": "./src",
     "importHelpers": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false
+    "noEmitHelpers": true,
+    "jsx": "react",
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+
+    "paths": {
+      "~~/*": ["./*"],
+      "@/*": ["../../@types/*.ts"]
+    },
+
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths"
+      }
+    ]
   }
 }

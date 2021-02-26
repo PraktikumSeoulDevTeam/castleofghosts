@@ -1,16 +1,16 @@
-import {Formik, Form, Field, ErrorMessage} from 'formik';
+import {Formik, Form, Field, ErrorMessage, FieldProps} from 'formik';
 import React from 'react';
 
-import type {FormControlProps, FormControlFields, FormFieldComponentProps, FormFields} from './types';
+import type {FormControlProps, FormControlFields, FormFields} from './types';
 import './FormControl.scss';
 
-const FormFile = ({formikHelpers, field}: FormFieldComponentProps): JSX.Element => (
+const FormFile = ({form, field}: FieldProps): JSX.Element => (
     <input
         className="input__field"
         name={field.name}
         type="file"
         id={field.name}
-        onChange={(e) => formikHelpers.setFieldValue(field.name, e.target.files?.[0])}
+        onChange={(e) => form.setFieldValue(field.name, e.target.files?.[0])}
     />
 );
 

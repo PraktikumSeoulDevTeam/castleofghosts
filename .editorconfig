@@ -14,5 +14,5 @@ rulers = 120
 trim_trailing_whitespace = false
 insert_final_newline = false
 
-[*.json]
+[*.{json,yml,conf}]
 indent_size = 2
