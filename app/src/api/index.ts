@@ -159,6 +159,127 @@ export async function authWithCode(code: string): Promise<boolean> {
 }
 
 /**
+ * Возвращает все топики с форума
+ */
+export async function getTopics(): Promise<ApiTopic[]> {
+    return [
+        {
+            id: 1,
+            header: 'test1',
+            text: 'qwerty1',
+            createdAt: '2021-02-24T11:55:23.147Z',
+            updatedAt: '2021-02-24T11:55:23.147Z',
+            user: {
+                id: 14151,
+                name: 'praktikum.cog'
+            }
+        },
+        {
+            id: 2,
+            header: 'test2',
+            text: 'qwerty2',
+            createdAt: '2021-02-25T16:42:04.477Z',
+            updatedAt: '2021-02-25T16:42:04.477Z',
+            user: {
+                id: 14151,
+                name: 'praktikum.cog'
+            }
+        },
+        {
+            id: 3,
+            header: 'sadasdsada',
+            text: 'asfasfasf',
+            createdAt: '2021-02-25T16:43:02.317Z',
+            updatedAt: '2021-02-25T16:43:02.317Z',
+            user: {
+                id: 33956,
+                name: 'test3228 test3228'
+            }
+        },
+        {
+            id: 4,
+            header: 'test15',
+            text: 'qwerty15',
+            createdAt: '2021-02-25T17:13:17.007Z',
+            updatedAt: '2021-02-25T17:13:17.007Z',
+            user: {
+                id: 14151,
+                name: 'praktikum.cog'
+            }
+        },
+        {
+            id: 5,
+            header: 'test16',
+            text: 'qwerty16',
+            createdAt: '2021-02-25T17:28:23.619Z',
+            updatedAt: '2021-02-25T17:28:23.619Z',
+            user: {
+                id: 14151,
+                name: 'praktikum.cog'
+            }
+        },
+        {
+            id: 6,
+            header: 'test17',
+            text: 'qwerty17',
+            createdAt: '2021-02-25T17:29:01.690Z',
+            updatedAt: '2021-02-25T17:29:01.690Z',
+            user: {
+                id: 14151,
+                name: 'praktikum.cog'
+            }
+        }
+    ];
+    const response = await ax.get<ApiTopic[]>('https://seoul-castleofghosts-01.ya-praktikum.tech/api/forum/topics');
+
+    return response.data;
+}
+
+/**
+ * Создаем топик в базе
+ * @param topic топик
+ */
+export async function createTopic(topic: ApiCreateTopic): Promise<boolean> {
+    const response = await ax.post('https://seoul-castleofghosts-01.ya-praktikum.tech/api/forum/topics', topic);
+
+    return response.status === 200;
+}
+
+/**
+ * Получаем все комментарии по топику
+ * @param topicId id топика
+ */
+export async function getPostsByTopic(topicId: number): Promise<ApiPost[]> {
+    return [
+        {
+            id: 1,
+            replyId: null,
+            text: 'Test',
+            createdAt: '2021-02-26T10:01:22.511Z',
+            updatedAt: '2021-02-26T10:01:22.511Z',
+            user: {
+                id: 33956,
+                name: 'test3228 test3228'
+            }
+        }
+    ];
+    const response = await ax.get<ApiPost[]>(
+        `https://seoul-castleofghosts-01.ya-praktikum.tech/api/forum/topics/${topicId}/topics`
+    );
+
+    return response.data;
+}
+
+export async function cretePost(topicId: number, post: ApiPost): Promise<boolean> {
+    const response = await ax.post(
+        `https://seoul-castleofghosts-01.ya-praktikum.tech/api/forum/topics/${topicId}/topics`,
+        post
+    );
+
+    return response.status === 200;
+}S
+
+/**
  * Перехватчик запросов на сервер. Позволяет выполнять обработку всех запросов
  * до отправки в сетевой стэк
  * @param request   Объект конфигурации запроса на сервер
