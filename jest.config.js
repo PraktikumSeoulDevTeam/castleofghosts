@@ -8,6 +8,7 @@ module.exports = {
         '^.+\\.(ts|tsx)$': 'ts-jest'
     },
 
+    setupFiles: ['jest-canvas-mock'],
     setupFilesAfterEnv: ['./jest.setup.ts'],
     globals: {
         'ts-jest': {
