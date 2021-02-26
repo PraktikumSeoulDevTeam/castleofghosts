@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 import './ForumHeader.scss';
-import {ForumSearch} from './ForumSearch/ForumSearch';
 
 export const ForumHeader = (): JSX.Element => (
     <header className="forum-header">
@@ -12,6 +11,5 @@ export const ForumHeader = (): JSX.Element => (
             </Link>
             CastleForum
         </h2>
-        <ForumSearch />
     </header>
 );

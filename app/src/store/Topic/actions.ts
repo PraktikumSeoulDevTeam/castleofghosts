@@ -1,7 +1,7 @@
 import {Topic} from '../Forum/types';
 import {TopicGetAction, TopicGetErrorAction, TopicGetSuccessAction, TOPIC_ACTIONS_TYPES} from './types';
 
-export function topicGetAction(id: string): TopicGetAction {
+export function topicGetAction(id: number): TopicGetAction {
     return {
         type: TOPIC_ACTIONS_TYPES.GET_TOPIC,
         payload: id

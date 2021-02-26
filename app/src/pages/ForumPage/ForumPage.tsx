@@ -35,7 +35,7 @@ const ForumPageComponent = (props: ConnectedProps<typeof connector>): JSX.Elemen
 
     if (isLoading) {
         return (
-            <UiLayout isStatic={false} isBlock className="forum-page">
+            <UiLayout isBlock className="forum-page">
                 <ForumHeader />
                 <TopicsListStub count={4} />
             </UiLayout>
@@ -43,7 +43,7 @@ const ForumPageComponent = (props: ConnectedProps<typeof connector>): JSX.Elemen
     }
 
     return (
-        <UiLayout isStatic={false} isBlock className="forum-page">
+        <UiLayout isBlock className="forum-page">
             <ForumHeader />
             <TopicsList topics={topics} />
             <div className="forum-form">

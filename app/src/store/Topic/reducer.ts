@@ -2,8 +2,8 @@ import {TopicActions, TopicState, TOPIC_ACTIONS_TYPES} from './types';
 
 const initialState: TopicState = {
     isLoading: true,
-    error: null,
-    topic: null
+    error: undefined,
+    topic: undefined
 };
 
 export function topicReducer(state = initialState, action: TopicActions): TopicState {
@@ -11,16 +11,13 @@ export function topicReducer(state = initialState, action: TopicActions): TopicS
         case TOPIC_ACTIONS_TYPES.GET_TOPIC: {
             return {
                 ...state,
-                isLoading: true,
-                error: null,
-                topic: null
+                isLoading: true
             };
         }
         case TOPIC_ACTIONS_TYPES.GET_TOPIC_SUCCESS: {
             return {
                 ...state,
                 isLoading: false,
-                error: null,
                 topic: action.payload
             };
         }
@@ -28,8 +25,7 @@ export function topicReducer(state = initialState, action: TopicActions): TopicS
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload,
-                topic: null
+                error: action.payload
             };
         }
         default:

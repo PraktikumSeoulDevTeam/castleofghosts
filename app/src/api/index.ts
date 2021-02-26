@@ -6,11 +6,6 @@ import type {
     ApiAddToLeaderboardRequest,
     ApiBadRequestError,
     ApiChangePasswordRequest,
-<<<<<<< HEAD
-=======
-    ApiCreatePost,
-    ApiCreateTopic,
->>>>>>> add forms;
     ApiGetLeaderboardRequest,
     ApiGetLeaderboardResponse,
     ApiServiceIdResponse,
@@ -162,46 +157,6 @@ export async function authWithCode(code: string): Promise<boolean> {
 
     return response.data === 'OK' || Promise.reject(response);
 }
-
-/**
- * Возвращает все топики с форума
- */
-export async function getTopics(): Promise<ApiTopic[]> {
-    const response = await ax.get<ApiTopic[]>('https://seoul-castleofghosts-01.ya-praktikum.tech/api/forum/topics');
-
-    return response.data;
-}
-
-/**
- * Создаем топик в базе
- * @param topic топик
- */
-export async function createTopic(topic: ApiCreateTopic): Promise<boolean> {
-    const response = await ax.post('https://seoul-castleofghosts-01.ya-praktikum.tech/api/forum/topics', topic);
-
-    return response.status === 200;
-}
-
-/**
- * Получаем все комментарии по топику
- * @param topicId id топика
- */
-export async function getPostsByTopic(topicId: number): Promise<ApiPost[]> {
-    const response = await ax.get<ApiPost[]>(
-        `https://seoul-castleofghosts-01.ya-praktikum.tech/api/forum/topics/${topicId}/topics`
-    );
-
-    return response.data;
-}
-
-export async function createPost(topicId: number, post: ApiCreatePost): Promise<boolean> {
-    const response = await ax.post(
-        `https://seoul-castleofghosts-01.ya-praktikum.tech/api/forum/topics/${topicId}/topics`,
-        post
-    );
-
-    return response.status === 200;
-}S
 
 /**
  * Перехватчик запросов на сервер. Позволяет выполнять обработку всех запросов

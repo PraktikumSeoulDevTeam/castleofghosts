@@ -1,16 +1,17 @@
-import {call, ForkEffect, put, takeEvery} from 'redux-saga/effects';
+import {call, ForkEffect, put, takeLeading} from 'redux-saga/effects';
 
-import {createTopic, createPost} from '~/api';
+import {addPost, addTopic} from '~/api/local';
 
+import {topicGetAction} from '../Topic/actions';
 import {getTopics} from './__topics';
 import {forumGetDataAction, forumGetDataErrorAction, forumGetDataSuccessAction} from './actions';
 
 import {ForumCreatePostAction, ForumCreateTopicAction, FORUM_ACTION_TYPES} from './types';
 
 export function* forumWatcher(): Generator<ForkEffect<never>> {
-    yield takeEvery(FORUM_ACTION_TYPES.GET_DATA, getDataWorker);
-    yield takeEvery(FORUM_ACTION_TYPES.CREATE_TOPIC, createTopiWorker);
-    yield takeEvery(FORUM_ACTION_TYPES.CREATE_POST, createPostWorker);
+    yield takeLeading(FORUM_ACTION_TYPES.GET_DATA, getDataWorker);
+    yield takeLeading(FORUM_ACTION_TYPES.CREATE_TOPIC, createTopicWorker);
+    yield takeLeading(FORUM_ACTION_TYPES.CREATE_POST, createPostWorker);
 }
 
 function* getDataWorker() {
@@ -22,9 +23,9 @@ function* getDataWorker() {
     }
 }
 
-function* createTopiWorker(action: ForumCreateTopicAction) {
+function* createTopicWorker(action: ForumCreateTopicAction) {
     try {
-        yield call(createTopic, action.payload);
+        yield call(addTopic, action.payload);
         yield put(forumGetDataAction());
     } catch (error) {
         // eslint-disable-next-line no-console
@@ -35,8 +36,9 @@ function* createTopiWorker(action: ForumCreateTopicAction) {
 function* createPostWorker(action: ForumCreatePostAction) {
     try {
         const {id, post} = action.payload;
-        yield call(createPost, id, post);
+        yield call(addPost, id, post);
         yield put(forumGetDataAction());
+        yield put(topicGetAction(id));
     } catch (error) {
         // eslint-disable-next-line no-console
         console.log(`error at createPostWorker\n`, error);

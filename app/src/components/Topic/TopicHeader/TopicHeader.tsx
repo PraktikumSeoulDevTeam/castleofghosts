@@ -6,7 +6,7 @@ import './TopicHeader.scss';
 type TopicHeaderProps = {
     title: string;
     author: string;
-    id: string;
+    id: number;
 };
 
 export const TopicHeader = (props: TopicHeaderProps): JSX.Element => {

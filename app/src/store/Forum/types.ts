@@ -1,17 +1,17 @@
-import {ApiCreatePost, ApiCreateTopic} from '~/api/types';
+import type {ApiForumTopicCreateRequest, ApiForumPostCreateRequest} from '@/api.d';
 
 /**
  * Forum Models
  */
 export interface Comment {
-    id: string;
+    id: number;
     author: string;
     content: string;
     createdAt: Date;
 }
 
 export interface Topic {
-    id: string;
+    id: number;
     author: string;
     title: string;
     content: string;
@@ -23,11 +23,11 @@ export interface Topic {
 export interface ForumState {
     topics: Topic[];
     isLoading: boolean;
-    error: string | null;
+    error?: string;
 }
 
 export interface CreatePostArgs {
-    post: ApiCreatePost;
+    post: ApiForumPostCreateRequest;
     id: number;
 }
 
@@ -55,7 +55,7 @@ export interface ForumGetDataErrorAction {
 
 export interface ForumCreateTopicAction {
     type: FORUM_ACTION_TYPES.CREATE_TOPIC;
-    payload: ApiCreateTopic;
+    payload: ApiForumTopicCreateRequest;
 }
 
 export interface ForumCreatePostAction {

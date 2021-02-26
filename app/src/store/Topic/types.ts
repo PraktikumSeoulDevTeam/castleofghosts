@@ -2,8 +2,8 @@ import {Topic} from '../Forum/types';
 
 export interface TopicState {
     isLoading: boolean;
-    topic: Topic | null;
-    error: string | null;
+    topic?: Topic;
+    error?: string;
 }
 
 export const enum TOPIC_ACTIONS_TYPES {
@@ -14,7 +14,7 @@ export const enum TOPIC_ACTIONS_TYPES {
 
 export interface TopicGetAction {
     type: TOPIC_ACTIONS_TYPES.GET_TOPIC;
-    payload: string;
+    payload: number;
 }
 
 export interface TopicGetSuccessAction {

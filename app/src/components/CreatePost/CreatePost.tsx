@@ -7,8 +7,7 @@ import {forumCreatePostAction} from '~/store/Forum/actions';
 import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
 
-import type {FormControlFields, FormFields} from '../FormControl/types';
-import type {ApiCreatePost} from '~/api/types';
+import type {FormControlFields} from '../FormControl/types';
 
 const PostSchema = Yup.object().shape({
     text: Yup.string().required('field is required').min(5, 'minimal length: 5')
@@ -22,33 +21,26 @@ const CreatePostFields: FormControlFields = {
     }
 };
 
-const mapState = () => ({});
-
 const mapDispatch = {
     createPost: forumCreatePostAction
 };
 
-const mergeProps = (_stateProps: unknown, dispatchProps: typeof mapDispatch) => {
-    const {createPost} = dispatchProps;
-
-    return {
-        onSubmit: (formData: FormFields, id: number) => {
-            const post: ApiCreatePost = {
-                text: formData.text ? formData.text : ''
-            } as ApiCreatePost;
-            createPost({
-                post,
-                id
-            });
-        }
-    };
-};
-
-const connector = connect(mapState, mapDispatch, mergeProps);
+const connector = connect(null, mapDispatch);
 
 export const CreatePost = connector(
-    ({onSubmit, topicId}: ConnectedProps<typeof connector> & {topicId: number}): JSX.Element => (
-        <FormControl schema={PostSchema} fields={CreatePostFields} onSubmit={(field) => onSubmit(field, topicId)}>
+    ({createPost, topicId}: ConnectedProps<typeof connector> & {topicId: number}): JSX.Element => (
+        <FormControl
+            schema={PostSchema}
+            fields={CreatePostFields}
+            onSubmit={(form) =>
+                createPost({
+                    post: {
+                        text: form.text || ''
+                    },
+                    id: topicId
+                })
+            }
+        >
             <footer className="button-bar mt-5">
                 <Button type="submit">Create Post</Button>
             </footer>

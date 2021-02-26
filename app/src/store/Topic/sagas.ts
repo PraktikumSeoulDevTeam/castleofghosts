@@ -1,4 +1,4 @@
-import {call, ForkEffect, put, takeEvery} from 'redux-saga/effects';
+import {call, ForkEffect, put, takeLeading} from 'redux-saga/effects';
 
 import {getTopics} from '../Forum/__topics';
 import {topicGetErrorAction, topicGetSuccessAction} from './actions';
@@ -7,7 +7,7 @@ import {Topic} from '../Forum/types';
 import {TopicGetAction, TOPIC_ACTIONS_TYPES} from './types';
 
 export function* topicWatcher(): Generator<ForkEffect<never>> {
-    yield takeEvery(TOPIC_ACTIONS_TYPES.GET_TOPIC, getTopicWorker);
+    yield takeLeading(TOPIC_ACTIONS_TYPES.GET_TOPIC, getTopicWorker);
 }
 
 function* getTopicWorker(action: TopicGetAction) {

@@ -8,7 +8,8 @@ import {
     Topic,
     CreatePostArgs
 } from './types';
-import {ApiCreateTopic} from '~/api/types';
+
+import type {ApiForumTopicCreateRequest} from '@/api.d';
 
 export function forumGetDataAction(): ForumGetDataAction {
     return {
@@ -30,7 +31,7 @@ export function forumGetDataErrorAction(error: string): ForumGetDataErrorAction 
     };
 }
 
-export function forumCreateTopicAction(topic: ApiCreateTopic): ForumCreateTopicAction {
+export function forumCreateTopicAction(topic: ApiForumTopicCreateRequest): ForumCreateTopicAction {
     return {
         type: FORUM_ACTION_TYPES.CREATE_TOPIC,
         payload: topic

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import './TopicElement.scss';
 
 type TopicProps = {
-    id: string;
+    id: number;
     title: string;
     comments: number;
     raiting: number;

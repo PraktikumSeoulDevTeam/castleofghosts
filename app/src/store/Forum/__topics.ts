@@ -1,7 +1,8 @@
-import {getPostsByTopic, getTopics as getTopicsFromServer} from '~/api';
+import {getPosts, getTopics as getTopicsFromServer} from '~/api/local';
 
-import {Topic} from './types';
-import {ApiPost} from '~/api/types';
+import type {Topic} from './types';
+
+import type {ApiForumPostResponse} from '@/api.d';
 
 /**
  * Возвращает топики с задержкой 0.9с
@@ -11,14 +12,14 @@ export async function getTopics(): Promise<Topic[]> {
         const topics = await getTopicsFromServer();
         const postsWorkers: unknown[] = [];
 
-        topics.forEach((topic) => postsWorkers.push(getPostsByTopic(topic.id)));
-        const posts: ApiPost[][] = (await Promise.all(postsWorkers)) as ApiPost[][];
+        topics.forEach((topic) => postsWorkers.push(getPosts(topic.id)));
+        const posts: ApiForumPostResponse[][] = (await Promise.all(postsWorkers)) as ApiForumPostResponse[][];
 
         const result: Topic[] = [];
 
         for (let i = 0; i < topics.length; i += 1) {
             const topic: Topic = {
-                id: String(topics[i].id),
+                id: topics[i].id,
                 author: topics[i].user.name,
                 content: topics[i].text,
                 title: topics[i].header,
@@ -30,7 +31,7 @@ export async function getTopics(): Promise<Topic[]> {
             const comments = posts[i];
             topic.comments = comments.map((comment) => ({
                 author: comment.user.name,
-                id: String(comment.id),
+                id: comment.id,
                 content: comment.text,
                 createdAt: new Date(comment.createdAt)
             }));

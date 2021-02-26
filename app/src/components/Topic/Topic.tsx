@@ -25,7 +25,7 @@ export const Topic = (props: TopicProps): JSX.Element => {
                 <TopicFooter raiting={topic.rating} comments={topic.comments.length} createdAt={topic.createdAt} />
             </article>
             <TopicComments comments={topic.comments} />
-            <CreatePost topicId={parseInt(topic.id, 10)} />
+            <CreatePost topicId={topic.id} />
         </div>
     );
 };
