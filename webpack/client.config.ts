@@ -2,6 +2,7 @@ import path from 'path';
 
 import CopyPlugin from 'copy-webpack-plugin';
 import HookShellScriptPlugin from 'hook-shell-script-webpack-plugin';
+import HtmlWebpackPartialsPlugin from 'html-webpack-partials-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import {Configuration as WebpackConfiguration} from 'webpack';
@@ -42,14 +43,22 @@ const config: Configuration = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve('app', 'www', 'index.html'),
-            publicPath: '/',
-            filename: 'index-csr.html'
+            template: path.resolve('app', 'www', 'index.html')
         }),
+        new HtmlWebpackPartialsPlugin([
+            {
+                path: path.resolve('app', 'www', 'partials', '_yaMetrika.html'),
+                priority: 'low',
+                location: 'head'
+            }
+        ]),
         new MiniCssExtractPlugin(),
         new HookShellScriptPlugin({environment: ['node scripts/concatLevels.js ./app/levels ./tmp']}),
         new CopyPlugin({
-            patterns: [{from: path.resolve('tmp', 'levels.json'), to: 'levels'}]
+            patterns: [
+                {from: path.resolve('tmp', 'levels.json'), to: 'levels'},
+                {from: path.resolve('app', 'www', 'favicon.ico'), to: '.'}
+            ]
         })
     ]
 };

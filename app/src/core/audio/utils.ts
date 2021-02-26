@@ -1,17 +1,6 @@
-import {isServer} from '~/utils';
-
 import {SampleContainer} from './types';
 
-export const audioCtx = isServer
-    ? {
-          suspend() {
-              return undefined;
-          },
-          decodeAudioData() {
-              return undefined;
-          }
-      }
-    : new AudioContext();
+export const audioCtx = new AudioContext();
 audioCtx.suspend();
 
 /**

@@ -21,7 +21,11 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "map": [["~", "./app/src"], ["~~", "./server/src"], ["@", "./@types"]],
+        "map": [
+          ["~", "./app/src"],
+          ["~~", "./server/src"],
+          ["@", "./@types"]
+        ],
         "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
       },
       "node": {
@@ -81,13 +85,8 @@
       }
     ],
     "import/prefer-default-export": "off",
-    "import/no-extraneous-dependencies": ["off"],
-    "react/jsx-filename-extension": [
-      "warn",
-      {
-        "extensions": [".tsx", ".jsx"]
-      }
-    ],
+    "import/no-extraneous-dependencies": "off",
+    "react/jsx-filename-extension": ["warn", {"extensions": [".tsx", ".jsx"]}],
     "react/jsx-uses-react": "warn",
     "react/jsx-indent": ["warn", 4],
     "react/jsx-indent-props": ["warn", 4],
@@ -108,8 +107,7 @@
       "parser": "@typescript-eslint/parser",
       "rules": {
         "no-undef": "off", // TODO https://github.com/typescript-eslint/typescript-eslint/issues/2477
-        "no-use-before-define": "off", // TODO https://github.com/typescript-eslint/typescript-eslint/issues/2502
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.ts", "**/*.test.tsx"]}]
+        "no-use-before-define": "off" // TODO https://github.com/typescript-eslint/typescript-eslint/issues/2502
       }
     }
   ]

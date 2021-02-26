@@ -12,14 +12,15 @@ const config: Configuration = {
     name: 'server',
     target: 'node',
     node: {__dirname: false},
-    entry: path.resolve('server', 'src', 'server'),
+    entry: path.resolve('server', 'src', 'index'),
     output: {
         path: path.resolve('dist', 'server'),
-        filename: 'server.js'
+        filename: 'index.js'
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
         alias: {
+            '~~': path.resolve('server', 'src'),
             '~': path.resolve('app', 'src')
         }
     },
