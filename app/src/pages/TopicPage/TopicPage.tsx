@@ -33,7 +33,7 @@ const TopicPageComponent = (props: ConnectedProps<typeof connector>): JSX.Elemen
         }
     }, []);
 
-    if (isLoading) {
+    if (isLoading || !topic) {
         return (
             <UiLayout isStatic={false} isBlock className="topic-page">
                 <TopicStub />

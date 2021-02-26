@@ -1,3 +1,5 @@
+import {ApiCreatePost, ApiCreateTopic} from '~/api/types';
+
 /**
  * Forum Models
  */
@@ -24,10 +26,17 @@ export interface ForumState {
     error: string | null;
 }
 
+export interface CreatePostArgs {
+    post: ApiCreatePost;
+    id: number;
+}
+
 export const enum FORUM_ACTION_TYPES {
     GET_DATA = 'cog/forum/get-data',
     GET_DATA_SUCCESS = 'cog/forum/get-data-success',
-    GET_DATA_ERROR = 'cog/forum/get-data-error'
+    GET_DATA_ERROR = 'cog/forum/get-data-error',
+    CREATE_TOPIC = 'cog/forum/create-topic',
+    CREATE_POST = 'cog/forum/create-post'
 }
 
 export interface ForumGetDataAction {
@@ -44,4 +53,19 @@ export interface ForumGetDataErrorAction {
     payload: string;
 }
 
-export type ForumActions = ForumGetDataAction | ForumGetDataSuccessAction | ForumGetDataErrorAction;
+export interface ForumCreateTopicAction {
+    type: FORUM_ACTION_TYPES.CREATE_TOPIC;
+    payload: ApiCreateTopic;
+}
+
+export interface ForumCreatePostAction {
+    type: FORUM_ACTION_TYPES.CREATE_POST;
+    payload: CreatePostArgs;
+}
+
+export type ForumActions =
+    | ForumGetDataAction
+    | ForumGetDataSuccessAction
+    | ForumGetDataErrorAction
+    | ForumCreateTopicAction
+    | ForumCreatePostAction;

@@ -3,6 +3,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {Dispatch} from 'redux';
 
 import {ForumHeader, TopicsList, TopicsListStub} from '~/components';
+import {CreateTopic} from '~/components/CreateTopic/CreateTopic';
 import {UiLayout} from '~/layouts';
 import {forumGetDataAction} from '~/store/Forum/actions';
 
@@ -45,6 +46,9 @@ const ForumPageComponent = (props: ConnectedProps<typeof connector>): JSX.Elemen
         <UiLayout isStatic={false} isBlock className="forum-page">
             <ForumHeader />
             <TopicsList topics={topics} />
+            <div className="forum-form">
+                <CreateTopic />
+            </div>
         </UiLayout>
     );
 };
