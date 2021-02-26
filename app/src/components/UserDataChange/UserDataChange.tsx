@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import {userUpdateAction} from '~/store/User/actions';
 import {FORMAT} from '~/utils';
 
-import {Button} from '../Button/Button';
 import {FormControl} from '../FormControl/FormControl';
 
 import type {FormControlFields, FormFields} from '../FormControl/types';
@@ -71,7 +70,11 @@ const mapDispatch = {
     userUpdate: userUpdateAction
 };
 
-const mergeProps = (stateProps: ReturnType<typeof mapState>, dispatchProps: typeof mapDispatch) => {
+const mergeProps = (
+    stateProps: ReturnType<typeof mapState>,
+    dispatchProps: typeof mapDispatch,
+    ownProps: JSX.ElementChildrenAttribute
+) => {
     const {user}: {user: {[key: string]: unknown}} = stateProps;
     const {userUpdate} = dispatchProps;
 
@@ -83,14 +86,15 @@ const mergeProps = (stateProps: ReturnType<typeof mapState>, dispatchProps: type
                 ...formData
             } as ApiUserInfo;
             userUpdate(userData);
-        }
+        },
+        ...ownProps
     };
 };
 
 const connector = connect(mapState, mapDispatch, mergeProps);
 
 export const UserDataChange = connector(
-    ({user, onUpdate}: ConnectedProps<typeof connector>): JSX.Element => {
+    ({children, user, onUpdate}: ConnectedProps<typeof connector>): JSX.Element => {
         const FilledUserEditFields = Object.keys(UserEditFields).reduce<FormControlFields>((res, key) => {
             res[key] = UserEditFields[key];
             const userField = user[key];
@@ -103,9 +107,7 @@ export const UserDataChange = connector(
 
         return (
             <FormControl schema={UserEditSchema} fields={FilledUserEditFields} onSubmit={onUpdate}>
-                <footer className="button-bar mt-5">
-                    <Button type="submit">Save</Button>
-                </footer>
+                {children}
             </FormControl>
         );
     }

@@ -2,21 +2,7 @@
 
 import type {GameCharacterInfo} from '../core/types';
 
-/**
- * Формат объекта 'пользователь' API
- * Запрос обновления информации по пользователю
- * Ответ на запрос обновления информации по пользователю
- */
-export interface ApiUserInfo {
-    id: number;
-    first_name: string;
-    second_name: string;
-    display_name: string;
-    login: string;
-    email: string;
-    phone?: string;
-    avatar?: string;
-}
+export type {ApiUserInfo, ApiBadRequestError} from '@/api.d';
 
 /**
  * Запрос смены пароля
@@ -88,15 +74,4 @@ export type ApiGetLeaderboardResponse = ApiGetLeaderboardResponseElement[];
  */
 export interface ApiServiceIdResponse {
     service_id: string;
-}
-
-/**
- * Ответ сервера с ошибкой
- */
-export interface ApiBadRequestError {
-    reason: string;
-    body?: {
-        description: string;
-    };
-    status?: number;
 }

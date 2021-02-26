@@ -1,5 +1,7 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 
+import {performanceCheckEnd, performanceCheckStart} from '~/services/perfomance/perfomance';
+
 import type {
     ApiAddToLeaderboardRequest,
     ApiBadRequestError,
@@ -162,6 +164,7 @@ export async function authWithCode(code: string): Promise<boolean> {
  * @param request   Объект конфигурации запроса на сервер
  */
 function requestHandler(request: AxiosRequestConfig): AxiosRequestConfig {
+    request.headers.common['x-perf'] = performanceCheckStart(request.url);
     // eslint-disable-next-line no-console
     console.log('[API req]', request);
 
@@ -176,6 +179,9 @@ function requestHandler(request: AxiosRequestConfig): AxiosRequestConfig {
 function responseHandler<T>(response: AxiosResponse<T>): AxiosResponse<T> {
     // eslint-disable-next-line no-console
     console.log('[API resp]', response);
+
+    const perfUniqueName = response.config.headers['x-perf'];
+    performanceCheckEnd(perfUniqueName);
 
     return response;
 }
