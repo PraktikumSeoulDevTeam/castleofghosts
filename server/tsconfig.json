@@ -6,6 +6,7 @@
     "rootDir": "./src",
     "importHelpers": true,
     "noEmitHelpers": true,
+    "jsx": "react",
 
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

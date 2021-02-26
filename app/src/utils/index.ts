@@ -31,3 +31,8 @@ export const getQueryParam = (param: string): string | null => new URLSearchPara
  * Удаление параметров запроса из адресной строки
  */
 export const clearQueryParams = (): void => window.history.replaceState({}, document.title, '/');
+
+/**
+ * Проверка среды исполнения: Сервер или браузер
+ */
+export const isServer = !(typeof window !== 'undefined' && window.document);
