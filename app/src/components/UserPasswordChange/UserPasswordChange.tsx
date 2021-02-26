@@ -33,12 +33,12 @@ const UserPasswordFields: FormControlFields = {
     passwordCurrent: {
         type: 'password',
         placeholder: 'Current password',
-        title: 'Current password: '
+        title: 'Current password:'
     },
     passwordNew: {
         type: 'password',
         placeholder: 'New password',
-        title: 'New password: ',
+        title: 'New password:',
         autocomplete: 'new-password'
     },
     passwordConfirm: {
