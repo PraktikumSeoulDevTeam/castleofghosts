@@ -7,8 +7,7 @@ export const ForumSearch = (): JSX.Element => (
     <div className="search-block">
         <Formik
             onSubmit={() => {
-                // eslint-disable-next-line no-console
-                console.log(`submiit!`);
+                // TODO: add search
             }}
             initialValues={{searchBlock: ''}}
         >
