@@ -29,12 +29,14 @@ export interface ApiBadRequestError {
 
 interface ApiDbFields {
     id: number;
-    createdAt?: string;
-    updatedAt?: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface ApiForumUser extends ApiDbFields {
     name: string;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface ApiForumTopicCreateRequest {

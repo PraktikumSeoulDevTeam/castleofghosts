@@ -32,6 +32,9 @@ export const Menu = connector(
                     <Link to="/leaderboard" className="t-center mt-5">
                         <Button>Leaderboard</Button>
                     </Link>
+                    <Link to="/forum" className="t-center mt-5">
+                        <Button>Forum</Button>
+                    </Link>
                     <Link to="/user" className="t-center mt-5">
                         <Button>User info</Button>
                     </Link>
